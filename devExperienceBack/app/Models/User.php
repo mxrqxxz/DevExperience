@@ -4,8 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 class User extends Authenticatable
 {
@@ -17,9 +22,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'usuario',
         'email',
-        'password',
+        'email_verified_at',
+        'nombre',
+        'apellidos',
+        'sobre_mi',
+        'avatar',
+        'practicas_realizadas',
+        'formulario_id'
     ];
 
     /**
@@ -44,4 +55,31 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function formulario(): HasOne
+    {
+        return $this->hasOne(Formulario::class);
+    }
+
+    public function comentarios(): HasMany
+    {
+        return $this->hasMany(Comentario::class);
+    }
+
+    public function insignias(): BelongsToMany
+    {
+        return $this->belongsToMany(Insignia::class, 'insignias_usuarios', 'usuario_id', 'insignia_id');
+    }
+
+    public function cuentas(): BelongsToMany
+    {
+        return $this->belongsToMany(Cuenta::class, 'cuentas_usuarios', 'usuario_id', 'cuenta_id')->withPivot('url');
+    }
+
+    public function comentariosLista(): BelongsToMany
+    {
+        return $this->belongsToMany(Comentario::class, 'comentarios_usuarios', 'usuario_id', 'comentario_id')->withPivot('reaccion');
+    }
+
+
 }
