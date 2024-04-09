@@ -11,11 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('formulario_id')->nullable();
-            $table->foreign('formulario_id')->references('id')->on('formularios');
-        });
-
         Schema::table('comentarios', function (Blueprint $table) {
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')->references('id')->on('users');
@@ -30,6 +25,9 @@ return new class extends Migration
 
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
+
+            $table->unsignedBigInteger('usuario_id');
+            $table->foreign('usuario_id')->references('id')->on('users');
         });
     }
 
@@ -55,6 +53,9 @@ return new class extends Migration
 
             $table->dropForeign('formularios_empresa_id_foreign');
             $table->dropColumn('empresa_id');
+
+            $table->dropForeign('formularios_usuario_id_foreign');
+            $table->dropColumn('usuario_id');
         });
     }
 };

@@ -23,6 +23,7 @@ class Formulario extends Model
         'hora_salida',
         'tiempo_descanso',
         'equipo_trabajo',
+        'usuario_id',
         'centro_id',
         'empresa_id'
     ];

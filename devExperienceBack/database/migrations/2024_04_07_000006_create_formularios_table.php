@@ -19,10 +19,10 @@ return new class extends Migration
             $table->float('val_empresa');
             $table->float('val_formacion');
             $table->float('val_ambiente_trabajo');
-            $table->float('tipo_jornada');
-            $table->float('hora_entrada');
-            $table->float('hora_salida');
-            $table->float('tiempo_descanso');
+            $table->string('tipo_jornada');
+            $table->string('hora_entrada');
+            $table->string('hora_salida');
+            $table->string('tiempo_descanso');
             $table->boolean('equipo_trabajo');
             $table->timestamps();
         });
