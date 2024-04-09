@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         $this->call(CentrosTableSeeder::class);
         $this->call(EmpresasTableSeeder::class);
+        $this->call(InsigniasTableSeeder::class);
+        $this->call(CuentasTableSeeder::class);
+        $this->call(TecnologiasTableSeeder::class);
         Schema::enableForeignKeyConstraints();
         $this->command->info('Tablas inicializadas con datos!');
     }
