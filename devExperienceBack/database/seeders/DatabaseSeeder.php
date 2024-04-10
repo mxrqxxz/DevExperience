@@ -35,7 +35,16 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Tabla de formularios inicializada con datos');
         $this->call(TecnologiasFormulariosTableSeeder::class);
         $this->command->info('Tabla de tecnologias_formularios inicializada con datos');
+        $this->call(CuentasUsuariosTableSeeder::class);
+        $this->command->info('Tabla de cuentas_usuarios inicializada con datos');
+        $this->call(ComentariosUsuariosTableSeeder::class);
+        $this->command->info('Tabla de comentarios_usuarios inicializada con datos');
+        $this->call(InsigniasUsuariosTableSeeder::class);
+        $this->command->info('Tabla de insignias_usuarios inicializada con datos');
         Schema::enableForeignKeyConstraints();
+        $this->command->info('');
+        $this->command->info('*****************************************************');
+        $this->command->info('');
         $this->command->info('Todas las tablas han sido inicializadas');
     }
 }
