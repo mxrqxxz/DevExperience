@@ -29,9 +29,9 @@ class CuentasUsuariosTableSeeder extends Seeder
                 $registro->cuenta_id = $cuenta->id;
 
                 if($cuenta->nombre === 'Github'){
-                    $registro->url = 'https://github.com/' . $user->nombre;
+                    $registro->url = 'https://github.com/' . $user->usuario;
                 }else{
-                    $registro->url = 'https://www.linkedin.com/in/' . $user->nombre;
+                    $registro->url = 'https://www.linkedin.com/in/' . $user->usuario;
                 }
 
                 $registro->save();
