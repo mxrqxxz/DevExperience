@@ -12,8 +12,7 @@ class Tecnologia extends Model
 
     protected $fillable = [
         'nombre',
-        'tipo',
-        'logo'
+        'tipo'
     ];
 
     public function formularios(): BelongsToMany

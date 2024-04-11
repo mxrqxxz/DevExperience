@@ -12,98 +12,79 @@ class TecnologiasTableSeeder extends Seeder
     private static $arrayTecnologias = [
         [
             'nombre' => 'React',
-            'tipo' => 'Front-end',
-            'logo' => 'url_example'
+            'tipo' => 'Front-end'
         ],
         [
             'nombre' => 'Angular',
-            'tipo' => 'Front-end',
-            'logo' => 'url_example'
+            'tipo' => 'Front-end'
         ],
         [
             'nombre' => 'Vue.js',
-            'tipo' => 'Front-end',
-            'logo' => 'url_example'
+            'tipo' => 'Front-end'
         ],
         [
             'nombre' => 'Ember.js',
-            'tipo' => 'Front-end',
-            'logo' => 'url_example'
+            'tipo' => 'Front-end'
         ],
         [
             'nombre' => 'Svelte',
-            'tipo' => 'Front-end',
-            'logo' => 'url_example'
+            'tipo' => 'Front-end'
         ],
         [
             'nombre' => 'Express.js',
-            'tipo' => 'Back-end',
-            'logo' => 'url_example'
+            'tipo' => 'Back-end'
         ],
         [
             'nombre' => 'Django',
-            'tipo' => 'Back-end',
-            'logo' => 'url_example'
+            'tipo' => 'Back-end'
         ],
         [
             'nombre' => 'Spring Boot',
-            'tipo' => 'Back-end',
-            'logo' => 'url_example'
+            'tipo' => 'Back-end'
         ],
         [
             'nombre' => 'Ruby on Rails',
-            'tipo' => 'Back-end',
-            'logo' => 'url_example'
+            'tipo' => 'Back-end'
         ],
         [
             'nombre' => 'Laravel',
-            'tipo' => 'Back-end',
-            'logo' => 'url_example'
+            'tipo' => 'Back-end'
         ],
         [
             'nombre' => 'Git',
-            'tipo' => 'Control de versiones',
-            'logo' => 'url_example'
+            'tipo' => 'Control de versiones'
         ],
         [
             'nombre' => 'SVN',
-            'tipo' => 'Control de versiones',
-            'logo' => 'url_example'
+            'tipo' => 'Control de versiones'
         ],
         [
             'nombre' => 'Mercurial',
-            'tipo' => 'Control de versiones',
-            'logo' => 'url_example'
+            'tipo' => 'Control de versiones'
         ],
         [
             'nombre' => 'Perforce',
-            'tipo' => 'Control de versiones',
-            'logo' => 'url_example'
+            'tipo' => 'Control de versiones'
         ],
         [
             'nombre' => 'MySQL',
-            'tipo' => 'Base de datos',
-            'logo' => 'url_example'
+            'tipo' => 'Base de datos'
         ],
         [
             'nombre' => 'PostgreSQL',
-            'tipo' => 'Base de datos',
-            'logo' => 'url_example'
+            'tipo' => 'Base de datos'
         ],
         [
             'nombre' => 'SQLite',
-            'tipo' => 'Base de datos',
-            'logo' => 'url_example'
+            'tipo' => 'Base de datos'
         ],
         [
             'nombre' => 'MongoDB',
-            'tipo' => 'Base de datos',
-            'logo' => 'url_example'
+            'tipo' => 'Base de datos'
         ],
         [
             'nombre' => 'Cassandra',
-            'tipo' => 'Base de datos',
-            'logo' => 'url_example'
+            'tipo' => 'Base de datos'
         ]
     ];
 
@@ -115,7 +96,6 @@ class TecnologiasTableSeeder extends Seeder
             $tecnologiaNueva = new Tecnologia;
             $tecnologiaNueva->nombre = $tecnologia['nombre'];
             $tecnologiaNueva->tipo = $tecnologia['tipo'];
-            $tecnologiaNueva->logo = $tecnologia['logo'];
             $tecnologiaNueva->save();
         }
     }

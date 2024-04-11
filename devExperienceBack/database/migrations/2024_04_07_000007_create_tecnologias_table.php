@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 40)->unique();
             $table->string('tipo');
-            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }
