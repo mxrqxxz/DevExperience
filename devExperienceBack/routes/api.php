@@ -7,5 +7,6 @@ use App\Http\Controllers\API\HomeController;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('datosHome', [HomeController::class, 'index']);
+Route::prefix('v1')->group(function () {
+    Route::get('datosHome', [HomeController::class, 'index']);
+});
