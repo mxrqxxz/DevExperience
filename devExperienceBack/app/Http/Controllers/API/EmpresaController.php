@@ -7,6 +7,7 @@ use App\Models\Empresa;
 use App\Models\Formulario;
 use App\Models\Tecnologia;
 use App\Models\TecnologiasFormularios;
+use App\Models\ComentariosUsuarios;
 use Illuminate\Http\Request;
 
 class EmpresaController extends Controller
@@ -18,6 +19,7 @@ class EmpresaController extends Controller
     {
         $empresa = Empresa::find($id);
         $formularios_empresa = $empresa->formularios;
+        $formularios_empresa->count() > 0 ? $numeroFormularios = $formularios_empresa->count() : $numeroFormularios = 1;
 
         $formularios_empresa = Formulario::where('empresa_id', $id)->get();
         //ahora quiero sacar los registros de la tabla tecnologias_formularios que tengan un formulario_id que esté en la colección de formularios_empresa
@@ -65,8 +67,8 @@ class EmpresaController extends Controller
             return $item;
         });
 
-        $tasa_contratacion = $formularios_empresa->where('opcion_quedarse', 1)->count() / $formularios_empresa->count()*100;
-        $equipo_trabajo = $formularios_empresa->where('equipo_trabajo', 1)->count() / $formularios_empresa->count()*100;
+        $tasa_contratacion = $formularios_empresa->where('opcion_quedarse', 1)->count() / $numeroFormularios*100;
+        $equipo_trabajo = $formularios_empresa->where('equipo_trabajo', 1)->count() / $numeroFormularios*100;
         //ahora quiero sacar la hora de entrada y la hora de salida agrupada y contar cuantas veces aparece cada hora
         $hora_entrada = $formularios_empresa->groupBy('hora_entrada')->map(function ($item) {
             return $item->count();
@@ -75,11 +77,6 @@ class EmpresaController extends Controller
         $hora_salida = $formularios_empresa->groupBy('hora_salida')->map(function ($item) {
             return $item->count();
         });
-
-        $empresa_comentarios = $empresa->comentarios;
-        foreach ($empresa_comentarios as $comentario) {
-
-        }
 
         $datosEmpresa = [
             'cabecera' =>[
@@ -108,9 +105,28 @@ class EmpresaController extends Controller
                 'hora_entrada'=>$hora_entrada,
                 'hora_salida'=>$hora_salida,
             ],
-            'comentarios' => $empresa_comentarios,
+            'comentarios' => $this->comentarios($empresa),
         ];
         return response()->json($datosEmpresa);
+    }
+
+    private function comentarios(Empresa $empresa)
+    {
+        $comentarios = $empresa->comentarios;
+        $interaccionesComentarios = ComentariosUsuarios::all();
+        $comentariosFinales = [];
+
+        foreach ($comentarios as $comentario) {
+            $likes = $interaccionesComentarios->where('comentario_id', $comentario->id)->where('reaccion', 'like')->count();
+            $dislikes = $interaccionesComentarios->where('comentario_id', $comentario->id)->where('reaccion', 'dislike')->count();
+            $comentarioFinal = [
+                'contenido' => $comentario->contenido,
+                'likes' => $likes,
+                'dislikes' => $dislikes
+            ];
+            array_push($comentariosFinales, $comentarioFinal);
+        }
+        return $comentariosFinales;
     }
 
 }

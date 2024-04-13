@@ -14,6 +14,25 @@ class HomeController extends Controller
 {
     public function index()
     {
+        return response()->json(
+            [
+                'porcentajeTecnologias' => $this->porcentajeTecnologias(),
+                'datosTotales' => $this->datosTotales()
+            ]
+        );
+    }
+
+    private function datosTotales()
+    {
+        return [
+            'empresas' => Empresa::count(),
+            'usuarios' => User::count(),
+            'comentarios' => Comentario::count(),
+        ];
+    }
+
+    private function porcentajeTecnologias()
+    {
         $tecnologiasFormularios = TecnologiasFormularios::all();
         $totalUsuarios = User::count();
 
@@ -32,16 +51,6 @@ class HomeController extends Controller
         //Ordenamos el array por el porcentaje de uso de mayor a menor y mostramos solo las 10 primeras
         $porcentajeTecnologiasNombre = $porcentajeTecnologiasNombre->sortDesc()->take(10);
 
-        return response()->json(
-            [
-                'porcentajeTecnologias' => $porcentajeTecnologiasNombre,
-                'datosTotales' => [
-                    'empresas' => Empresa::count(),
-                    'usuarios' => User::count(),
-                    'comentarios' => Comentario::count(),
-                    ]
-
-            ]
-        );
+        return $porcentajeTecnologiasNombre;
     }
 }

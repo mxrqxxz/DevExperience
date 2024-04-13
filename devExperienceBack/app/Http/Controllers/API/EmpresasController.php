@@ -30,45 +30,14 @@ class EmpresasController extends Controller
             // metemos en un array los campos distintos remoto
             $remotos = $formulariosEmpresa->pluck('remoto')->unique();
 
-            $modalidadPresencial = false;
-            $modalidadRemoto = false;
-            foreach ($remotos as $remoto) {
-                if ($remoto == 1) {
-                    $modalidadRemoto = true;
-                } else {
-                    $modalidadPresencial = true;
-                }
-            }
-
-            if ($modalidadRemoto && $modalidadPresencial) {
-                $remotos = 'Presencial y remoto';
-            } else if ($modalidadRemoto) {
-                $remotos = 'Remoto';
-            } else {
-                $remotos = 'Presencial';
-            }
-
             // metemos en un array los campos distintos tecnologias
             $tecnologias = $tecnologiasFormularios->whereIn('formulario_id', $formulariosEmpresa->pluck('id'))->pluck('tecnologia_id')->unique();
 
-            //Filtramos tecnologías por Front-end y Back-end
-            $tecnologiasFront = [];
-            $tecnologiasBack = [];
-
-            foreach ($tecnologias as $tecnologia) {
-                $tecnologia = Tecnologia::find($tecnologia);
-                if ($tecnologia->tipo == 'Front-end') {
-                    array_push($tecnologiasFront, $tecnologia->nombre);
-                } else if ($tecnologia->tipo == 'Back-end'){
-                    array_push($tecnologiasBack, $tecnologia->nombre);
-                }
-            }
-
             $empresa = [
                 'nombre' => $empresa->nombre,
-                'remoto' => $remotos,
-                'tecnologiasFront' => $tecnologiasFront,
-                'tecnologiasBack' => $tecnologiasBack
+                'remoto' => $this->traducirRemoto($remotos),
+                'tecnologiasFront' => $this->filtrarTecnologias($tecnologias, 'Front-end'),
+                'tecnologiasBack' => $this->filtrarTecnologias($tecnologias, 'Back-end'),
             ];
 
             array_push($output, $empresa);
@@ -77,4 +46,40 @@ class EmpresasController extends Controller
         return response()->json($output);
     }
 
+    private function filtrarTecnologias($tecnologias, String $tipo)
+    {
+        $tecnologiasFiltradas = [];
+
+        foreach ($tecnologias as $tecnologia) {
+            $tecnologia = Tecnologia::find($tecnologia);
+            if ($tecnologia->tipo == $tipo) {
+                array_push($tecnologiasFiltradas, $tecnologia->nombre);
+            }
+        }
+
+        return $tecnologiasFiltradas;
+    }
+
+    private function traducirRemoto($remotos)
+    {
+        $modalidadPresencial = false;
+        $modalidadRemoto = false;
+        foreach ($remotos as $remoto) {
+            if ($remoto == 1) {
+                $modalidadRemoto = true;
+            } else {
+                $modalidadPresencial = true;
+            }
+        }
+
+        if ($modalidadRemoto && $modalidadPresencial) {
+            $remotos = 'Presencial y remoto';
+        } else if ($modalidadRemoto) {
+            $remotos = 'Remoto';
+        } else {
+            $remotos = 'Presencial';
+        }
+
+        return $remotos;
+    }
 }
