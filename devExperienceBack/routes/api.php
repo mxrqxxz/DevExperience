@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\EmpresaController;
 use App\Http\Controllers\API\EmpresasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -11,4 +12,5 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     Route::get('datosHome', [HomeController::class, 'index']);
     Route::get('empresas', [EmpresasController::class, 'index']);
+    Route::get('empresa/{id}', [EmpresaController::class, 'index']);
 });
