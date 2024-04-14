@@ -17,67 +17,68 @@ class EmpresaController extends Controller
      */
     public function index($id)
     {
+        //Recogemos la empresa con el id que nos pasan
         $empresa = Empresa::find($id);
+        //Recogemos los formularios de la empresa
         $formularios_empresa = $empresa->formularios;
+        //Si no hay formularios, el número de formularios será 1 para evitar divisiones por 0
         $formularios_empresa->count() > 0 ? $numeroFormularios = $formularios_empresa->count() : $numeroFormularios = 1;
-
+        //Recogemos los formularios que referencian a la empresa
         $formularios_empresa = Formulario::where('empresa_id', $id)->get();
-        //ahora quiero sacar los registros de la tabla tecnologias_formularios que tengan un formulario_id que esté en la colección de formularios_empresa
+        //Recogemos las tecnologías de los formularios de la empresa
         $tecnologias_formularios = TecnologiasFormularios::whereIn('formulario_id', $formularios_empresa->pluck('id'))->get();
-
-        //ahora quiero agrupar por tecnologia_id y contar cuantas veces aparece cada tecnología
+        //Agrupamos las tecnologías por id y contamos cuantas veces aparece cada tecnología
         $tecnologias_formularios = $tecnologias_formularios->groupBy('tecnologia_id')->map(function ($item) {
             return $item->count();
         });
-
-        //ahora quiero obtener el nombre de las tecnologías
+        //Obtenemos el nombre de las tecnologías ya que solo tenemos el id
         $tecnologias = Tecnologia::findMany($tecnologias_formularios->keys())->pluck('nombre', 'id');
-
-        //ahora quiero crear un array asociativo con el nombre de la tecnología y el número de veces que aparece y el tipo de tecnología
+        //Creamos un array asociativo con el nombre de la tecnología y su número de usos para poder mostrarlo en la vista
         $tecnologias_formularios = $tecnologias_formularios->mapWithKeys(function ($num_usos, $tecnologia_id) use ($tecnologias) {
             $tecnologia = Tecnologia::find($tecnologia_id);
             return [$tecnologias[$tecnologia_id] => ['num_usos' => $num_usos, 'tipo' => $tecnologia->tipo]];
         });
-
+        //Filtramos las tecnologías para obtener las de front-end
         $front = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Front-end';
         })->transform(function ($item) {
             unset($item['tipo']);
             return $item;
         });
-
+        //Filtramos las tecnologías para obtener las de back-end
         $back = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Back-end';
         })->transform(function ($item) {
             unset($item['tipo']);
             return $item;
         });
-
+        //Filtramos las tecnologías para obtener las de control de versiones
         $control_versiones = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Control de versiones';
         })->transform(function ($item) {
             unset($item['tipo']);
             return $item;
         });
-
+        //Filtramos las tecnologías para obtener las de base de datos
         $bases_datos = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Base de datos';
         })->transform(function ($item) {
             unset($item['tipo']);
             return $item;
         });
-
+        //Calculamos la tasa de contratación
         $tasa_contratacion = $formularios_empresa->where('opcion_quedarse', 1)->count() / $numeroFormularios*100;
+        //Calculamos el porcentaje de usuarios que han recibido un equipo de trabajo en la empresa
         $equipo_trabajo = $formularios_empresa->where('equipo_trabajo', 1)->count() / $numeroFormularios*100;
-        //ahora quiero sacar la hora de entrada y la hora de salida agrupada y contar cuantas veces aparece cada hora
+        //Contamos cuantas veces aparece cada hora de entrada
         $hora_entrada = $formularios_empresa->groupBy('hora_entrada')->map(function ($item) {
             return $item->count();
         });
-
+        //Contamos cuantas veces aparece cada hora de salida
         $hora_salida = $formularios_empresa->groupBy('hora_salida')->map(function ($item) {
             return $item->count();
         });
-
+        //Creamos un array con los datos de la empresa
         $datosEmpresa = [
             'cabecera' =>[
                 'nombre' => $empresa->nombre,
@@ -112,8 +113,11 @@ class EmpresaController extends Controller
 
     private function comentarios(Empresa $empresa)
     {
+        //Recogemos los comentarios de la empresa
         $comentarios = $empresa->comentarios;
+        //Recogemos las interacciones de los comentarios
         $interaccionesComentarios = ComentariosUsuarios::all();
+        //Creamos un array con vacio para añaadir los datos necesarios para mostrar en la vista
         $comentariosFinales = [];
 
         foreach ($comentarios as $comentario) {
