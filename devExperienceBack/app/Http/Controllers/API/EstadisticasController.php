@@ -61,36 +61,44 @@ class EstadisticasController extends Controller
     public function empresas()
     {
         $formularios = Formulario::all();
+        $empresas = Empresa::all();
 
-        $practicas = $formularios->groupBy('empresa_id')->map(function ($item) {
+        $practicas = $formularios->groupBy('empresa_id')->map(function ($item) use ($empresas){
+            $empresa = $empresas->find($item->first()->empresa_id);
             return [
-                'name' => Empresa::find($item->first()->empresa_id)->nombre,
-                'value' => $item->count()
+                'name' => $empresa->nombre,
+                'value' => $item->count(),
+                'icon' => $empresa->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
 
-        $contratos = $formularios->groupBy('empresa_id')->map(function ($item) {
+        $contratos = $formularios->groupBy('empresa_id')->map(function ($item) use ($empresas){
             $numeroContratos = $item->where('opcion_quedarse', 1)->count();
+            $empresa = $empresas->find($item->first()->empresa_id);
             return [
-                'name' => Empresa::find($item->first()->empresa_id)->nombre,
-                'value' => $numeroContratos
-
+                'name' => $empresa->nombre,
+                'value' => $numeroContratos,
+                'icon' => $empresa->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
 
-        $salarios = $formularios->groupBy('empresa_id')->map(function ($item) {
+        $salarios = $formularios->groupBy('empresa_id')->map(function ($item) use ($empresas){
             $salario = $item->where('salario_ofrecido', '>', 0)->avg('salario_ofrecido');
+            $empresa = $empresas->find($item->first()->empresa_id);
             return [
-                'name' => Empresa::find($item->first()->empresa_id)->nombre,
-                'value' => floor($salario)
+                'name' => $empresa->nombre,
+                'value' => floor($salario),
+                'icon' => $empresa->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
 
-        $remotos = $formularios->groupBy('empresa_id')->map(function ($item) {
+        $remotos = $formularios->groupBy('empresa_id')->map(function ($item) use ($empresas){
             $remoto = $item->where('remoto', 1)->count();
+            $empresa = $empresas->find($item->first()->empresa_id);
             return [
-                'name' => Empresa::find($item->first()->empresa_id)->nombre,
-                'value' => $remoto
+                'name' => $empresa->nombre,
+                'value' => $remoto,
+                'icon' => $empresa->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
 
