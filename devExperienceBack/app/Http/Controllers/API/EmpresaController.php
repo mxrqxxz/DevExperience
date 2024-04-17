@@ -33,78 +33,100 @@ class EmpresaController extends Controller
         });
         //Obtenemos el nombre de las tecnologías ya que solo tenemos el id
         $tecnologias = Tecnologia::findMany($tecnologias_formularios->keys())->pluck('nombre', 'id');
-        //Creamos un array asociativo con el nombre de la tecnología y su número de usos para poder mostrarlo en la vista
+        // Creamos un array asociativo con el nombre de la tecnología y su número de usos para poder mostrarlo en la vista
         $tecnologias_formularios = $tecnologias_formularios->mapWithKeys(function ($num_usos, $tecnologia_id) use ($tecnologias) {
+            // Obtenemos la tecnología por ID para acceder al tipo
             $tecnologia = Tecnologia::find($tecnologia_id);
-            return [$tecnologias[$tecnologia_id] => ['num_usos' => $num_usos, 'tipo' => $tecnologia->tipo]];
+            return [$tecnologia_id => [
+                'name' => $tecnologias[$tecnologia_id], // Nombre de la tecnología
+                'value' => $num_usos,                   // Número de usos
+                'tipo' => $tecnologia->tipo             // Tipo de tecnología
+            ]];
         });
-        //Filtramos las tecnologías para obtener las de front-end
+
+        // Filtramos las tecnologías para obtener las de front-end
         $front = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Front-end';
-        })->transform(function ($item) {
-            unset($item['tipo']);
-            return $item;
-        });
-        //Filtramos las tecnologías para obtener las de back-end
+        })->map(function ($item) {
+            // Transformamos cada elemento a la estructura deseada, eliminando el campo 'tipo'
+            return [
+                'name' => $item['name'], // Usamos 'name' para el nombre de la tecnología
+                'value' => $item['value'] // Usamos 'value' para el número de usos
+            ];
+        })->values();
+        // Filtramos las tecnologías para obtener las de back-end
         $back = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Back-end';
-        })->transform(function ($item) {
-            unset($item['tipo']);
-            return $item;
-        });
-        //Filtramos las tecnologías para obtener las de control de versiones
+        })->map(function ($item) {
+            // Transformamos cada elemento a la estructura deseada, eliminando el campo 'tipo'
+            return [
+                'name' => $item['name'], // Usamos 'name' para el nombre de la tecnología
+                'value' => $item['value'] // Usamos 'value' para el número de usos
+            ];
+        })->values();
+        // Filtramos las tecnologías para obtener las de control de versiones
         $control_versiones = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Control de versiones';
-        })->transform(function ($item) {
-            unset($item['tipo']);
-            return $item;
-        });
-        //Filtramos las tecnologías para obtener las de base de datos
+        })->map(function ($item) {
+            // Transformamos cada elemento a la estructura deseada, eliminando el campo 'tipo'
+            return [
+                'name' => $item['name'], // Usamos 'name' para el nombre de la tecnología
+                'value' => $item['value'] // Usamos 'value' para el número de usos
+            ];
+        })->values();
+        // Filtramos las tecnologías para obtener las de base de datos
         $bases_datos = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Base de datos';
-        })->transform(function ($item) {
-            unset($item['tipo']);
-            return $item;
-        });
+        })->map(function ($item) {
+            // Transformamos cada elemento a la estructura deseada, eliminando el campo 'tipo'
+            return [
+                'name' => $item['name'], // Usamos 'name' para el nombre de la tecnología
+                'value' => $item['value'] // Usamos 'value' para el número de usos
+            ];
+        })->values();
+
         //Calculamos la tasa de contratación
-        $tasa_contratacion = $formularios_empresa->where('opcion_quedarse', 1)->count() / $numeroFormularios*100;
+        $tasa_contratacion = $formularios_empresa->where('opcion_quedarse', 1)->count() / $numeroFormularios * 100;
         //Calculamos el porcentaje de usuarios que han recibido un equipo de trabajo en la empresa
-        $equipo_trabajo = $formularios_empresa->where('equipo_trabajo', 1)->count() / $numeroFormularios*100;
-        //Contamos cuantas veces aparece cada hora de entrada
-        $hora_entrada = $formularios_empresa->groupBy('hora_entrada')->map(function ($item) {
-            return $item->count();
-        });
-        //Contamos cuantas veces aparece cada hora de salida
-        $hora_salida = $formularios_empresa->groupBy('hora_salida')->map(function ($item) {
-            return $item->count();
-        });
+        $equipo_trabajo = $formularios_empresa->where('equipo_trabajo', 1)->count() / $numeroFormularios * 100;
+        // Agrupamos y contamos cuantas veces aparece cada hora de entrada
+        $hora_entrada = $formularios_empresa->groupBy('hora_entrada')->map(function ($item, $key) {
+            return ['name' => $key, 'value' => $item->count()];
+        })->values(); // Convertimos a valores para eliminar las claves de agrupación
+
+        // Agrupamos y contamos cuantas veces aparece cada hora de salida
+        $hora_salida = $formularios_empresa->groupBy('hora_salida')->map(function ($item, $key) {
+            return ['name' => $key, 'value' => $item->count()];
+        })->values(); // Convertimos a valores para eliminar las claves de agrupación
         //Creamos un array con los datos de la empresa
         $datosEmpresa = [
-            'cabecera' =>[
+            'cabecera' => [
                 'nombre' => $empresa->nombre,
                 'localizacion' => $empresa->direccion,
                 'num_usuarios' => $empresa->formularios->count(),
                 'val-media' => $formularios_empresa->avg('val_empresa')
             ],
             'estadisticas' => [
-                'remoto'=>[
-                    'si'=>$formularios_empresa->where('remoto', 1)->count(),
-                    'no'=>$formularios_empresa->where('remoto', 0)->count()],
-                'front'=> $front,
-                'back'=> $back,
-                'control_versiones'=> $control_versiones,
-                'base_datos'=> $bases_datos,
-                'jornada'=>[
-                    'continua'=>$formularios_empresa->where('tipo_jornada', 'Continua')->count(),
-                    'partida'=>$formularios_empresa->where('tipo_jornada','Partida')->count()],
-                'tasa_contratacion'=>$tasa_contratacion,
-                'val_formacion'=>$formularios_empresa->avg('val_formacion'),
-                'val_ambiente_trabajo'=>$formularios_empresa->avg('val_ambiente_trabajo'),
-                'salario_medio'=>$formularios_empresa->avg('salario_ofrecido'),
-                'tiempo_descanso'=>$formularios_empresa->min('tiempo_descanso') . ' - ' . $formularios_empresa->max('tiempo_descanso'),
-                'equipo_trabajo'=>$equipo_trabajo,
-                'hora_entrada'=>$hora_entrada,
-                'hora_salida'=>$hora_salida,
+                'remoto' => [
+                    ['name' => 'si', 'value' => $formularios_empresa->where('remoto', 1)->count()],
+                    ['name' => 'no', 'value' => $formularios_empresa->where('remoto', 0)->count()],
+                ],
+                'front' => $front,
+                'back' => $back,
+                'control_versiones' => $control_versiones,
+                'base_datos' => $bases_datos,
+                'jornada' => [
+                    'continua' => $formularios_empresa->where('tipo_jornada', 'Continua')->count(),
+                    'partida' => $formularios_empresa->where('tipo_jornada', 'Partida')->count()
+                ],
+                'tasa_contratacion' => $tasa_contratacion,
+                'val_formacion' => $formularios_empresa->avg('val_formacion'),
+                'val_ambiente_trabajo' => $formularios_empresa->avg('val_ambiente_trabajo'),
+                'salario_medio' => $formularios_empresa->avg('salario_ofrecido'),
+                'tiempo_descanso' => $formularios_empresa->min('tiempo_descanso') . ' - ' . $formularios_empresa->max('tiempo_descanso'),
+                'equipo_trabajo' => $equipo_trabajo,
+                'hora_entrada' => $hora_entrada,
+                'hora_salida' => $hora_salida,
             ],
             'comentarios' => $this->comentarios($empresa),
         ];
@@ -132,5 +154,4 @@ class EmpresaController extends Controller
         }
         return $comentariosFinales;
     }
-
 }
