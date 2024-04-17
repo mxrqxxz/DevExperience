@@ -16,6 +16,15 @@ class EstadisticasController extends Controller
      */
     public function estadisticas()
     {
+        $estadisticas_generales = [
+            'estadisticas_tecnologias' => $this->tecnologias(),
+            'estadisticas_empresas' => $this->empresas(),
+        ];
+        return response()->json($estadisticas_generales);
+    }
+
+    public function tecnologias()
+    {
         $tecnologias_formularios = TecnologiasFormularios::all();
         $tecnologias_formularios = $tecnologias_formularios->groupBy('tecnologia_id')->map(function ($item) {
             return $item->count();
@@ -26,64 +35,72 @@ class EstadisticasController extends Controller
             return [$tecnologias[$tecnologia_id] => ['name' => $tecnologia->nombre, 'value' => $num_usos, 'tipo' => $tecnologia->tipo]];
         });
 
+        $estadisticas_tecnologias = [
+            'front' => $this->dividirTecnologias($tecnologias_formularios, 'Front-end'),
+            'back' => $this->dividirTecnologias($tecnologias_formularios, 'Back-end'),
+            'control_versiones' => $this->dividirTecnologias($tecnologias_formularios, 'Control de versiones'),
+            'bases_datos' => $this->dividirTecnologias($tecnologias_formularios, 'Base de datos')
+        ];
+
+        return $estadisticas_tecnologias;
+    }
+
+    public function dividirTecnologias($array, $tipo)
+    {
         //Filtramos las tecnologías para obtener las de front-end y devolvemos maximo 5
-        $front = $tecnologias_formularios->filter(function ($tecnologia) {
-            return $tecnologia['tipo'] == 'Front-end';
+        $tecnologiasFiltradas = $array->filter(function ($tecnologia) use ($tipo){
+            return $tecnologia['tipo'] == $tipo;
         })->transform(function ($item) {
             unset($item['tipo']);
             return $item;
         })->sortByDesc('value')->take(5)->values()->all();;
 
-        //Filtramos las tecnologías para obtener las de back-end
-        $back = $tecnologias_formularios->filter(function ($tecnologia) {
-            return $tecnologia['tipo'] == 'Back-end';
-        })->transform(function ($item) {
-            unset($item['tipo']);
-            return $item;
-        })->sortByDesc('num_usos')->take(5)->values()->all();;
+        return $tecnologiasFiltradas;
+    }
 
-        //Filtramos las tecnologías para obtener las de control de versiones
-        $control_versiones = $tecnologias_formularios->filter(function ($tecnologia) {
-            return $tecnologia['tipo'] == 'Control de versiones';
-        })->transform(function ($item) {
-            unset($item['tipo']);
-            return $item;
-        })->sortByDesc('num_usos')->take(5)->values()->all();;
+    public function empresas()
+    {
+        $formularios = Formulario::all();
 
-        //Filtramos las tecnologías para obtener las de base de datos
-        $bases_datos = $tecnologias_formularios->filter(function ($tecnologia) {
-            return $tecnologia['tipo'] == 'Base de datos';
-        })->transform(function ($item) {
-            unset($item['tipo']);
-            return $item;
-        })->sortByDesc('num_usos')->take(5)->values()->all();
+        $practicas = $formularios->groupBy('empresa_id')->map(function ($item) {
+            return [
+                'name' => Empresa::find($item->first()->empresa_id)->nombre,
+                'value' => $item->count()
+            ];
+        })->sortByDesc('value')->take(5)->values()->all();
 
-        $estadisticas_tecnologias = [
-            'front' => $front,
-            'back' => $back,
-            'control_versiones' => $control_versiones,
-            'bases_datos' => $bases_datos
+        $contratos = $formularios->groupBy('empresa_id')->map(function ($item) {
+            $numeroContratos = $item->where('opcion_quedarse', 1)->count();
+            return [
+                'name' => Empresa::find($item->first()->empresa_id)->nombre,
+                'value' => $numeroContratos
+
+            ];
+        })->sortByDesc('value')->take(5)->values()->all();
+
+        $salarios = $formularios->groupBy('empresa_id')->map(function ($item) {
+            $salario = $item->where('salario_ofrecido', '>', 0)->avg('salario_ofrecido');
+            return [
+                'name' => Empresa::find($item->first()->empresa_id)->nombre,
+                'value' => floor($salario)
+            ];
+        })->sortByDesc('value')->take(5)->values()->all();
+
+        $remotos = $formularios->groupBy('empresa_id')->map(function ($item) {
+            $remoto = $item->where('remoto', 1)->count();
+            return [
+                'name' => Empresa::find($item->first()->empresa_id)->nombre,
+                'value' => $remoto
+            ];
+        })->sortByDesc('value')->take(5)->values()->all();
+
+        $estadisticas_empresas = [
+            'practicas' => $practicas,
+            'contratos' => $contratos,
+            'salarios' => $salarios,
+            'remotos' => $remotos
         ];
 
-        $formularios = Formulario::with('empresa')->get();
-
-        $estadisticas_empresas = $formularios->groupBy('empresa_id')->mapWithKeys(function ($item, $key) {
-            $empresa = $item->first()->empresa;
-            return [[
-                'name' => $empresa->nombre,
-                'value' => $item->sum('opcion_quedarse'),
-                'href' => $empresa->imagen_url
-            ]];
-        })->sortByDesc(function ($value) {
-
-            return $value['value'];
-        })->values()->all();
-
-
-        $estadisticas_generales = [
-            'estadisticas_tecnologias' => $estadisticas_tecnologias,
-            'estadisticas_empresas' => $estadisticas_empresas,
-        ];
-        return response()->json($estadisticas_generales);
+        return $estadisticas_empresas;
     }
 }

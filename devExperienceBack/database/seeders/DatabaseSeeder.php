@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        User::factory(10)->create();
+        User::factory(25)->create();
         $this->call(CentrosTableSeeder::class);
         $this->command->info('Tabla de centros inicializada con datos');
         $this->call(EmpresasTableSeeder::class);
