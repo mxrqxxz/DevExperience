@@ -116,8 +116,8 @@ class EmpresaController extends Controller
                 'control_versiones' => $control_versiones,
                 'base_datos' => $bases_datos,
                 'jornada' => [
-                    'continua' => $formularios_empresa->where('tipo_jornada', 'Continua')->count(),
-                    'partida' => $formularios_empresa->where('tipo_jornada', 'Partida')->count()
+                    ['name' => 'continua', 'value' => $formularios_empresa->where('tipo_jornada', 'Continua')->count()],
+                    ['name' => 'partida', 'value' => $formularios_empresa->where('tipo_jornada', 'Partida')->count()]
                 ],
                 'tasa_contratacion' => $tasa_contratacion,
                 'val_formacion' => $formularios_empresa->avg('val_formacion'),
