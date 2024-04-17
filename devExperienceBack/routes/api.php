@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\EmpresaController;
 use App\Http\Controllers\API\EmpresasController;
+use App\Http\Controllers\API\EstadisticasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\HomeController;
@@ -13,4 +14,5 @@ Route::prefix('v1')->group(function () {
     Route::get('datosHome', [HomeController::class, 'index']);
     Route::get('empresas', [EmpresasController::class, 'index']);
     Route::get('empresa/{id}', [EmpresaController::class, 'index']);
+    Route::get('estadisticas', [EstadisticasController::class, 'estadisticas']);
 });
