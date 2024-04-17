@@ -23,7 +23,7 @@ class EstadisticasController extends Controller
         $tecnologias = Tecnologia::findMany($tecnologias_formularios->keys())->pluck('nombre', 'id');
         $tecnologias_formularios = $tecnologias_formularios->mapWithKeys(function ($num_usos, $tecnologia_id) use ($tecnologias) {
             $tecnologia = Tecnologia::find($tecnologia_id);
-            return [$tecnologias[$tecnologia_id] => ['num_usos' => $num_usos, 'tipo' => $tecnologia->tipo]];
+            return [$tecnologias[$tecnologia_id] => ['name' => $tecnologia->nombre, 'value' => $num_usos, 'tipo' => $tecnologia->tipo]];
         });
 
         //Filtramos las tecnologías para obtener las de front-end y devolvemos maximo 5
@@ -32,28 +32,31 @@ class EstadisticasController extends Controller
         })->transform(function ($item) {
             unset($item['tipo']);
             return $item;
-        })->sortByDesc('num_usos')->take(5);
+        })->sortByDesc('value')->take(5)->values()->all();;
+
         //Filtramos las tecnologías para obtener las de back-end
         $back = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Back-end';
         })->transform(function ($item) {
             unset($item['tipo']);
             return $item;
-        })->sortByDesc('num_usos')->take(5);
+        })->sortByDesc('num_usos')->take(5)->values()->all();;
+
         //Filtramos las tecnologías para obtener las de control de versiones
         $control_versiones = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Control de versiones';
         })->transform(function ($item) {
             unset($item['tipo']);
             return $item;
-        })->sortByDesc('num_usos')->take(5);
+        })->sortByDesc('num_usos')->take(5)->values()->all();;
+
         //Filtramos las tecnologías para obtener las de base de datos
         $bases_datos = $tecnologias_formularios->filter(function ($tecnologia) {
             return $tecnologia['tipo'] == 'Base de datos';
         })->transform(function ($item) {
             unset($item['tipo']);
             return $item;
-        })->sortByDesc('num_usos')->take(5);
+        })->sortByDesc('num_usos')->take(5)->values()->all();
 
         $estadisticas_tecnologias = [
             'front' => $front,
