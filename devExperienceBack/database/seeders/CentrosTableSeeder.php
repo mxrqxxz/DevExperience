@@ -151,6 +151,7 @@ class CentrosTableSeeder extends Seeder
             $centroNuevo = new Centro;
             $centroNuevo->nombre = $centro['nombre'];
             $centroNuevo->direccion = $centro['direccion'];
+            $centroNuevo->imagen = 'https://via.placeholder.com/150';
             $centroNuevo->save();
         }
     }

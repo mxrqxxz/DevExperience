@@ -12,7 +12,8 @@ class Centro extends Model
 
     protected $fillable = [
         'nombre',
-        'direccion'
+        'direccion',
+        'imagen',
     ];
 
     public function formularios(): HasMany
