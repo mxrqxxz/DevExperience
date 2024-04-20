@@ -29,9 +29,12 @@ class EstadisticasController extends Controller
     public function tecnologias()
     {
         $tecnologias_formularios = TecnologiasFormularios::all();
-        $tecnologias_formularios = $tecnologias_formularios->groupBy('tecnologia_id')->map(function ($item) {
-            return $item->count();
+        $total_formularios = Formulario::all()->count();
+
+        $tecnologias_formularios = $tecnologias_formularios->groupBy('tecnologia_id')->map(function ($item) use ($total_formularios){
+            return round($item->count() / $total_formularios * 100, 1);
         });
+
         $tecnologias = Tecnologia::findMany($tecnologias_formularios->keys())->pluck('nombre', 'id');
         $tecnologias_formularios = $tecnologias_formularios->mapWithKeys(function ($num_usos, $tecnologia_id) use ($tecnologias) {
             $tecnologia = Tecnologia::find($tecnologia_id);
@@ -64,23 +67,24 @@ class EstadisticasController extends Controller
     public function empresas()
     {
         $formularios = Formulario::all();
+        $total_formularios = $formularios->count();
         $empresas = Empresa::all();
 
-        $practicas = $formularios->groupBy('empresa_id')->map(function ($item) use ($empresas) {
+        $practicas = $formularios->groupBy('empresa_id')->map(function ($item) use ($empresas, $total_formularios) {
             $empresa = $empresas->find($item->first()->empresa_id);
             return [
                 'name' => $empresa->nombre,
-                'value' => $item->count(),
+                'value' => round($item->count() / $total_formularios * 100, 1),
                 'icon' => $empresa->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
 
-        $contratos = $formularios->groupBy('empresa_id')->map(function ($item) use ($empresas) {
+        $contratos = $formularios->groupBy('empresa_id')->map(function ($item) use ($empresas, $total_formularios) {
             $numeroContratos = $item->where('opcion_quedarse', 1)->count();
             $empresa = $empresas->find($item->first()->empresa_id);
             return [
                 'name' => $empresa->nombre,
-                'value' => $numeroContratos,
+                'value' => round($numeroContratos / $total_formularios * 100,1),
                 'icon' => $empresa->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
@@ -90,17 +94,17 @@ class EstadisticasController extends Controller
             $empresa = $empresas->find($item->first()->empresa_id);
             return [
                 'name' => $empresa->nombre,
-                'value' => floor($salario),
+                'value' => round($salario),
                 'icon' => $empresa->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
 
-        $remotos = $formularios->groupBy('empresa_id')->map(function ($item) use ($empresas) {
+        $remotos = $formularios->groupBy('empresa_id')->map(function ($item) use ($empresas, $total_formularios) {
             $remoto = $item->where('remoto', 1)->count();
             $empresa = $empresas->find($item->first()->empresa_id);
             return [
                 'name' => $empresa->nombre,
-                'value' => $remoto,
+                'value' => round($remoto / $total_formularios * 100, 1),
                 'icon' => $empresa->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
@@ -118,14 +122,15 @@ class EstadisticasController extends Controller
     public function centros()
     {
         $formularios = Formulario::all();
+        $total_formularios = $formularios->count();
         $centros = Centro::all();
 
-        $contratos = $formularios->groupBy('centro_id')->map(function ($item) use ($centros) {
+        $contratos = $formularios->groupBy('centro_id')->map(function ($item) use ($centros, $total_formularios) {
             $numeroContratos = $item->where('opcion_quedarse', 1)->count();
             $centro = $centros->find($item->first()->centro_id);
             return [
                 'name' => $centro->nombre,
-                'value' => $numeroContratos,
+                'value' => round($numeroContratos / $total_formularios * 100, 1),
                 'icon' => $centro->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
@@ -140,22 +145,22 @@ class EstadisticasController extends Controller
             ];
         })->sortByDesc('value')->take(5)->values()->all();
 
-        $remotos = $formularios->groupBy('centro_id')->map(function ($item) use ($centros) {
+        $remotos = $formularios->groupBy('centro_id')->map(function ($item) use ($centros, $total_formularios) {
             $remoto = $item->where('remoto', 1)->count();
             $centro = $centros->find($item->first()->centro_id);
             return [
                 'name' => $centro->nombre,
-                'value' => $remoto,
+                'value' => round($remoto / $total_formularios * 100, 1),
                 'icon' => $centro->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
 
-        $empresasAsociadas = $formularios->groupBy('centro_id')->map(function ($item) use ($centros) {
+        $empresasAsociadas = $formularios->groupBy('centro_id')->map(function ($item) use ($centros, $total_formularios) {
             $uniqueEmpresas = $item->pluck('empresa_id')->unique()->count();
             $centro = $centros->find($item->first()->centro_id);
             return [
                 'name' => $centro->nombre,
-                'value' => $uniqueEmpresas,
+                'value' => round($uniqueEmpresas / $total_formularios * 100, 1),
                 'icon' => $centro->imagen
             ];
         })->sortByDesc('value')->take(5)->values()->all();
@@ -171,21 +176,22 @@ class EstadisticasController extends Controller
     public function horarios()
     {
         $formularios = Formulario::all();
+        $total_formularios = $formularios->count();
 
-        $hora_entrada = $formularios->groupBy('hora_entrada')->map(function ($item, $key) {
-            return ['name' => $key, 'value' => $item->count()];
+        $hora_entrada = $formularios->groupBy('hora_entrada')->map(function ($item, $key)use ($total_formularios){
+            return ['name' => $key, 'value' => round($item->count()/ $total_formularios * 100, 1)];
         })->sortByDesc('value')->take(5)->values()->all();
 
-        $hora_salida = $formularios->groupBy('hora_salida')->map(function ($item, $key) {
-            return ['name' => $key, 'value' => $item->count()];
+        $hora_salida = $formularios->groupBy('hora_salida')->map(function ($item, $key)use($total_formularios) {
+            return ['name' => $key, 'value' => round($item->count()/ $total_formularios * 100, 1)];
         })->sortByDesc('value')->take(5)->values()->all();
 
-        $jornada_tipo = $formularios->groupBy('tipo_jornada')->map(function ($item, $key) {
-            return ['name' => $key, 'value' => $item->count()];
+        $jornada_tipo = $formularios->groupBy('tipo_jornada')->map(function ($item, $key) use ($total_formularios){
+            return ['name' => $key, 'value' => round($item->count()/ $total_formularios * 100, 1)];
         })->sortByDesc('value')->take(5)->values()->all();
 
-        $tiempo_descanso = $formularios->groupBy('tiempo_descanso')->map(function ($item, $key) {
-            return ['name' => $key, 'value' => $item->count()];
+        $tiempo_descanso = $formularios->groupBy('tiempo_descanso')->map(function ($item, $key) use($total_formularios){
+            return ['name' => $key, 'value' => round($item->count()/ $total_formularios * 100, 1)];
         })->sortByDesc('value')->take(5)->values()->all();
 
         $estadisticas_horarios = [

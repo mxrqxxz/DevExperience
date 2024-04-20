@@ -21,6 +21,8 @@ class EmpresaController extends Controller
         $empresa = Empresa::find($id);
         //Recogemos los formularios de la empresa
         $formularios_empresa = $empresa->formularios;
+        //Recogemos el número de formularios de la empresa
+        $empresa->formularios->count() > 0 ? $total_formularios_empresas = $empresa->formularios->count() : $total_formularios_empresas = 1;
         //Si no hay formularios, el número de formularios será 1 para evitar divisiones por 0
         $formularios_empresa->count() > 0 ? $numeroFormularios = $formularios_empresa->count() : $numeroFormularios = 1;
         //Recogemos los formularios que referencian a la empresa
@@ -34,12 +36,12 @@ class EmpresaController extends Controller
         //Obtenemos el nombre de las tecnologías ya que solo tenemos el id
         $tecnologias = Tecnologia::findMany($tecnologias_formularios->keys())->pluck('nombre', 'id');
         // Creamos un array asociativo con el nombre de la tecnología y su número de usos para poder mostrarlo en la vista
-        $tecnologias_formularios = $tecnologias_formularios->mapWithKeys(function ($num_usos, $tecnologia_id) use ($tecnologias) {
+        $tecnologias_formularios = $tecnologias_formularios->mapWithKeys(function ($num_usos, $tecnologia_id) use ($tecnologias, $total_formularios_empresas) {
             // Obtenemos la tecnología por ID para acceder al tipo
             $tecnologia = Tecnologia::find($tecnologia_id);
             return [$tecnologia_id => [
                 'name' => $tecnologias[$tecnologia_id], // Nombre de la tecnología
-                'value' => $num_usos,                   // Número de usos
+                'value' => round($num_usos / $total_formularios_empresas  * 100,1),                   // Número de usos
                 'tipo' => $tecnologia->tipo             // Tipo de tecnología
             ]];
         });
@@ -90,13 +92,13 @@ class EmpresaController extends Controller
         //Calculamos el porcentaje de usuarios que han recibido un equipo de trabajo en la empresa
         $equipo_trabajo = $formularios_empresa->where('equipo_trabajo', 1)->count() / $numeroFormularios * 100;
         // Agrupamos y contamos cuantas veces aparece cada hora de entrada
-        $hora_entrada = $formularios_empresa->groupBy('hora_entrada')->map(function ($item, $key) {
-            return ['name' => $key, 'value' => $item->count()];
+        $hora_entrada = $formularios_empresa->groupBy('hora_entrada')->map(function ($item, $key) use ($total_formularios_empresas){
+            return ['name' => $key, 'value' => round($item->count() / $total_formularios_empresas * 100, 1)];
         })->values(); // Convertimos a valores para eliminar las claves de agrupación
 
         // Agrupamos y contamos cuantas veces aparece cada hora de salida
-        $hora_salida = $formularios_empresa->groupBy('hora_salida')->map(function ($item, $key) {
-            return ['name' => $key, 'value' => $item->count()];
+        $hora_salida = $formularios_empresa->groupBy('hora_salida')->map(function ($item, $key) use($total_formularios_empresas){
+            return ['name' => $key, 'value' => round($item->count() / $total_formularios_empresas * 100, 1)];
         })->values(); // Convertimos a valores para eliminar las claves de agrupación
         //Creamos un array con los datos de la empresa
         $datosEmpresa = [
@@ -108,16 +110,16 @@ class EmpresaController extends Controller
             ],
             'estadisticas' => [
                 'remoto' => [
-                    ['name' => 'si', 'value' => $formularios_empresa->where('remoto', 1)->count()],
-                    ['name' => 'no', 'value' => $formularios_empresa->where('remoto', 0)->count()],
+                    ['name' => 'si', 'value' => round($formularios_empresa->where('remoto', 1)->count() / $total_formularios_empresas * 100, 1)],
+                    ['name' => 'no', 'value' => round($formularios_empresa->where('remoto', 0)->count() / $total_formularios_empresas * 100, 1)],
                 ],
                 'front' => $front,
                 'back' => $back,
                 'control_versiones' => $control_versiones,
                 'base_datos' => $bases_datos,
                 'jornada' => [
-                    ['name' => 'continua', 'value' => $formularios_empresa->where('tipo_jornada', 'Continua')->count()],
-                    ['name' => 'partida', 'value' => $formularios_empresa->where('tipo_jornada', 'Partida')->count()]
+                    ['name' => 'continua', 'value' => round($formularios_empresa->where('tipo_jornada', 'Continua')->count() / $total_formularios_empresas * 100, 1)],
+                    ['name' => 'partida', 'value' => round($formularios_empresa->where('tipo_jornada', 'Partida')->count() / $total_formularios_empresas * 100, 1)]
                 ],
                 'tasa_contratacion' => $tasa_contratacion,
                 'val_formacion' => $formularios_empresa->avg('val_formacion'),
