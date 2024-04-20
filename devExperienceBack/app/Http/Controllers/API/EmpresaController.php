@@ -148,6 +148,7 @@ class EmpresaController extends Controller
             $likes = $interaccionesComentarios->where('comentario_id', $comentario->id)->where('reaccion', 'like')->count();
             $dislikes = $interaccionesComentarios->where('comentario_id', $comentario->id)->where('reaccion', 'dislike')->count();
             $comentarioFinal = [
+                'id' => $comentario->id,
                 'contenido' => $comentario->contenido,
                 'likes' => $likes,
                 'dislikes' => $dislikes
@@ -155,5 +156,17 @@ class EmpresaController extends Controller
             array_push($comentariosFinales, $comentarioFinal);
         }
         return $comentariosFinales;
+    }
+
+    public function store(Request $request)
+    {
+        $empresa = new Empresa();
+        $empresa->CIF = $request->CIF;
+        $empresa->nombre = $request->nombre;
+        $empresa->direccion = $request->direccion;
+        $path = $request->file('imagen')->store('imagenesEmpresas', ['disk' => 'public']);
+        $empresa->imagen = $path;
+        $empresa->save();
+        return response()->json($empresa);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\ComentarioController;
+use App\Http\Controllers\API\ComentariosUsuariosController;
 use App\Http\Controllers\API\EmpresaController;
 use App\Http\Controllers\API\EmpresasController;
 use App\Http\Controllers\API\EstadisticasController;
@@ -15,4 +17,7 @@ Route::prefix('v1')->group(function () {
     Route::get('empresas', [EmpresasController::class, 'index']);
     Route::get('empresa/{id}', [EmpresaController::class, 'index']);
     Route::get('estadisticas', [EstadisticasController::class, 'estadisticas']);
+    Route::post('createEmpresa', [EmpresaController::class, 'store']);
+    Route::post('createComentario', [ComentarioController::class, 'store']);
+    Route::post('createComentarioReaccion', [ComentariosUsuariosController::class, 'store']);
 });
