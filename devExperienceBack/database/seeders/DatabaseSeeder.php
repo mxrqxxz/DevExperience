@@ -19,6 +19,17 @@ class DatabaseSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         User::factory(25)->create();
+        User::create([
+            'usuario' => 'admin',
+            'email' => 'admin',
+            'password' => 'admin',
+            'nombre' => 'admin',
+            'apellidos' => 'admin',
+            'sobre_mi' => 'admin',
+            'avatar' => 'admin',
+            'practicas_realizadas' => '0',
+        ]);
+
         $this->call(CentrosTableSeeder::class);
         $this->command->info('Tabla de centros inicializada con datos');
         $this->call(EmpresasTableSeeder::class);
