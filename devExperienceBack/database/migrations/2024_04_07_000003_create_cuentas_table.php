@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cuentas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 32)->unique();
+            $table->string('avatar', 255);
             $table->timestamps();
         });
     }

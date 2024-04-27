@@ -11,11 +11,14 @@ class CuentasTableSeeder extends Seeder
 {
     private static $arrayCuentas = [
         [
-            'nombre' => 'Github'
+            'nombre' => 'Github',
+            'avatar' => 'https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_github_icon_130816.png'
         ],
         [
-            'nombre' => 'LinkedIn'
-        ]
+            'nombre' => 'LinkedIn',
+            'avatar' => 'https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_linkedin_icon_130813.png'
+        ],
+
     ];
 
 
@@ -26,6 +29,7 @@ class CuentasTableSeeder extends Seeder
         foreach( self::$arrayCuentas as $cuenta ) {
             $cuentaNueva = new Cuenta;
             $cuentaNueva->nombre = $cuenta['nombre'];
+            $cuentaNueva->avatar = $cuenta['avatar'];
             $cuentaNueva->save();
         }
     }

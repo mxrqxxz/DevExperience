@@ -56,6 +56,16 @@ class User extends Authenticatable
         ];
     }
 
+    public function esProfesor()
+    {
+        return str_ends_with($this->email, '@murciaeduca.es');
+    }
+
+    public function esEstudiante()
+    {
+        return str_ends_with($this->email, '@alu.murciaeduca.es');
+    }
+
     public function formulario(): HasOne
     {
         return $this->hasOne(Formulario::class);

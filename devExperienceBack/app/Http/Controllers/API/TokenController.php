@@ -25,7 +25,7 @@ class TokenController extends Controller
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'email' => 'required|email',
-            'password' => 'required|string'
+            'password' => 'required|string',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -58,7 +58,8 @@ class TokenController extends Controller
                 'nombre' => $request->nombre,
                 'apellidos' => $request->apellidos,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'practicas_realizadas' => '0'
             ]
 
         );

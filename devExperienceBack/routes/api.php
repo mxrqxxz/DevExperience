@@ -9,7 +9,9 @@ use App\Http\Controllers\API\FormularioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\HomeController;
+use App\Http\Controllers\API\PerfilController;
 use App\Http\Controllers\API\TokenController;
+use App\Http\Middleware\ComprobarTipoUsuario;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -18,13 +20,19 @@ Route::prefix('v1')->group(function () {
 
     //Rutas accesibles sin autenticación
     Route::get('datosHome', [HomeController::class, 'index']);
-    Route::get('empresas', [EmpresasController::class, 'index']);
+
+    //Route::get('empresas', [EmpresasController::class, 'index']);
     Route::get('estadisticas', [EstadisticasController::class, 'estadisticas']);
 
     //Rutas accesibles solo con autenticación
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('createFormulario', [FormularioController::class, 'store']);
-        Route::get('empresas', [EmpresasController::class, 'index']);
+        Route::get('perfil', [PerfilController::class, 'datosPerfil']);
+        //Middleware para comprobar el tipo de usuario(profesor/alumno)
+        Route::middleware(['auth:sanctum', ComprobarTipoUsuario::class . ':alumno'])->group(function () {
+
+        });
+
         Route::post('createComentarioReaccion', [ComentariosUsuariosController::class, 'store']);
         Route::post('createEmpresa', [EmpresaController::class, 'store']);
         Route::post('createComentario', [ComentarioController::class, 'store']);
@@ -37,5 +45,4 @@ Route::prefix('v1')->group(function () {
     Route::post('login', [TokenController::class, 'login']);
     // elimina el token del usuario autenticado
     Route::delete('logout', [TokenController::class, 'destroy'])->middleware('auth:sanctum');
-
 });
