@@ -28,6 +28,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('createFormulario', [FormularioController::class, 'store']);
         Route::get('perfil', [PerfilController::class, 'datosPerfil']);
+        Route::put('editarPerfil', [PerfilController::class, 'actualizarPerfil']);
         //Middleware para comprobar el tipo de usuario(profesor/alumno)
         Route::middleware(['auth:sanctum', ComprobarTipoUsuario::class . ':alumno'])->group(function () {
 

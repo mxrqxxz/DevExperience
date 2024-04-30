@@ -79,7 +79,7 @@ class PerfilController extends Controller
         $user = Auth::user();
         $cuentas = $request->cuentas;
 
-        if($userRepoAvatar = $request->file('avatar')) {
+        if($request->file('avatar')) {
             $request->validate([
                 'avatar' => 'mimes:png,jpg,jpeg|max:5120', // Se permiten imagenes de hasta 5 MB
             ], [
@@ -93,7 +93,15 @@ class PerfilController extends Controller
             $user['avatar'] = $user->avatar;
         }
 
-        $user->avatar = $request->avatar;
+        foreach ($cuentas as $cuenta) {
+            $cuentaUsuario = $user->cuentas->where('id', $cuenta['id'])->first();
+            if($cuentaUsuario){
+                $cuentaUsuario['url'] = $cuenta['url'];
+            }else{
+                $user->cuentas()->attach($cuenta['id'], ['url' => $cuenta['url']]);
+            }
+        }
+
         $user->usuario = $request->usuario;
         $user->nombre = $request->nombre;
         $user->apellidos = $request->apellidos;
