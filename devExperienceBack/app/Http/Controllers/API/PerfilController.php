@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\Cuenta;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Http\Request;
 
 
 class PerfilController extends Controller
@@ -29,6 +31,14 @@ class PerfilController extends Controller
             ];
         });
 
+        $cat_cuentas = Cuenta::all()->map(function ($cuenta) {
+            return [
+                'id' => $cuenta->id,
+                'nombre' => $cuenta->nombre,
+                'avatar' => $cuenta->avatar
+            ];
+        });
+
         if($user->esProfesor()){
             return response()->json([
                 'avatar' => $user->avatar,
@@ -40,7 +50,8 @@ class PerfilController extends Controller
                 'sober_mi' => $user->sober_mi,
                 'practicas' => "No aplica",
                 'insignias' => $insignias,
-                'cuentas' => $cuentas
+                'cuentas' => $cuentas,
+                'cat_cuentas'=> $cat_cuentas
             ]);
         }else{
 
@@ -57,9 +68,43 @@ class PerfilController extends Controller
                 'email' => $user->email,
                 'practicas' => $user->practicas_realizadas,
                 'insignias' => $insignias,
-                'cuentas' => $cuentas
+                'cuentas' => $cuentas,
+                'cat_cuentas'=> $cat_cuentas
             ]);
         }
+    }
+
+    public function actualizarPerfil(Request $request)
+    {
+        $user = Auth::user();
+        $cuentas = $request->cuentas;
+
+        if($userRepoAvatar = $request->file('avatar')) {
+            $request->validate([
+                'avatar' => 'mimes:png,jpg,jpeg|max:5120', // Se permiten imagenes de hasta 5 MB
+            ], [
+                'avatar.mimes' => 'El avatar debe ser una imagen.',
+                'avatar.max' => 'El tamaño del avatar no debe ser mayor a 5 MB.',
+            ]);
+
+            $path = $userRepoAvatar->store('imagenesEmpresas', ['disk' => 'public']);
+            $user['avatar'] = $path;
+        } else {
+            $user['avatar'] = $user->avatar;
+        }
+
+        $user->avatar = $request->avatar;
+        $user->usuario = $request->usuario;
+        $user->nombre = $request->nombre;
+        $user->apellidos = $request->apellidos;
+        $user->sobre_mi = $request->sobre_mi;
+        $user->email = $request->email;
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Perfil actualizado correctamente'
+        ]);
     }
 
 }
