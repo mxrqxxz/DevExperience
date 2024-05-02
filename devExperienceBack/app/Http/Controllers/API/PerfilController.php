@@ -39,7 +39,7 @@ class PerfilController extends Controller
             ];
         });
 
-        if($user->esProfesor()){
+        if ($user->esProfesor()) {
             return response()->json([
                 'avatar' => $user->avatar,
                 'usuario' => $user->usuario,
@@ -51,9 +51,9 @@ class PerfilController extends Controller
                 'practicas' => "No aplica",
                 'insignias' => $insignias,
                 'cuentas' => $cuentas,
-                'cat_cuentas'=> $cat_cuentas
+                'cat_cuentas' => $cat_cuentas
             ]);
-        }else{
+        } else {
 
             $centro_educativo = $user->practicas_realizadas == 0 ? "Debe completar el formulario" : $user->formulario->centro->nombre;
             $sobre_mi = $user->sobre_mi == null ? "Añade información sobre tí..." : $user->sobre_mi;
@@ -69,17 +69,18 @@ class PerfilController extends Controller
                 'practicas' => $user->practicas_realizadas,
                 'insignias' => $insignias,
                 'cuentas' => $cuentas,
-                'cat_cuentas'=> $cat_cuentas
+                'cat_cuentas' => $cat_cuentas
             ]);
         }
     }
 
     public function actualizarPerfil(Request $request)
     {
+        // Obtener el usuario autenticado
         $user = Auth::user();
-        $cuentas = $request->cuentas;
 
-        if($request->file('avatar')) {
+        // Validar el avatar
+        if ($userRepoAvatar = $request->file('avatar')) {
             $request->validate([
                 'avatar' => 'mimes:png,jpg,jpeg|max:5120', // Se permiten imagenes de hasta 5 MB
             ], [
@@ -92,27 +93,35 @@ class PerfilController extends Controller
         } else {
             $user['avatar'] = $user->avatar;
         }
+        // Actualizar las cuentas, recorriendo el array de cuentas
+     /*    foreach ($cuentas as $cuenta) {
+            $pivotData = ['url' => $cuenta['url']];
+            $pivotWhere = ['cuenta_id' => $cuenta['id'], 'usuario_id' => $user->id];
 
-        foreach ($cuentas as $cuenta) {
-            $cuentaUsuario = $user->cuentas->where('id', $cuenta['id'])->first();
-            if($cuentaUsuario){
-                $cuentaUsuario['url'] = $cuenta['url'];
-            }else{
-                $user->cuentas()->attach($cuenta['id'], ['url' => $cuenta['url']]);
+            // Primero intenta obtener el registro pivot
+            $pivot = $user->cuentas()->wherePivot('cuenta_id', $cuenta['id'])->first();
+
+            if ($pivot) {
+                // Actualizar si existe
+                $user->cuentas()->updateExistingPivot($cuenta['id'], $pivotData);
+            } else {
+                // Adjuntar si no existe
+                $user->cuentas()->attach($cuenta['id'], $pivotData);
             }
-        }
-
+        } */
+        // Actualizar los datos del usuario
+        $user->avatar = $request->avatar;
         $user->usuario = $request->usuario;
         $user->nombre = $request->nombre;
         $user->apellidos = $request->apellidos;
         $user->sobre_mi = $request->sobre_mi;
         $user->email = $request->email;
-
-        $user->save();
-
+        // Guardar los cambios
+        //$user->save();
+        // Responder con un mensaje de éxito
         return response()->json([
-            'message' => 'Perfil actualizado correctamente'
+            'message' => 'Perfil actualizado correctamente',
+            'request' => $request->all()
         ]);
     }
-
 }
