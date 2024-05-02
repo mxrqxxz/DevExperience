@@ -88,13 +88,14 @@ class PerfilController extends Controller
                 'avatar.max' => 'El tamaño del avatar no debe ser mayor a 5 MB.',
             ]);
 
-            $path = $userRepoAvatar->store('imagenesEmpresas', ['disk' => 'public']);
+            $path = $userRepoAvatar->store('imagenesUsers', ['disk' => 'public']);
             $user['avatar'] = $path;
         } else {
             $user['avatar'] = $user->avatar;
         }
         // Actualizar las cuentas, recorriendo el array de cuentas
-     /*    foreach ($cuentas as $cuenta) {
+        $cuentas = json_decode($request->cuentas);
+         foreach ($cuentas as $cuenta) {
             $pivotData = ['url' => $cuenta['url']];
             $pivotWhere = ['cuenta_id' => $cuenta['id'], 'usuario_id' => $user->id];
 
@@ -108,9 +109,8 @@ class PerfilController extends Controller
                 // Adjuntar si no existe
                 $user->cuentas()->attach($cuenta['id'], $pivotData);
             }
-        } */
+        }
         // Actualizar los datos del usuario
-        $user->avatar = $request->avatar;
         $user->usuario = $request->usuario;
         $user->nombre = $request->nombre;
         $user->apellidos = $request->apellidos;
@@ -119,9 +119,16 @@ class PerfilController extends Controller
         // Guardar los cambios
         //$user->save();
         // Responder con un mensaje de éxito
+
+        $ejemplo = [
+            'id' => 1,
+            'url' => 'url_testing',
+        ];
         return response()->json([
             'message' => 'Perfil actualizado correctamente',
-            'request' => $request->all()
+            'request' => $request->all(),
+            'decode' => $cuentas,
+            'ejemplo' => json_encode($ejemplo)
         ]);
     }
 }
