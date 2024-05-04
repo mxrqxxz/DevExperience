@@ -34,8 +34,11 @@ Route::prefix('v1')->group(function () {
 
         });
 
+        Route::middleware(['auth:sanctum', ComprobarTipoUsuario::class . ':profesor'])->group(function () {
+            Route::post('createEmpresa', [EmpresaController::class, 'store']);
+        });
+
         Route::post('createComentarioReaccion', [ComentariosUsuariosController::class, 'store']);
-        Route::post('createEmpresa', [EmpresaController::class, 'store']);
         Route::post('createComentario', [ComentarioController::class, 'store']);
         Route::get('empresa/{id}', [EmpresaController::class, 'index']);
     });

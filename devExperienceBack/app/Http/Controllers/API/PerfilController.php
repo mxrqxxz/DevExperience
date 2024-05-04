@@ -96,7 +96,6 @@ class PerfilController extends Controller
         // Actualizar las cuentas, recorriendo el array de cuentas
         foreach ($cuentas as $cuenta) {
             $pivotData = ['url' => $cuenta['url']];
-            $pivotWhere = ['cuenta_id' => $cuenta['cuenta_id'], 'usuario_id' => $user->id];
 
             // Primero intenta obtener el registro pivot
             $pivot = $user->cuentas()->wherePivot('cuenta_id', $cuenta['cuenta_id'])->first();
@@ -117,16 +116,9 @@ class PerfilController extends Controller
         $user->email = $request->email;
         //Guardar los cambios
         $user->save();
-        // Responder con un mensaje de éxito
 
-        $ejemplo = [
-            'id' => 1,
-            'url' => 'url_testing',
-        ];
         return response()->json([
             'message' => 'Perfil actualizado correctamente',
-            'request' => $request->all(),
-            'cuentas' => $cuentas,
         ]);
     }
 }
