@@ -78,9 +78,9 @@ class PerfilController extends Controller
     {
         // Obtener el usuario autenticado
         $user = Auth::user();
-
+        $cuentas = json_decode($request->cuentas, true);
         // Validar el avatar
-        if ($userRepoAvatar = $request->file('avatar')) {
+        if ($request->file('avatar')) {
             $request->validate([
                 'avatar' => 'mimes:png,jpg,jpeg|max:5120', // Se permiten imagenes de hasta 5 MB
             ], [
@@ -88,27 +88,27 @@ class PerfilController extends Controller
                 'avatar.max' => 'El tamaño del avatar no debe ser mayor a 5 MB.',
             ]);
 
-            $path = $userRepoAvatar->store('imagenesEmpresas', ['disk' => 'public']);
-            $user['avatar'] = $path;
+            $path = $request->file('avatar')->store('imagenesPerfil', ['disk' => 'public']);
+            $user->avatar = $path;
         } else {
-            $user['avatar'] = $user->avatar;
+            $user->avatar = $user->avatar;
         }
         // Actualizar las cuentas, recorriendo el array de cuentas
-     /*    foreach ($cuentas as $cuenta) {
+        foreach ($cuentas as $cuenta) {
             $pivotData = ['url' => $cuenta['url']];
-            $pivotWhere = ['cuenta_id' => $cuenta['id'], 'usuario_id' => $user->id];
+            $pivotWhere = ['cuenta_id' => $cuenta['cuenta_id'], 'usuario_id' => $user->id];
 
             // Primero intenta obtener el registro pivot
-            $pivot = $user->cuentas()->wherePivot('cuenta_id', $cuenta['id'])->first();
+            $pivot = $user->cuentas()->wherePivot('cuenta_id', $cuenta['cuenta_id'])->first();
 
             if ($pivot) {
                 // Actualizar si existe
-                $user->cuentas()->updateExistingPivot($cuenta['id'], $pivotData);
+                $user->cuentas()->updateExistingPivot($cuenta['cuenta_id'], $pivotData);
             } else {
                 // Adjuntar si no existe
-                $user->cuentas()->attach($cuenta['id'], $pivotData);
+                $user->cuentas()->attach($cuenta['cuenta_id'], $pivotData);
             }
-        } */
+        }
         // Actualizar los datos del usuario
         $user->avatar = $request->avatar;
         $user->usuario = $request->usuario;
@@ -116,12 +116,13 @@ class PerfilController extends Controller
         $user->apellidos = $request->apellidos;
         $user->sobre_mi = $request->sobre_mi;
         $user->email = $request->email;
-        // Guardar los cambios
-        //$user->save();
+        //Guardar los cambios
+        $user->save();
         // Responder con un mensaje de éxito
         return response()->json([
             'message' => 'Perfil actualizado correctamente',
-            'request' => $request->all()
+            'request' => $request->all(),
+            'cuentas' => $cuentas,
         ]);
     }
 }
