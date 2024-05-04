@@ -110,7 +110,6 @@ class PerfilController extends Controller
             }
         }
         // Actualizar los datos del usuario
-        $user->avatar = $request->avatar;
         $user->usuario = $request->usuario;
         $user->nombre = $request->nombre;
         $user->apellidos = $request->apellidos;
@@ -119,6 +118,11 @@ class PerfilController extends Controller
         //Guardar los cambios
         $user->save();
         // Responder con un mensaje de éxito
+
+        $ejemplo = [
+            'id' => 1,
+            'url' => 'url_testing',
+        ];
         return response()->json([
             'message' => 'Perfil actualizado correctamente',
             'request' => $request->all(),
