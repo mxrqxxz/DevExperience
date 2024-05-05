@@ -4,6 +4,7 @@ use App\Http\Controllers\API\ComentarioController;
 use App\Http\Controllers\API\ComentariosUsuariosController;
 use App\Http\Controllers\API\EmpresaController;
 use App\Http\Controllers\API\EmpresasController;
+use App\Http\Controllers\API\EnviarCorreos;
 use App\Http\Controllers\API\EstadisticasController;
 use App\Http\Controllers\API\FormularioController;
 use Illuminate\Http\Request;
@@ -20,27 +21,29 @@ Route::prefix('v1')->group(function () {
 
     //Rutas accesibles sin autenticación
     Route::get('datosHome', [HomeController::class, 'index']);
-
     //Route::get('empresas', [EmpresasController::class, 'index']);
     Route::get('estadisticas', [EstadisticasController::class, 'estadisticas']);
 
     //Rutas accesibles solo con autenticación
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('createFormulario', [FormularioController::class, 'store']);
+
         Route::get('perfil', [PerfilController::class, 'datosPerfil']);
         Route::put('editarPerfil', [PerfilController::class, 'actualizarPerfil']);
-        //Middleware para comprobar el tipo de usuario(profesor/alumno)
-        Route::middleware(['auth:sanctum', ComprobarTipoUsuario::class . ':alumno'])->group(function () {
-
-        });
-
-        Route::middleware(['auth:sanctum', ComprobarTipoUsuario::class . ':profesor'])->group(function () {
-            Route::post('createEmpresa', [EmpresaController::class, 'store']);
-        });
-
         Route::post('createComentarioReaccion', [ComentariosUsuariosController::class, 'store']);
         Route::post('createComentario', [ComentarioController::class, 'store']);
         Route::get('empresa/{id}', [EmpresaController::class, 'index']);
+        Route::get('empresas', [EmpresasController::class, 'index']);
+
+        //Middleware para comprobar el tipo de usuario(alumno)
+        Route::middleware(['auth:sanctum', ComprobarTipoUsuario::class . ':alumno'])->group(function () {
+            Route::post('createFormulario', [FormularioController::class, 'store']);
+        });
+
+        //Middleware para comprobar el tipo de usuario(profesor)
+        Route::middleware(['auth:sanctum', ComprobarTipoUsuario::class . ':profesor'])->group(function () {
+            Route::post('createEmpresa', [EmpresaController::class, 'store']);
+            Route::post('enviarCorreos', [EnviarCorreos::class, 'enviarCorreos']);
+        });
     });
 
     // registra un nuevo usuario
