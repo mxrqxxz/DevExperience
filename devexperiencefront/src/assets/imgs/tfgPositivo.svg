@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="122.24388mm"
+   height="88.08567mm"
+   viewBox="0 0 122.24388 88.08567"
    version="1.1"
    id="svg1"
    inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
@@ -37,7 +37,8 @@
   <g
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-43.877999,-104.45717)">
     <g
        id="g3"
        style="fill:#181a20;fill-opacity:1"
@@ -48,23 +49,23 @@
          style="fill:#181a20;fill-opacity:1">
         <path
            id="rect1"
-           style="stroke-width:2.00044;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:2.00044"
            d="M 94.819031,96.775208 H 115.18097 V 189.11722 H 94.819031 Z" />
         <path
            id="rect1-4"
-           style="stroke-width:1.54386;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:1.54386"
            d="m 119.81903,134.11722 h 20.36194 v 55 h -20.36194 z" />
         <path
            id="rect1-4-2"
-           style="stroke-width:1.54386;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:1.54386"
            d="m 69.819031,134.11722 h 20.361936 v 55 H 69.819031 Z" />
         <path
            id="rect1-7"
-           style="stroke-width:0.816321;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:0.816321"
            d="m 144.819,173.74035 h 20.36168 v 15.37687 H 144.819 Z" />
         <path
            id="rect1-7-7"
-           style="stroke-width:0.81632;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:0.81632"
            d="m 44.819031,173.74035 h 20.361936 v 15.37687 H 44.819031 Z" />
       </g>
       <g
@@ -73,15 +74,15 @@
          style="fill:#181a20;fill-opacity:1">
         <path
            id="rect2"
-           style="stroke-width:4.10931;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:4.10931"
            d="m 42.880417,85.502518 h 30.99789 v 7.491157 h -30.99789 z" />
         <path
            id="rect2-0"
-           style="stroke-width:4.10931;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:4.10931"
            d="m 42.880417,166.09703 h 30.99789 v 7.49116 h -30.99789 z" />
         <path
            id="rect2-3"
-           style="stroke-width:6.92716;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:6.92716"
            transform="rotate(90)"
            d="m 85.502518,-50.371574 h 88.085672 v 7.491157 H 85.502518 Z" />
       </g>
@@ -91,15 +92,15 @@
          style="fill:#181a20;fill-opacity:1">
         <path
            id="rect2-5"
-           style="stroke-width:4.10931;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:4.10931"
            d="m 42.880417,85.502518 h 30.99789 v 7.491157 h -30.99789 z" />
         <path
            id="rect2-0-8"
-           style="stroke-width:4.10931;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:4.10931"
            d="m 42.880417,166.09703 h 30.99789 v 7.49116 h -30.99789 z" />
         <path
            id="rect2-3-9"
-           style="stroke-width:6.92716;fill:#181a20;fill-opacity:1"
+           style="fill:#181a20;fill-opacity:1;stroke-width:6.92716"
            transform="rotate(90)"
            d="m 85.502518,-50.371574 h 88.085672 v 7.491157 H 85.502518 Z" />
       </g>

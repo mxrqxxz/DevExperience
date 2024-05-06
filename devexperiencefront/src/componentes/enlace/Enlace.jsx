@@ -1,14 +1,15 @@
 import React from "react";
 import './enlace.css'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-export function Enlace(props) {
+function Enlace(props) {
+    const location = useLocation();
     return (
-        <div className="col-1 caja-logo">
-            <Link to={props.to}>
-                    {props.texto}
-            </Link>
-        </div>
+        <Link to={props.to} className={`enlaceNavbar ${location.pathname === props.to ? 'active' : ''}`}>
+            {props.texto}
+        </Link>
     )
 
 }
+
+export default Enlace;
