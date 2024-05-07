@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar } from '../../componentes/navbar/Navbar';
+import Navbar from '../../componentes/navbar/Navbar.jsx';
 
 function Empresas() {
     return (

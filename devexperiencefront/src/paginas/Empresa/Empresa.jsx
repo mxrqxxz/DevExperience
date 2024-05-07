@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import { Navbar } from '../../componentes/navbar/Navbar';
+import Navbar from '../../componentes/navbar/Navbar.jsx';
 
 
 function Empresa() {

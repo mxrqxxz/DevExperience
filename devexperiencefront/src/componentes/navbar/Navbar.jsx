@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './navbar.css'
 import { Logo } from "../logo/Logo";
 import Enlace from "../enlace/Enlace";
+import Tema from "../tema/Tema";
 
-export function Navbar() {
+function Navbar(props) {
 
+    /* useEffect(() => {
+        localStorage.setItem("darkmode", darkmode);
+        console.log(darkmode);
+    }, [darkmode]) */
     return (
         <nav className="navbar navbar-expand-sm">
             <div className="container-fluid">
@@ -19,9 +24,10 @@ export function Navbar() {
                     <Enlace to={'/estadisticas'} texto={'Estadisticas'}></Enlace>
                     <Enlace to={'/soporte'} texto={'Soporte'}></Enlace>
                 </div>
+                <Tema cambiarDarkmode={props.cambiarDarkmode} tema={props.infoGuardada.darkmode}></Tema>
             </div>
         </nav>
-
     );
-
 }
+
+export default Navbar;
