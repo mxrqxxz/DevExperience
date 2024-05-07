@@ -1,12 +1,12 @@
 .enlaceNavbar {
     text-decoration: none;
     color: black;
-    padding: 10px 20px 10px 20px;
+    padding: 10px 30px 10px 30px;
 }
 
 .enlaceNavbar.active {
     text-decoration: none;
     color: black;
     background-color: #149ECA;
-    padding: 10px 20px 10px 20px;
+    padding: 10px 30px 10px 30px;
 }

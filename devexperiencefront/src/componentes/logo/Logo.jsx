@@ -1,12 +1,14 @@
 import React from "react";
 import './logo.css'
-import logo from '../../assets/imgs/tfgPositivo.svg'
+import logoLigth from '../../assets/imgs/tfgPositivo.svg'
+import logoDark from '../../assets/imgs/tfgNegativo.svg'
 import { Link } from "react-router-dom";
 
-export function Logo() {
+export function Logo(props) {
+
     return (
         <Link to={'/'}>
-            <img className="logo" src={logo} alt="Logo DevExperience" />
+            <img className="logo" src={props.tema === true ? logoDark : logoLigth} alt="Logo DevExperience" />
         </Link>
     )
 
