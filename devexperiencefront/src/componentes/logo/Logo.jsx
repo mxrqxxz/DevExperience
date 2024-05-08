@@ -8,7 +8,7 @@ export function Logo(props) {
 
     return (
         <Link to={'/'}>
-            <img className="logo" src={props.tema === true ? logoDark : logoLigth} alt="Logo DevExperience" />
+            <img className="logo" src={props.tema ? logoDark : logoLigth} alt="Logo DevExperience" />
         </Link>
     )
 

@@ -1,18 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import './PerfilNavbar.css';  
 import Avatar from '../../assets/imgs/Avatar.svg';
-function PerfilNavbar() {
+import ColoresContext from "../../contextos/ColoresContext";
+
+function PerfilNavbar(props) {
+    // Estado para manejar la visibilidad del menú desplegable
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const colores = useContext(ColoresContext);
 
     // Simulación de datos del usuario
-    const user = {
-        name: 'Nombre del Usuario',
-        imageUrl: Avatar,  // Puedes cambiar esto por la URL real
+   
+    const user = null;
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
     };
+    
     return (
         <div className="perfil-navbar">
-            <img src={user.imageUrl} alt={user.name} className="user-image" />
+            <img src={user ? user.imageUrl : Avatar} alt={user ? user.name : "Default Avatar"} className="user-image" onClick={toggleMenu} />
+            
+            <svg className={`dropdown-arrow ${isMenuOpen ? 'open' : ''}`} width="10" height="10" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" onClick={toggleMenu}>
+                <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+            </svg>
+
+            <div className="dropdown-menu" style={{ display: isMenuOpen ? "block" : "none", borderRadius:'10px',textAlign:'center', backgroundColor:props.tema ? colores.Light.Fondos.principal : colores.Dark.Fondos.principal, color: props.tema ? colores.Light.Texto.principal : colores.Dark.Texto.principal}}>
+                {user ? (
+                    <>
+                        <div onClick={() => console.log('Ir al perfil')}>Perfil</div>
+                        <div onClick={() => console.log('Cerrar sesión')}>Cerrar sesión</div>
+                    </>
+                ) : (
+                    <>
+                        <div onClick={() => console.log('Logearse')}>Iniciar sesión</div>
+                        <div onClick={() => console.log('Registrarse')}>Registrarse</div>
+                    </>
+                )}
+            </div>
         </div>
     );
+    
 }
 
 export default PerfilNavbar;

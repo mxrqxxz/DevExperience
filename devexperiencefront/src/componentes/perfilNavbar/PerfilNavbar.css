@@ -1,4 +1,41 @@
+
+.perfil-navbar {
+  position: relative;
+  cursor: pointer;
+}
+
 .user-image {
-  width: 50px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  /* Asegúrate de que la imagen esté alineada a la derecha si no lo está ya */
   margin-left: 10px; 
+  margin-right: 5px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 150px;
+  top: 60px;
+  right: 0; /* Alinea el menú hacia la derecha de la imagen del perfil */
+  z-index: 100;
+}
+
+.dropdown-menu div {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.dropdown-menu div:last-child {
+  border-bottom: none;
+}
+.dropdown-arrow {
+  transition: transform 0.3s ease; /* Asegura una transición suave */
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg); /* Gira la flecha 180 grados */
 }
