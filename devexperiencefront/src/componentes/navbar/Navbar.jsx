@@ -37,7 +37,7 @@ function Navbar(props) {
     };
 
     return (
-        <nav className="navbar navbar-expand-md p-0">
+        <nav className="navbar navbar-expand-md p-0 sticky-top">
             <div className="container-fluid p-3" style={{ backgroundColor: colores[modoColor].Fondos.principal }}>
                 <button className="navbar-toggler" type="button"
                     onClick={toggleNavbar}

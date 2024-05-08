@@ -3,10 +3,13 @@
 }
 
 .seccionHomeTexto {
-    padding-top: 30px;
-    font-size: 1.5em;
+    padding-top: 20px;
+    font-size: clamp(14px, 1.5vw, 22px); 
 }
 
 .seccion {
-    padding-top: 50px;
+    padding: 50px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0px !important;
 }

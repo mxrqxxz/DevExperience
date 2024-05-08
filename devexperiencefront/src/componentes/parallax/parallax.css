@@ -1,0 +1,38 @@
+.parallax {
+    height: 100vh;
+    padding-top: 60vh;
+    padding-left: 80px;
+    padding-bottom: 80px;
+    background-image: url("../../assets/imgs/parallax.png");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    animation: cameraMove 15s linear infinite; /* Ajusta la duración según lo rápido que quieras que se mueva la 'cámara' */
+  }
+  @media (max-width: 768px) {
+    .parallax {
+      padding-top: 40vh;
+      padding-left: 20px;
+      padding-bottom: 20px;
+    }
+}
+@keyframes cameraMove {
+  0% {
+    background-position: top left;
+  }
+  50% {
+    background-position: bottom right;
+  }
+  100% {
+    background-position: top left;
+  }
+}
+  .parallax h1 {
+    color: #ffffff;
+    font-size: clamp(30px, 3vw, 50px);
+  }
+  .parallax p {
+    color: #ffffff;
+    font-size: clamp(30px, 2vw, 50px);
+  }

@@ -1,7 +1,7 @@
 /* navbar.css */
 
 .navbar {
-    position: relative; 
+    position: sticky; 
 }
 
 .navbar-collapse.collapsing,

@@ -5,10 +5,11 @@ import fotoSeccion1 from '../../assets/imgs/fotoHome.png';
 import fotoSeccion2 from '../../assets/imgs/fotoHome2.png';
 import fotoSeccion3 from '../../assets/imgs/fotoHome3.png';
 import fotoSeccion4 from '../../assets/imgs/fotoHome4.png';
-
+import Parallax from '../../componentes/parallax/Parallax.jsx';
 function Home(props) {
     return (
         <div>
+            <Parallax></Parallax>
             <Navbar infoGuardada={props.infoGuardada} cambiarDarkmode={props.cambiarDarkmode}></Navbar>
             <SeccionHome 
                 titulo="Descubre DevExperience: Tu aliado en el camino hacia las prácticas"
