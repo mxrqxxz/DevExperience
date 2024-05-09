@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from '../../componentes/navbar/Navbar.jsx';
 import SeccionHome from "../../componentes/seccionHome/SeccionHome.jsx";
 import fotoSeccion1 from '../../assets/imgs/fotoHome.png';
@@ -6,7 +6,17 @@ import fotoSeccion2 from '../../assets/imgs/fotoHome2.png';
 import fotoSeccion3 from '../../assets/imgs/fotoHome3.png';
 import fotoSeccion4 from '../../assets/imgs/fotoHome4.png';
 import Parallax from '../../componentes/parallax/Parallax.jsx';
+import useDatosTotales from "../../hooks/useDatosTotales.jsx";
+
 function Home(props) {
+
+    const {listaDatos} = useDatosTotales();
+
+    useEffect(() => {
+        console.log('CONSOLE LOG DATO FINAL');
+        console.log(listaDatos);
+    }, [listaDatos]);
+
     return (
         <div>
             <Parallax></Parallax>
@@ -27,6 +37,7 @@ function Home(props) {
                 fotoDerecha={false}
                 infoGuardada={props.infoGuardada}
                 fondo="principal"
+                boton={{enlace: "/estadisticas", contenido: "DESCUBRE MÁS"}}
             >
             </SeccionHome>
             <SeccionHome 
@@ -36,6 +47,7 @@ function Home(props) {
                 fotoDerecha={true}
                 infoGuardada={props.infoGuardada}
                 fondo="secundario"
+                boton={{enlace: "/empresas", contenido: "ENCUENTRA TU EMPRESA"}}
             >
             </SeccionHome>
             <SeccionHome 
@@ -45,6 +57,7 @@ function Home(props) {
                 fotoDerecha={false}
                 infoGuardada={props.infoGuardada}
                 fondo="principal"
+                boton={{enlace: "/soporte", contenido: "CONTÁCTANOS"}}
             >
             </SeccionHome>
         </div>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import './SeccionHome.css';
 import ColoresContext from "../../contextos/ColoresContext";
+import BotonEnlace from "../boton-enlace/BotonEnlace";
 
 
 function SeccionHome(props) {
@@ -27,6 +28,11 @@ function SeccionHome(props) {
             </div>
             <div className={`col-12 col-md-6 order-1 ${props.fotoDerecha ? 'order-md-1' : 'order-md-0'}`}>
                 <img className="seccionHomeFoto" src={props.foto} alt="Foto sección" />
+            </div>
+            <div className="col-12 order-2">
+                {props.boton && (
+                <BotonEnlace enlace={props.boton.enlace} contenido={props.boton.contenido} />
+                )}
             </div>
         </div>
     );

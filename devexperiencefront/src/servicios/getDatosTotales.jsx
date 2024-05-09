@@ -5,5 +5,7 @@ export async function getDatosTotales () {
         } else {
             console.log("Fallo en la respuesta del servidor");
         }
+    }).then((data) => {
+        return data;
     });
 }
