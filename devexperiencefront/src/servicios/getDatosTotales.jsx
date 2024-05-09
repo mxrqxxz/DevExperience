@@ -1,11 +1,11 @@
 export async function getDatosTotales () {
-    fetch('http://devexperience.test/api/v1/datosHome').then((response) => {
+    return fetch('http://devexperience.test/api/v1/datosHome').then((response) => {
         if (response.ok) {
             return response.json();
         } else {
-            console.log("Fallo en la respuesta del servidor");
+            throw new Error("Error al obtener los datos");
         }
-    }).then((data) => {
-        return data;
+    }).catch(error => {
+        console.error("Error al obtener los datos: ", error);
     });
 }

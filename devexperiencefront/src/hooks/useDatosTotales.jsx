@@ -10,8 +10,6 @@ const useDatosTotales = () => {
 
     function obtenerDatos() {
         getDatosTotales().then(datos => {
-            console.log('CONSOLE LOG HOOK');
-            console.log(datos);
             setListaDatos(datos);
         });
     }

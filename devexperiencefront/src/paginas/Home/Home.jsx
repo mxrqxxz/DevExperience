@@ -12,11 +12,6 @@ function Home(props) {
 
     const {listaDatos} = useDatosTotales();
 
-    useEffect(() => {
-        console.log('CONSOLE LOG DATO FINAL');
-        console.log(listaDatos);
-    }, [listaDatos]);
-
     return (
         <div>
             <Parallax></Parallax>
