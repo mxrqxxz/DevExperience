@@ -28,6 +28,18 @@
     background-position: top left;
   }
 }
+
+@media (max-width: 600px) {
+  .parallax {
+    animation: cameraMove 70s linear infinite; /* Más lento en pantallas pequeñas */
+  }
+}
+
+@media (max-width: 1300px) {
+  .parallax {
+    animation: cameraMove 40s linear infinite; /* Más lento en pantallas pequeñas */
+  }
+}
   .parallax h1 {
     color: #ffffff;
     font-size: clamp(30px, 3vw, 50px);

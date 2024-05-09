@@ -1,0 +1,5 @@
+.carousel-item img {
+    width: 100px;  /* Ajusta el ancho automáticamente */
+    height: 100px; /* Altura fija para todos los logos */
+    margin: auto; /* Centrar logos en el carrusel */
+}
