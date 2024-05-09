@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
+import ColoresContext from "../../contextos/ColoresContext";
 import Navbar from '../../componentes/navbar/Navbar.jsx';
 import SeccionHome from "../../componentes/seccionHome/SeccionHome.jsx";
 import fotoSeccion1 from '../../assets/imgs/fotoHome.png';
@@ -7,8 +8,26 @@ import fotoSeccion3 from '../../assets/imgs/fotoHome3.png';
 import fotoSeccion4 from '../../assets/imgs/fotoHome4.png';
 import Parallax from '../../componentes/parallax/Parallax.jsx';
 import useDatosTotales from "../../hooks/useDatosTotales.jsx";
+import CardHome from "../../componentes/cardHome/CardHome.jsx";
+import CardComentarios from '../../assets/imgs/cardComentarios.png';
+import CardUsuarios from '../../assets/imgs/cardUsuarios.png';
+import CardEmpresas from '../../assets/imgs/cardEmpresas.png';
 
 function Home(props) {
+
+    const colores = useContext(ColoresContext);
+
+    const [modoColor, setModoColor] = useState(props.infoGuardada.darkmode ? "Dark" : "Light");
+
+    useEffect(() => {
+        const updateColorMode = () => {
+            const newColorMode = props.infoGuardada.darkmode ? "Dark" : "Light";
+            setModoColor(newColorMode);
+            console.log('cambio de color');
+        };
+
+        updateColorMode();
+    }, [props.infoGuardada.darkmode]);
 
     const {listaDatos} = useDatosTotales();
 
@@ -55,6 +74,12 @@ function Home(props) {
                 boton={{enlace: "/soporte", contenido: "CONTÁCTANOS"}}
             >
             </SeccionHome>
+            <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.footer}} >
+                <h1 style={{ color: colores[modoColor].Texto.principal}} >USO ACTUAL DE LA APLICACIÓN</h1>
+                <CardHome foto={CardEmpresas} titulo="EMPRESAS" texto={listaDatos.datosTotales.empresas} />
+                <CardHome foto={CardUsuarios} titulo="USUARIOS" texto={listaDatos.datosTotales.usuarios} />
+                <CardHome foto={CardComentarios} titulo="RESEÑAS" texto={listaDatos.datosTotales.comentarios} />
+            </div>
         </div>
     );
 }

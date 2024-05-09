@@ -1,0 +1,22 @@
+.cardHome {
+    max-width: 50%;
+    border-radius: 20px;
+    background-color: white;
+    padding: 30px 0px;
+}
+
+.titleCardHome {
+    margin-top: 20px;
+    color: black;
+}
+
+.numberCardHome {
+    color: #149ECA;
+    font-weight: bolder;
+    font-size: 4em;
+}
+
+.imgCardHome {
+    max-width: 25%;
+    margin: 0 auto;
+}
