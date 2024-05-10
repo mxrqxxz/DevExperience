@@ -1,0 +1,13 @@
+.linea hr {
+    color: white;
+    background-color: white;
+    height: 3px;
+    border: 1px solid white;
+}
+
+.linea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}

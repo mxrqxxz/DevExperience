@@ -1,3 +1,5 @@
+
+
 .formularioSoporte input {
     display: block;
     width: 65%;
@@ -36,18 +38,11 @@
     margin-top: 20px;
 }
 
-.footer {
-    margin-top: 75px;
-}
-
 .pFooter {
     padding: 30px;
-    margin: auto;
+    text-align: center;
     font-weight: normal;
-}
-
-.pantalla {
-    min-height: 100vh;
+    margin: auto;
 }
 
 .centrar {
