@@ -78,10 +78,10 @@ function Home(props) {
                 >
                 </SeccionHome>
                 <div className=" row text-center" style={{ backgroundColor: colores[modoColor].Fondos.secundario }}>
-                    <div className="col-12">
-                        <h1 style={{ color: colores[modoColor].Titulos.principal }}>TECNOLOGÍAS MÁS UTILIZADAS</h1>
-                        <p style={{ color: colores[modoColor].Texto.principal }}>Accede a nuestras estadísticas y datos para tomar decisiones informadas y mejorar tu trayectoria profesional.</p>
-                        <CarouselHome></CarouselHome>
+                    <div className="col-12 caja-carousel">
+                        <h1 style={{ color: colores[modoColor].Titulos.principal, marginBottom:'20px' }}>TECNOLOGÍAS MÁS UTILIZADAS</h1>
+                        <p className="text-carousel" style={{ color: colores[modoColor].Texto.principal, marginBottom:'20px' }}>Accede a nuestras estadísticas y datos para tomar decisiones informadas y mejorar tu trayectoria profesional.</p>
+                        <CarouselHome porcentajes={listaDatos.porcentajeTecnologias} color={modoColor}></CarouselHome>
                     </div>
                 </div>
                 <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.footer }} >

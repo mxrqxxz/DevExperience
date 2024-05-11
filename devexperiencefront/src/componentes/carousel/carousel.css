@@ -3,3 +3,7 @@
     height: 100px; /* Altura fija para todos los logos */
     margin: auto; /* Centrar logos en el carrusel */
 }
+.img-carousel{
+    width: 200px;  /* Ajusta el ancho automáticamente */
+    min-height: 200px;
+}

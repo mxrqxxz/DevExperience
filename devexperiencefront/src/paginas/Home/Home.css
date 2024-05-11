@@ -11,3 +11,9 @@
     justify-content: center;
     height: 100%;
 }
+.text-carousel{
+    font-size: clamp(14px, 1.5vw, 22px); 
+}
+.caja-carousel{
+    padding: 30px 0px;
+}
