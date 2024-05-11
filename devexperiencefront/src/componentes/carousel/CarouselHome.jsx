@@ -48,7 +48,6 @@ const imagesMap = {
 export function CarouselHome(props) {
     const colores = useContext(ColoresContext);
     return (
-        <div className='row'>
             <Swiper
                 key={Object.keys(props.porcentajes).length}
                 modules={[FreeMode, Autoplay]}
@@ -78,7 +77,6 @@ export function CarouselHome(props) {
                 ))}
 
             </Swiper>
-        </div>
 
     );
 }

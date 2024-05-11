@@ -5,5 +5,6 @@
 }
 .img-carousel{
     width: 200px;  /* Ajusta el ancho automáticamente */
-    min-height: 200px;
+    height: 200px; /* Altura fija para todos los logos */
+    margin: auto; /* Centrar logos en el carrusel */
 }

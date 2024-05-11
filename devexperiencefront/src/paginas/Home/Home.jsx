@@ -45,6 +45,7 @@ function Home(props) {
                     fotoDerecha={true}
                     infoGuardada={props.infoGuardada}
                     fondo="secundario"
+                    aparicion="fade-right"
                 >
                 </SeccionHome>
                 <SeccionHome
@@ -55,6 +56,7 @@ function Home(props) {
                     infoGuardada={props.infoGuardada}
                     fondo="principal"
                     boton={{ enlace: "/estadisticas", contenido: "DESCUBRE MÁS" }}
+                    aparicion="fade-left"
                 >
                 </SeccionHome>
                 <SeccionHome
@@ -65,6 +67,7 @@ function Home(props) {
                     infoGuardada={props.infoGuardada}
                     fondo="secundario"
                     boton={{ enlace: "/empresas", contenido: "ENCUENTRA TU EMPRESA" }}
+                    aparicion="fade-right"
                 >
                 </SeccionHome>
                 <SeccionHome
@@ -75,6 +78,7 @@ function Home(props) {
                     infoGuardada={props.infoGuardada}
                     fondo="principal"
                     boton={{ enlace: "/soporte", contenido: "CONTÁCTANOS" }}
+                    aparicion="fade-left"
                 >
                 </SeccionHome>
                 <div className=" row text-center" style={{ backgroundColor: colores[modoColor].Fondos.secundario }}>

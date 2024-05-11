@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './App.css';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './paginas/Home/Home';
 import Perfil from './paginas/Perfil/Perfil';
@@ -12,6 +14,13 @@ import Soporte from './paginas/Soporte/Soporte';
 import Colores from './mocks/colores';
 import ColoresContext from './contextos/ColoresContext';
 function App() {
+
+  useEffect(() => {
+    AOS.init({
+      once: true,
+    });
+    
+  }, []);
 
   function recuperarUsuario() {
     return localStorage.getItem("user");
