@@ -1,5 +1,6 @@
-
-
+.contenido{
+   min-height: 100vh;
+}
 .formularioSoporte input {
     display: block;
     width: 65%;

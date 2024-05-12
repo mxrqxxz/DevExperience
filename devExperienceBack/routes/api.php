@@ -21,8 +21,8 @@ Route::prefix('v1')->group(function () {
 
     //Rutas accesibles sin autenticación
     Route::get('datosHome', [HomeController::class, 'index']);
-    //Route::get('empresas', [EmpresasController::class, 'index']);
     Route::get('estadisticas', [EstadisticasController::class, 'estadisticas']);
+    Route::post('enviarCorreoForm', [EnviarCorreos::class, 'enviarCorreoForm']);
 
     //Rutas accesibles solo con autenticación
     Route::middleware('auth:sanctum')->group(function () {
@@ -44,6 +44,7 @@ Route::prefix('v1')->group(function () {
             Route::post('createEmpresa', [EmpresaController::class, 'store']);
             Route::post('enviarCorreos', [EnviarCorreos::class, 'enviarCorreos']);
         });
+
     });
 
     // registra un nuevo usuario

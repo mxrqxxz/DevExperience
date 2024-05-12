@@ -38,7 +38,7 @@ class HomeController extends Controller
 
         //Calculamos el porcentaje de uso de cada tecnología
         $porcentajeTecnologias = $tecnologiasFormularios->groupBy('tecnologia_id')->map(function ($item) use ($totalUsuarios) {
-            return $item->count() / $totalUsuarios * 100;
+            return floor($item->count() / $totalUsuarios * 100);
         });
 
         //Obtenemos el nombre de las tecnologías ya que solo tenemos el id

@@ -13,12 +13,12 @@ import Laravel from '../../assets/imgs/tecnologias/Laravel.svg';
 import Git from '../../assets/imgs/tecnologias/icons8-git.svg';
 import SVN from '../../assets/imgs/tecnologias/subversion.svg';
 import Mercurial from '../../assets/imgs/tecnologias/Mercurial_logo_cropped.svg';
-import Perforce from '../../assets/imgs/tecnologias/perforce.jpeg';
+import Perforce from '../../assets/imgs/tecnologias/perforce-icon.svg';
 import MySQL from '../../assets/imgs/tecnologias/mysql.svg';
 import PostgreSQL from '../../assets/imgs/tecnologias/postgresql-logo.svg';
 import SQLite from '../../assets/imgs/tecnologias/icons8-sqlite.svg';
 import MongoDB from '../../assets/imgs/tecnologias/icons8-mongodb.svg';
-import Cassandra from '../../assets/imgs/tecnologias/cassandra.png';
+import Cassandra from '../../assets/imgs/tecnologias/apache_cassandra-icon.svg';
 import 'swiper/css';
 import './carousel.css'
 import ColoresContext from '../../contextos/ColoresContext';

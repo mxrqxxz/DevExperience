@@ -26,7 +26,7 @@ function Soporte(props) {
         <>
             <Navbar infoGuardada={props.infoGuardada} cambiarDarkmode={props.cambiarDarkmode}></Navbar>
             <div className="container-fluid p-0">
-                <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.secundario }}>
+                <div className="row contenido" style={{ backgroundColor: colores[modoColor].Fondos.secundario }}>
                     <div className="col-12 col-md-6">
                         <div className="mitad text-center">
                             <img src={fotoSoporte} className="centrado fotoSoporte" alt="Foto asistente técnico" />
@@ -36,7 +36,7 @@ function Soporte(props) {
                     </div>
                     <div className="col-12 col-md-6">
                         <div className="formularioSoporte mitad">
-                            <form action="mailto:devexperiencecarlosiii@gmail.com" method="post" enctype="text/plain">
+                            <form action="mailto:devexperiencecarlosiii@gmail.com" method="post" encType="text/plain">
                                 <input type="text" id="nombre" name="nombre" required placeholder="Nombre" />
                                 <input type="email" id="email" name="email" required placeholder="Email" />
                                 <textarea id="mensaje" name="mensaje" rows={10} required placeholder="Deja tu mensaje"></textarea>
