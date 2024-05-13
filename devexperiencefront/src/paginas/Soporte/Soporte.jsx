@@ -58,6 +58,7 @@ function Soporte(props) {
                         <div className="mitad text-center">
                             <img src={fotoSoporte} className="centrado fotoSoporte" alt="Foto asistente técnico" />
                             <p style={{ color: colores[modoColor].Texto.principal }} className="centrado" >¡Hola! Para ponerte en contacto con nosotros, rellena este formulario o mándanos un email a admin@devexperience.com.</p>
+                            <br />
                             <p style={{ color: colores[modoColor].Texto.principal }} className="centrado" >Te responderemos en la mayor brevedad posible. &#128515;</p>
                         </div>
                     </div>

@@ -1,6 +1,11 @@
 .contenido{
-   min-height: 100vh;
+   min-height: 81vh;
 }
+
+.formularioSoporte {
+    margin-bottom: 20px;
+}
+
 .formularioSoporte input {
     display: block;
     width: 65%;
@@ -31,6 +36,11 @@
 
 .mitad {
     margin-top: 50px;
+}
+
+.mitad p {
+    margin: auto;
+    max-width: 80%;
 }
 
 .divBoton {
