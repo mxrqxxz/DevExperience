@@ -4,6 +4,7 @@ import Boton from "../../componentes/boton/Boton.jsx";
 import fotoSoporte from '../../assets/imgs/soporte.png';
 import './Soporte.css';
 import ColoresContext from "../../contextos/ColoresContext";
+import { sendSoporteForm } from "../../servicios/sendSoporteForm.jsx";
 
 
 function Soporte(props) {
@@ -22,6 +23,32 @@ function Soporte(props) {
         updateColorMode();
     }, [props.infoGuardada.darkmode]);
 
+    const [formulario, setFormulario] = useState({
+        nombre: "",
+        email: "",
+        mensaje: ""
+    });
+
+    const asignarValores = async (event) => {
+        event.preventDefault();
+
+        setFormulario({
+            nombre: event.target.nombre.value,
+            email: event.target.email.value,
+            mensaje: event.target.mensaje.value
+        })
+
+        enviarSoporteForm();
+    };
+
+    const enviarSoporteForm = async () => {
+        try {
+            await sendSoporteForm(formulario);
+        } catch (error) {
+            console.error("Error al enviar el formulario: ", error);
+        }
+    };
+
     return (
         <>
             <Navbar infoGuardada={props.infoGuardada} cambiarDarkmode={props.cambiarDarkmode}></Navbar>
@@ -36,7 +63,7 @@ function Soporte(props) {
                     </div>
                     <div className="col-12 col-md-6">
                         <div className="formularioSoporte mitad">
-                            <form action="mailto:devexperiencecarlosiii@gmail.com" method="post" encType="text/plain">
+                            <form onSubmit={asignarValores} method="post" encType="text/plain">
                                 <input type="text" id="nombre" name="nombre" required placeholder="Nombre" />
                                 <input type="email" id="email" name="email" required placeholder="Email" />
                                 <textarea id="mensaje" name="mensaje" rows={10} required placeholder="Deja tu mensaje"></textarea>
