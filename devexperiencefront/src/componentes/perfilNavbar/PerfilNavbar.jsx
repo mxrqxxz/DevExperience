@@ -1,4 +1,4 @@
-import React, { useState,useContext } from 'react';
+import React, { useState,useContext, useEffect } from 'react';
 import './PerfilNavbar.css';  
 import Avatar from '../../assets/imgs/Avatar.svg';
 import ColoresContext from "../../contextos/ColoresContext";
@@ -15,12 +15,23 @@ function PerfilNavbar(props) {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    const [modoColor, setModoColor] = useState(props.tema ? "Dark" : "Light");
+
+    useEffect(() => {
+        const updateColorMode = () => {
+            const newColorMode = props.tema ? "Dark" : "Light";
+            setModoColor(newColorMode);
+        };
+
+        updateColorMode();
+    }, [props.tema]);
     
     return (
         <div className="perfil-navbar">
             <img src={user ? user.imageUrl : Avatar} alt={user ? user.name : "Default Avatar"} className="user-image" onClick={toggleMenu} />
             
-            <svg className={`dropdown-arrow ${isMenuOpen ? 'open' : ''}`} width="10" height="10" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" onClick={toggleMenu}>
+            <svg className={`dropdown-arrow ${isMenuOpen ? 'open' : ''}`} width="10" height="10" viewBox="0 0 16 16" fill={colores[modoColor].Flecha} xmlns="http://www.w3.org/2000/svg" onClick={toggleMenu}>
                 <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
             </svg>
 

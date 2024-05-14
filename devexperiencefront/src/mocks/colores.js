@@ -14,7 +14,8 @@ const Colores = {
         Titulos: {
             principal: "#149ECA",
         },
-        Accent: "#149ECA"  
+        Accent: "#149ECA",
+        Flecha: "white"  
     },
     Light: {
         Fondos: {
@@ -30,7 +31,8 @@ const Colores = {
         Titulos: {
             principal: "#149ECA",  
         },
-        Accent: "#149ECA"  
+        Accent: "#149ECA",
+        Flecha: "black"  
     }
 }
 
