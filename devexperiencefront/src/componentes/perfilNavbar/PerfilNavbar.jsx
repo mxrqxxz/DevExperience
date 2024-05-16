@@ -2,6 +2,7 @@ import React, { useState,useContext, useEffect } from 'react';
 import './PerfilNavbar.css';  
 import Avatar from '../../assets/imgs/Avatar.svg';
 import ColoresContext from "../../contextos/ColoresContext";
+import { Link } from 'react-router-dom';
 
 function PerfilNavbar(props) {
     // Estado para manejar la visibilidad del menú desplegable
@@ -43,7 +44,7 @@ function PerfilNavbar(props) {
                     </>
                 ) : (
                     <>
-                        <div onClick={() => console.log('Logearse')}>Iniciar sesión</div>
+                        <div onClick={() => console.log('Logearse')}><Link className='enlaceNav' to="/login">Iniciar sesión</Link></div>
                         <div onClick={() => console.log('Registrarse')}>Registrarse</div>
                     </>
                 )}

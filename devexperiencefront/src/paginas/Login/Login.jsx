@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../contextos/AuthContext'; // Importar el hook de autenticación si lo estás usando.
 
 const Login = () => {
     const [email, setEmail] = useState('');

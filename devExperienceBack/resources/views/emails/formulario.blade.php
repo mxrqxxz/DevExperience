@@ -36,6 +36,7 @@
         <h1 class="email-header">Nuevo Mensaje de Contacto</h1>
         <div class="email-body">
             <p><strong>Nombre:</strong> {{ $nombre }}</p>
+            <p><strong>Email:</strong> {{ $email }}</p>
             <p><strong>Mensaje:</strong></p>
             <p>{{ $mensaje }}</p>
         </div>

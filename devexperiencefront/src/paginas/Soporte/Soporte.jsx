@@ -23,24 +23,48 @@ function Soporte(props) {
         updateColorMode();
     }, [props.infoGuardada.darkmode]);
 
-    const [formulario, setFormulario] = useState({
-        nombre: "",
-        email: "",
-        mensaje: ""
-    });
+    // LOGICA FORMULARIO
 
+    const formularioInicial = {
+        nombre: "Sin definir",
+        email: "Sin definir",
+        mensaje: "Sin definir",
+        disponible: false
+    }
+
+    const [formulario, setFormulario] = useState(formularioInicial);
+
+
+    // Al hacer click en enviar, se asignan los valores del formulario
     const asignarValores = async (event) => {
         event.preventDefault();
 
         setFormulario({
             nombre: event.target.nombre.value,
             email: event.target.email.value,
-            mensaje: event.target.mensaje.value
-        })
-
-        enviarSoporteForm();
+            mensaje: event.target.mensaje.value,
+            disponible: true
+        });
     };
 
+    // Al asignar valores del formulario, se envía el formulario y se resetea
+    useEffect(() => {
+        enviarSoporteForm()
+        setFormulario(formularioInicial);
+        vaciarFormulario();
+    }, [formulario.disponible === true]);
+
+    // Reseteo del formulario
+    function vaciarFormulario() {
+        const campoNombre = document.getElementById("nombre");
+        const campoEmail = document.getElementById("email");
+        const campoMensaje = document.getElementById("mensaje");
+        campoNombre.value = "";
+        campoEmail.value = "";
+        campoMensaje.value = "";
+    }
+
+    // Envío del formulario
     const enviarSoporteForm = async () => {
         try {
             await sendSoporteForm(formulario);

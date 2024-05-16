@@ -13,8 +13,7 @@ import Empresa from './paginas/Empresa/Empresa';
 import Soporte from './paginas/Soporte/Soporte';
 import Colores from './mocks/colores';
 import ColoresContext from './contextos/ColoresContext';
-import { AuthProvider, useAuth } from './contextos/AuthContext';
-import Login from './componentes/login/Login';
+import Login from './paginas/Login/Login';
 
 function App() {
 
@@ -43,9 +42,7 @@ function App() {
 
   const usuarioInicial = recuperarUsuario();
   const darkmodeInicial = recuperarDarkmode();
-  const PrivateRoute = ({ element: Component, ...rest }) => {
-    const { authToken } = useAuth();
-  }
+
   const [infoGuardada, setInfoGuardada] = useState({
     usuario: usuarioInicial,
     darkmode: darkmodeInicial
@@ -58,7 +55,6 @@ function App() {
 
 
   return (
-    <AuthProvider>
       <ColoresContext.Provider value={Colores}>
         <div className='container-fluid p-0'>
           <Routes>
@@ -72,7 +68,6 @@ function App() {
           </Routes>
         </div>
       </ColoresContext.Provider>
-    </AuthProvider>
   )
 }
 

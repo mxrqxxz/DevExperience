@@ -39,3 +39,7 @@
 .dropdown-arrow.open {
   transform: rotate(180deg); /* Gira la flecha 180 grados */
 }
+
+.enlaceNav {
+  text-decoration: none;
+}
