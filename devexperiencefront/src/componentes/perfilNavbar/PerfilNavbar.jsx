@@ -19,10 +19,13 @@ function PerfilNavbar(props) {
 
     const [modoColor, setModoColor] = useState(props.tema ? "Dark" : "Light");
 
+    const [colorEnlacePerfil, setColorEnlacePerfil] = useState(props.tema ? "black" : "white");
+
     useEffect(() => {
         const updateColorMode = () => {
             const newColorMode = props.tema ? "Dark" : "Light";
             setModoColor(newColorMode);
+            setColorEnlacePerfil(props.tema ? "black" : "white");
         };
 
         updateColorMode();
@@ -44,7 +47,7 @@ function PerfilNavbar(props) {
                     </>
                 ) : (
                     <>
-                        <div onClick={() => console.log('Logearse')}><Link className='enlaceNav' to="/login">Iniciar sesión</Link></div>
+                        <div onClick={() => console.log('Logearse')}><Link className='enlaceNav' to="/login" style={{color: colorEnlacePerfil}}>Iniciar sesión</Link></div>
                         <div onClick={() => console.log('Registrarse')}>Registrarse</div>
                     </>
                 )}

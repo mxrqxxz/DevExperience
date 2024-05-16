@@ -38,7 +38,6 @@ function Soporte(props) {
     // Al hacer click en enviar, se asignan los valores del formulario
     const asignarValores = async (event) => {
         event.preventDefault();
-
         setFormulario({
             nombre: event.target.nombre.value,
             email: event.target.email.value,
