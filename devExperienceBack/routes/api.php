@@ -53,4 +53,6 @@ Route::prefix('v1')->group(function () {
     Route::post('login', [TokenController::class, 'login']);
     // elimina el token del usuario autenticado
     Route::delete('logout', [TokenController::class, 'destroy'])->middleware('auth:sanctum');
+    // Manda el token CSRF
+    Route::get('csrf-token', [TokenController::class, 'getCsrfToken']);
 });

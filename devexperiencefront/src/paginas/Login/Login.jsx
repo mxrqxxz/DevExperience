@@ -1,33 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { sendLoginDetails } from '../../servicios/sendLoginDetails';
 
-function Login () {
+function Login (props) {
 
-    const [csrfToken, setCsrfToken] = useState('');
-
-    const usuarioInicial = {
+    const loginDetailsInitial = {
         email: 'Sin definir',
         password: 'Sin definir',
         disponible: false
     }
 
-    const [usuario, setUsuario] = useState(usuarioInicial);
+    const [loginDetails, setloginDetails] = useState(loginDetailsInitial);
 
     // Al hacer click en login, se asignan los valores del formulario
     const asignarValores = async (event) => {
         event.preventDefault();
-        setUsuario({
+        setloginDetails({
             email: event.target.email.value,
             password: event.target.password.value,
             disponible: true
         });
     };
 
-    // Al asignar valores del usuario, se envía el formulario y se resetea
+    // Al asignar valores del loginDetails, se envía el formulario y se resetea
     useEffect(() => {
-        enviarLogin()
-        setUsuario(usuarioInicial);
+        enviarLogin();
+        setloginDetails(loginDetailsInitial);
         vaciarFormulario();
-    }, [usuario.disponible === true]);
+    }, [loginDetails.disponible === true]);
 
     // Reseteo del formulario
     function vaciarFormulario() {
@@ -40,71 +39,26 @@ function Login () {
     // Envío del formulario
     const enviarLogin = async () => {
         try {
-            await loguear(usuario);
+            await sendLoginDetails(loginDetails).then((token) => {
+                const newUser = {
+                    token: token,
+                    foto: "Sin definir"
+                }
+                pasarDatosApp(newUser);
+            });
         } catch (error) {
             console.error("Error al enviar el login: ", error);
         }
     };
 
-    /* export async function sendSoporteForm (props) {
-        return fetch('http://devexperience.test/api/v1/enviarCorreoForm', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                nombre: props.nombre,
-                email: props.email,
-                mensaje: props.mensaje
-            }),
-        })
-    } */
-    
-
-    async function loguear (usuario) {
-        try {
-            console.log(csrfToken);
-            const response = await fetch('http://devexperience.test/api/v1/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                body: JSON.stringify({
-                    email: usuario.email,
-                    password: usuario.password
-                })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                //login(data.token); // Guarda el token usando el contexto
-                console.log(data);
-            } else {
-                throw new Error(data.message || 'Error al hacer login');
-            } 
-        } catch (error) {
-            console.error('Error de Login:', error);
-        }
-    };
-
-    // Obtener el token CSRF cuando el componente se monta
-    useEffect(() => {
-        // En tu componente React, al cargar el componente o antes de hacer la solicitud POST
-        fetch('http://devexperience.test/api/v1/csrf-token', {
-            method: 'GET',
-            credentials: 'include'
-        })
-            .then(response => response.json())
-            .then(data => {
-                setCsrfToken(data.csrfToken)
-            });
-
-    }, []);
+    function pasarDatosApp(newUser) {
+        props.cambiarUsuario(newUser);
+    }
 
     return (
         <form onSubmit={asignarValores}>
             <div>
-                <label>Usuario</label>
+                <label>loginDetails</label>
                 <input type="email" id='email' />
             </div>
             <div>

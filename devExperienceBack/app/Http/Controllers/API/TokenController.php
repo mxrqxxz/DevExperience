@@ -101,4 +101,11 @@ class TokenController extends Controller
             'message' => 'Token deleted'
         ]);
     }
+
+    public function getCsrfToken()
+    {
+        return response()->json([
+            'csrf_token' => csrf_token()
+        ]);
+    }
 }

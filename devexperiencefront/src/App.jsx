@@ -25,7 +25,16 @@ function App() {
   }, []);
 
   function recuperarUsuario() {
-    return localStorage.getItem("user");
+    const usuarioRecuperado = localStorage.getItem("user");
+
+    if (usuarioRecuperado === null || usuarioRecuperado === "") {
+      const usuarioInicial = {
+        token: "Sin definir",
+        foto: "Sin definir",
+      }
+      localStorage.setItem("user", JSON.stringify(usuarioInicial));
+      return usuarioInicial;
+    }
   }
 
   function recuperarDarkmode() {
@@ -53,6 +62,16 @@ function App() {
     setInfoGuardada({ ...infoGuardada, darkmode: !infoGuardada.darkmode });
   }
 
+  function cambiarUsuario(usuarioNuevo) {
+    localStorage.setItem("user", JSON.stringify(usuarioNuevo));
+    setInfoGuardada({ ...infoGuardada, usuario: usuarioNuevo });
+    console.log(usuarioNuevo);
+  }
+
+  useEffect(() => {
+    console.log(infoGuardada);
+  }, [infoGuardada]);
+
 
   return (
       <ColoresContext.Provider value={Colores}>
@@ -64,7 +83,7 @@ function App() {
             <Route path="/empresas" element={<Empresas infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Empresas>}> </Route>
             <Route path="/empresa/:nombre" element={<Empresa infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Empresa>}> </Route>
             <Route path="/soporte" element={<Soporte infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Soporte>}> </Route>
-            <Route path="/login" element={<Login></Login>} />
+            <Route path="/login" element={<Login cambiarUsuario={cambiarUsuario}></Login>} />
           </Routes>
         </div>
       </ColoresContext.Provider>
