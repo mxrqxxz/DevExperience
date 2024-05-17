@@ -13,7 +13,7 @@ import Empresa from './paginas/Empresa/Empresa';
 import Soporte from './paginas/Soporte/Soporte';
 import Colores from './mocks/colores';
 import ColoresContext from './contextos/ColoresContext';
-import Login from './paginas/Login/Login';
+import { UserProvider } from './contextos/UserContext';
 
 function App() {
 
@@ -24,22 +24,9 @@ function App() {
 
   }, []);
 
-  function recuperarUsuario() {
-    const usuarioRecuperado = localStorage.getItem("user");
-
-    if (usuarioRecuperado === null || usuarioRecuperado === "") {
-      const usuarioInicial = {
-        token: "Sin definir",
-        foto: "Sin definir",
-      }
-      localStorage.setItem("user", JSON.stringify(usuarioInicial));
-      return usuarioInicial;
-    }
-  }
 
   function recuperarDarkmode() {
     const darkmodeValue = localStorage.getItem("darkmode");
-    const colores = useContext(Colores);
 
     if (darkmodeValue === null) {
       localStorage.setItem("darkmode", "false");
@@ -49,11 +36,9 @@ function App() {
     return darkmodeValue === "true";
   }
 
-  const usuarioInicial = recuperarUsuario();
   const darkmodeInicial = recuperarDarkmode();
 
   const [infoGuardada, setInfoGuardada] = useState({
-    usuario: usuarioInicial,
     darkmode: darkmodeInicial
   });
 
@@ -62,18 +47,8 @@ function App() {
     setInfoGuardada({ ...infoGuardada, darkmode: !infoGuardada.darkmode });
   }
 
-  function cambiarUsuario(usuarioNuevo) {
-    localStorage.setItem("user", JSON.stringify(usuarioNuevo));
-    setInfoGuardada({ ...infoGuardada, usuario: usuarioNuevo });
-    console.log(usuarioNuevo);
-  }
-
-  useEffect(() => {
-    console.log(infoGuardada);
-  }, [infoGuardada]);
-
-
   return (
+    <UserProvider>
       <ColoresContext.Provider value={Colores}>
         <div className='container-fluid p-0'>
           <Routes>
@@ -83,10 +58,10 @@ function App() {
             <Route path="/empresas" element={<Empresas infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Empresas>}> </Route>
             <Route path="/empresa/:nombre" element={<Empresa infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Empresa>}> </Route>
             <Route path="/soporte" element={<Soporte infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Soporte>}> </Route>
-            <Route path="/login" element={<Login cambiarUsuario={cambiarUsuario}></Login>} />
           </Routes>
         </div>
       </ColoresContext.Provider>
+    </UserProvider>
   )
 }
 

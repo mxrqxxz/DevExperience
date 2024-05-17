@@ -1,0 +1,20 @@
+.my-modal-header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* Para permitir que los estilos en línea tomen prioridad */
+    padding: 1rem; /* Ajusta según sea necesario */
+    border-bottom: none; /* Quitar el borde inferior */
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%; /* Para que el contenido ocupe todo el ancho disponible */
+}
+body.modal-open {
+    padding-right: 0 !important;
+}
