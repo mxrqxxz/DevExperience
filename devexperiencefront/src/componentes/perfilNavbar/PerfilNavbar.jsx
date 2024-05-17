@@ -3,14 +3,22 @@ import './PerfilNavbar.css';
 import Avatar from '../../assets/imgs/Avatar.svg';
 import ColoresContext from "../../contextos/ColoresContext";
 import { Link } from 'react-router-dom';
-
+import Login from '../../paginas/Login/Login';
 function PerfilNavbar(props) {
     // Estado para manejar la visibilidad del menú desplegable
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
+
     const colores = useContext(ColoresContext);
 
     // Simulación de datos del usuario
-   
+    const handleLoginClick = () => {
+        setShowLoginModal(true);
+    };
+
+    const handleLoginClose = () => {
+        setShowLoginModal(false);
+    };
     const user = null;
 
     const toggleMenu = () => {
@@ -47,11 +55,13 @@ function PerfilNavbar(props) {
                     </>
                 ) : (
                     <>
-                        <div onClick={() => console.log('Logearse')}><Link className='enlaceNav' to="/login" style={{color: colorEnlacePerfil}}>Iniciar sesión</Link></div>
+                        <div onClick={handleLoginClick} ><Link className='enlaceNav' to="/login" style={{color: colorEnlacePerfil}}>Iniciar sesión</Link></div>
                         <div onClick={() => console.log('Registrarse')}>Registrarse</div>
                     </>
                 )}
             </div>
+            <Login show={showLoginModal} handleClose={handleLoginClose} cambiarUsuario={props.cambiarUsuario} />
+
         </div>
     );
     

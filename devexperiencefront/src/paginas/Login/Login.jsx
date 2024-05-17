@@ -1,73 +1,72 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { sendLoginDetails } from '../../servicios/sendLoginDetails';
+import { Modal, Button } from 'react-bootstrap';
 
-function Login (props) {
+function Login(props) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    const loginDetailsInitial = {
-        email: 'Sin definir',
-        password: 'Sin definir',
-        disponible: false
-    }
-
-    const [loginDetails, setloginDetails] = useState(loginDetailsInitial);
-
-    // Al hacer click en login, se asignan los valores del formulario
-    const asignarValores = async (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault();
-        setloginDetails({
-            email: event.target.email.value,
-            password: event.target.password.value,
-            disponible: true
-        });
-    };
+        setLoading(true);
+        setError(null);
 
-    // Al asignar valores del loginDetails, se envía el formulario y se resetea
-    useEffect(() => {
-        enviarLogin();
-        setloginDetails(loginDetailsInitial);
-        vaciarFormulario();
-    }, [loginDetails.disponible === true]);
-
-    // Reseteo del formulario
-    function vaciarFormulario() {
-        const campoEmail = document.getElementById("email");
-        const campoPass = document.getElementById("password");
-        campoEmail.value = "";
-        campoPass.value = "";
-    }
-
-    // Envío del formulario
-    const enviarLogin = async () => {
         try {
-            await sendLoginDetails(loginDetails).then((token) => {
-                const newUser = {
-                    token: token,
-                    foto: "Sin definir"
-                }
-                pasarDatosApp(newUser);
-            });
+            const loginDetails = { email, password };
+            const token = await sendLoginDetails(loginDetails);
+            const newUser = {
+                token: token,
+                foto: "Sin definir"
+            };
+            props.cambiarUsuario(newUser);
+            setEmail('');
+            setPassword('');
+            handleClose(); 
         } catch (error) {
+            setError('Error al enviar el login');
             console.error("Error al enviar el login: ", error);
+        } finally {
+            setLoading(false);
         }
     };
 
-    function pasarDatosApp(newUser) {
-        props.cambiarUsuario(newUser);
-    }
-
     return (
-        <form onSubmit={asignarValores}>
-            <div>
-                <label>loginDetails</label>
-                <input type="email" id='email' />
-            </div>
-            <div>
-                <label>Contraseña</label>
-                <input type="password" id='password' />
-            </div>
-            <button type="submit">Login</button>
-        </form>
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Iniciar Sesión</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <form onSubmit={handleLogin}>
+                    <div className="mb-3">
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label>Contraseña</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    <Button type="submit" disabled={loading}>
+                        {loading ? 'Cargando...' : 'Login'}
+                    </Button>
+                </form>
+            </Modal.Body>
+        </Modal>
     );
-};
+}
 
 export default Login;
