@@ -1,0 +1,16 @@
+.datosPerfil{
+    margin: 50px 20%;
+}
+.datosPerfil img {
+    min-width:150px;
+    width: 25%; 
+    max-width: 250px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin: 10px 0; 
+}
+@media (max-width: 768px) {
+    .datosPerfil{
+        margin: 50px 5%;
+    }
+}
