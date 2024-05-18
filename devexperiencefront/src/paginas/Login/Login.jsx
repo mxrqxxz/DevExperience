@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { sendLoginDetails } from '../../servicios/sendLoginDetails';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import ColoresContext from "../../contextos/ColoresContext";
 import './Login.css';
 import { Logo } from '../../componentes/logo/Logo';
@@ -44,7 +44,7 @@ function Login(props) {
 
     return (
         <Modal show={props.show} onHide={props.handleClose} body={false} >
-            <Modal.Header className="my-modal-header" closeButton style={{ backgroundColor: colores[props.modoColor].Fondos.principal, color: colores[props.modoColor].Texto.principal, border: '0px' }}>
+            <Modal.Header className="my-modal-header" closeButton style={{ backgroundColor: colores[props.modoColor].Fondos.principal, color: colores[props.modoColor].Texto.principal, border: '0px', borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}>
                 <div className="header-content">
                     <Logo tema={props.modoColor == 'Dark' ? true : false} />
                 </div>
@@ -52,7 +52,7 @@ function Login(props) {
             <div className="header-content">
                 <h2 style={{ backgroundColor: colores[props.modoColor].Fondos.principal, color: colores[props.modoColor].Texto.principal, marginBottom: '0px' }}>¡Bienvenido de nuevo a DevExperience!</h2>
             </div>
-            <Modal.Body style={{ backgroundColor: colores[props.modoColor].Fondos.principal, color: colores[props.modoColor].Texto.principal }}>
+            <Modal.Body style={{ backgroundColor: colores[props.modoColor].Fondos.principal, color: colores[props.modoColor].Texto.principal, borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
                 <form onSubmit={handleLogin}>
                     <div className="mb-3">
                         <label>Email</label>

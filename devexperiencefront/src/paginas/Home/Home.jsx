@@ -31,12 +31,13 @@ function Home(props) {
         updateColorMode();
     }, [props.infoGuardada.darkmode]);
 
+
     const { listaDatos } = useDatosTotales();
 
     return (
         <div>
             <Parallax></Parallax>
-            <Navbar infoGuardada={props.infoGuardada} cambiarDarkmode={props.cambiarDarkmode}></Navbar>
+            <Navbar infoGuardada={props.infoGuardada} cambiarDarkmode={props.cambiarDarkmode} ></Navbar>
             <div className="container-fluid">
                 <SeccionHome
                     titulo="Descubre DevExperience: Tu aliado en el camino hacia las prácticas"

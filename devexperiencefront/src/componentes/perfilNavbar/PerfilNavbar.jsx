@@ -5,13 +5,17 @@ import ColoresContext from "../../contextos/ColoresContext";
 import { Link } from 'react-router-dom';
 import Login from '../../paginas/Login/Login';
 import { UserContext } from '../../contextos/UserContext';
-
+import { useNavigate } from 'react-router-dom';
 function PerfilNavbar(props) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(() => {
+        const storedShowLoginModal = localStorage.getItem('showLoginModal');
+        localStorage.removeItem('showLoginModal'); 
+        return storedShowLoginModal === 'true';
+    });
     const { usuario, cambiarUsuario } = useContext(UserContext);
     const colores = useContext(ColoresContext);
-
+    const navigate = useNavigate();
     const handleLoginClick = () => {
         setShowLoginModal(true);
     };
@@ -49,7 +53,7 @@ function PerfilNavbar(props) {
                 {usuario ? (
                     <>
                         <div onClick={() => console.log('Ir al perfil')}>Perfil</div>
-                        <div onClick={() => cambiarUsuario(null)}>Cerrar sesión</div>
+                        <div onClick={() => {cambiarUsuario(null); navigate('/');}}>Cerrar sesión</div>
                     </>
                 ) : (
                     <>

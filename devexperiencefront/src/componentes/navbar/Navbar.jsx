@@ -58,7 +58,7 @@ function Navbar(props) {
                 </div>
                 <div className="d-flex align-items-center">
                     <Tema cambiarDarkmode={props.cambiarDarkmode} tema={props.infoGuardada.darkmode}></Tema>
-                    <PerfilNavbar tema={props.infoGuardada.darkmode}s></PerfilNavbar>
+                    <PerfilNavbar tema={props.infoGuardada.darkmode}></PerfilNavbar>
                 </div>
             </div>
         </nav>
