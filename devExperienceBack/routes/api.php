@@ -26,7 +26,7 @@ Route::prefix('v1')->group(function () {
 
     //Rutas accesibles solo con autenticación
     Route::middleware('auth:sanctum')->group(function () {
-
+        Route::get('checkToken', [TokenController::class, 'checkToken']);
         Route::get('perfil', [PerfilController::class, 'datosPerfil']);
         Route::put('editarPerfil', [PerfilController::class, 'actualizarPerfil']);
         Route::post('createComentarioReaccion', [ComentariosUsuariosController::class, 'store']);

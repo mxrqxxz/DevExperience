@@ -108,4 +108,10 @@ class TokenController extends Controller
             'csrf_token' => csrf_token()
         ]);
     }
+    public function checkToken()
+    {
+        return response()->json([
+            'valido' => true
+        ]);
+    }
 }
