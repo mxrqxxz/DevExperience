@@ -13,7 +13,11 @@ export async function sendLoginDetails (props) {
         });
         const data = await response.json();
         if (response.ok) {
-            return data.access_token;
+          const respuesta = {
+            'access_token': data.access_token,
+            'foto': data.user_image,
+          }
+            return respuesta;
         } else {
             throw new Error(data.message || 'Error al hacer login');
         } 

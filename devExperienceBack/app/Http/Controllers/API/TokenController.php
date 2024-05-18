@@ -26,6 +26,7 @@ class TokenController extends Controller
             'apellidos' => 'required|string',
             'email' => 'required|email',
             'password' => 'required|string',
+            'confirm_password' => 'required|string|same:password',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -63,11 +64,11 @@ class TokenController extends Controller
             ]
 
         );
-
         return response()->json([
-            'message' => 'Usuario registrado',
-            'user' => $user
+            'token_type' => 'Bearer',
+            'access_token' => $user->createToken('token_name')->plainTextToken
         ]);
+
 
     }
 
@@ -83,7 +84,8 @@ class TokenController extends Controller
 
         return response()->json([
             'token_type' => 'Bearer',
-            'access_token' => $user->createToken('token_name')->plainTextToken
+            'access_token' => $user->createToken('token_name')->plainTextToken,
+            'user_image' => $user->avatar,
         ]);
     }
 

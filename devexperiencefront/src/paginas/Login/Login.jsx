@@ -20,12 +20,13 @@ function Login(props) {
 
         try {
             const loginDetails = { email, password };
-            const token = await sendLoginDetails(loginDetails);
+            const respuesta = await sendLoginDetails(loginDetails);
+            const token = respuesta.access_token;
 
             if (token) {
                 const newUser = {
                     token: token,
-                    foto: "Sin definir",
+                    foto: respuesta.foto,
                 };
                 props.cambiarUsuario(newUser);
                 setEmail('');

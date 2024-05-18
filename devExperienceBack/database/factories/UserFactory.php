@@ -33,7 +33,7 @@ class UserFactory extends Factory
             'nombre' => $nombre,
             'apellidos' => fake()->lastName(),
             'sobre_mi' => fake()->sentence(),
-            'avatar' => fake()->imageUrl(),
+            'avatar' => 'https://img.freepik.com/vector-premium/ilustracion-avatar-estudiante-cono-perfil-usuario-avatar-jovenes_118339-4402.jpg',
             'practicas_realizadas' => fake()->boolean(),
             'usuario' => fake()->userName(),
             'email' => $correo,
