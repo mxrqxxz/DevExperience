@@ -5,7 +5,7 @@ import fotoSoporte from '../../assets/imgs/soporte.png';
 import './Soporte.css';
 import ColoresContext from "../../contextos/ColoresContext";
 import { sendSoporteForm } from "../../servicios/sendSoporteForm.jsx";
-
+import Alerta from "../../componentes/alerta/alerta.jsx";
 
 function Soporte(props) {
 
@@ -13,15 +13,25 @@ function Soporte(props) {
 
     const [modoColor, setModoColor] = useState(props.infoGuardada.darkmode ? "Dark" : "Light");
 
+    const [modoColorInverso, setModoColorInverso] = useState(props.infoGuardada.darkmode ? "Light" : "Dark");
+
     useEffect(() => {
         const updateColorMode = () => {
             const newColorMode = props.infoGuardada.darkmode ? "Dark" : "Light";
             setModoColor(newColorMode);
-            console.log('cambio de color');
         };
 
         updateColorMode();
     }, [props.infoGuardada.darkmode]);
+
+    useEffect(() => {
+        const updateColorMode = () => {
+            const newColorMode = props.infoGuardada.darkmode ? "Light" : "Dark";
+            setModoColorInverso(newColorMode);
+        };
+
+        updateColorMode();
+    }, [modoColor]);
 
     // LOGICA FORMULARIO
 
@@ -33,6 +43,8 @@ function Soporte(props) {
     }
 
     const [formulario, setFormulario] = useState(formularioInicial);
+
+    const [soporteEnviado, setSoporteEnviado] = useState(false);
 
 
     // Al hacer click en enviar, se asignan los valores del formulario
@@ -51,6 +63,7 @@ function Soporte(props) {
         enviarSoporteForm()
         setFormulario(formularioInicial);
         vaciarFormulario();
+        mostrarMensaje();
     }, [formulario.disponible === true]);
 
     // Reseteo del formulario
@@ -71,6 +84,14 @@ function Soporte(props) {
             console.error("Error al enviar el formulario: ", error);
         }
     };
+
+    // Mensaje de formulario enviado
+    function mostrarMensaje() {
+        setSoporteEnviado(true);
+        setTimeout(() => {
+            setSoporteEnviado(false);
+        }, 2500);
+    }
 
     return (
         <>
@@ -103,6 +124,15 @@ function Soporte(props) {
                         <p style={{ color: colores[modoColor].Texto.principal }} className="pFooter" >&#169; DevExperience | Diseñado por: Manuel Fernández y Jesús Rial | Proyecto TFG DAW 2024</p>
                     </div>
                 </div>
+                
+                { /* Mensaje de enviado */ }
+                {soporteEnviado && (
+                    <Alerta 
+                    mensaje="Formulario enviado correctamente"
+                    colorFondo={ colores[modoColorInverso].Fondos.principal }
+                    colorTexto={ colores[modoColorInverso].Texto.principal }>
+                    </Alerta>
+                )}
             </div>
 
         </>

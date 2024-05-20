@@ -1,0 +1,17 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    backdrop-filter: blur(5px); /* Efecto de blur */
+    z-index: 0; /* Asegura que esté sobre el contenido de la página */
+}
+
+.pMensaje {
+    margin: auto;
+    text-decoration: underline;
+    font-size: larger;
+    font-style: italic;
+}
