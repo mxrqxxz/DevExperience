@@ -33,7 +33,7 @@ class UserFactory extends Factory
             'nombre' => $nombre,
             'apellidos' => fake()->lastName(),
             'sobre_mi' => fake()->sentence(),
-            'avatar' => 'https://cdn.autobild.es/sites/navi.axelspringer.es/public/media/image/2016/09/569465-whatsapp-que-tus-contactos-ponen-rana-perfil.jpg?tf=3840x',
+            'avatar' => 'https://phantom-expansion.unidadeditorial.es/e657e4b9272ba13c4183efcc1f33cb55/resize/828/f/webp/assets/multimedia/imagenes/2023/10/03/16963306273937.png',
             'practicas_realizadas' => fake()->boolean(),
             'usuario' => fake()->userName(),
             'email' => $correo,
