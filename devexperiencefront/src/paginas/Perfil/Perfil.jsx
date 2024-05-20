@@ -39,16 +39,27 @@ function Perfil(props) {
     }
 
     return (
-        <div className="container-fluid" style={{ minHeight: '100vh', backgroundColor: colores[modoColor].Fondos.secundario, color: colores[modoColor].Texto.principal, padding:0 }}>
+        <div className="container-fluid" style={{ minHeight: '100vh', backgroundColor: colores[modoColor].Fondos.secundario, color: colores[modoColor].Texto.principal, padding: 0 }}>
             <Navbar infoGuardada={props.infoGuardada} cambiarDarkmode={props.cambiarDarkmode} />
             {editableDatosPerfil && (
                 <div className="row datosPerfil d-flex justify-content-center" >
                     <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.principal }}>
-                        <img className="col-6" style={{borderRadius: '100%' }} src={datosPerfil.avatar} alt="Foto de pergil" />
+                        <div className="col-4 col-xl-3 p-0 d-flex justify-content-center align-items-center">
+                            <img
+                                className="img-fluid imgPerfil"
+                                src={datosPerfil.avatar}
+                                alt="Foto de perfil"
+                            />
+                        </div>
+                        <div className="col-8 col-xl-9 p-0">
+                            <div className="row">
+                            </div>
+                        </div>
                     </div>
+
                     <div className="row">
-                    <label className="col-12 col-lg-4">
-                           <p>Usuario:</p> 
+                        <label className="col-12 col-lg-4 mt-3">
+                            <p style={{ marginBottom: '0px' }}>Usuario:</p>
                             <input
                                 type="text"
                                 name="usuario"
@@ -57,8 +68,8 @@ function Perfil(props) {
                                 style={{ width: '100%' }}
                             />
                         </label>
-                        <label className="col-12 col-lg-4">
-                           <p>Nombre:</p> 
+                        <label className="col-12 col-lg-4 mt-3">
+                            <p style={{ marginBottom: '0px' }}>Nombre:</p>
                             <input
                                 type="text"
                                 name="nombre"
@@ -67,8 +78,8 @@ function Perfil(props) {
                                 style={{ width: '100%' }}
                             />
                         </label>
-                        <label className="col-12 col-lg-4">
-                            <p>Apellidos:</p>
+                        <label className="col-12 col-lg-4 mt-3">
+                            <p style={{ marginBottom: '0px' }}>Apellidos:</p>
                             <input
                                 type="text"
                                 name="apellidos"
@@ -77,8 +88,8 @@ function Perfil(props) {
                                 style={{ width: '100%' }}
                             />
                         </label>
-                        <label className="col-12 col-lg-6">
-                            <p>Centro Educativo:</p>
+                        <label className="col-12 col-lg-6 mt-3">
+                            <p style={{ marginBottom: '0px' }}>Centro Educativo:</p>
                             <input
                                 type="text"
                                 name="centro_educativo"
@@ -87,8 +98,8 @@ function Perfil(props) {
                                 style={{ width: '100%' }}
                             />
                         </label>
-                        <label className="col-12 col-lg-6">
-                            <p>Email:</p>                           
+                        <label className="col-12 col-lg-6 mt-3">
+                            <p style={{ marginBottom: '0px' }}>Email:</p>
                             <input
                                 type="email"
                                 name="email"
@@ -97,8 +108,8 @@ function Perfil(props) {
                                 style={{ width: '100%' }}
                             />
                         </label>
-                        <label className="col-12">
-                            <p>Sobre mi:</p>                           
+                        <label className="col-12 mt-3">
+                            <p style={{ marginBottom: '0px' }}>Sobre mi:</p>
                             <input
                                 type="text"
                                 name="sobre_mi"
