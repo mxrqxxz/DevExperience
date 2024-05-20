@@ -1,0 +1,16 @@
+.cardEmpresa {
+    text-align: center;
+    margin: auto;
+    width: 60%;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+.tituloCard {
+    padding: 10px 0px;
+}
+
+.colorAzul {
+    color: #149ECA;
+}

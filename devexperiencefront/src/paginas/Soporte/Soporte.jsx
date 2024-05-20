@@ -39,7 +39,6 @@ function Soporte(props) {
         nombre: "Sin definir",
         email: "Sin definir",
         mensaje: "Sin definir",
-        disponible: false
     }
 
     const [formulario, setFormulario] = useState(formularioInicial);
@@ -54,26 +53,23 @@ function Soporte(props) {
             nombre: event.target.nombre.value,
             email: event.target.email.value,
             mensaje: event.target.mensaje.value,
-            disponible: true
         });
-    };
+    }
 
-    // Al asignar valores del formulario, se envía el formulario y se resetea
     useEffect(() => {
-        enviarSoporteForm()
-        setFormulario(formularioInicial);
-        vaciarFormulario();
-        mostrarMensaje();
-    }, [formulario.disponible === true]);
+        if (formulario.nombre !== "Sin definir" && formulario.email !== "Sin definir" && formulario.mensaje !== "Sin definir") {
+            enviarSoporteForm();
+            setFormulario(formularioInicial);
+            vaciarFormulario();
+            mostrarMensaje();
+        }
+    }, [formulario]);
 
     // Reseteo del formulario
     function vaciarFormulario() {
-        const campoNombre = document.getElementById("nombre");
-        const campoEmail = document.getElementById("email");
-        const campoMensaje = document.getElementById("mensaje");
-        campoNombre.value = "";
-        campoEmail.value = "";
-        campoMensaje.value = "";
+        document.getElementById("nombre").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("mensaje").value = "";
     }
 
     // Envío del formulario
@@ -126,7 +122,7 @@ function Soporte(props) {
                 </div>
                 
                 { /* Mensaje de enviado */ }
-                {soporteEnviado && (
+                {soporteEnviado === true && (
                     <Alerta 
                     mensaje="Formulario enviado correctamente"
                     colorFondo={ colores[modoColorInverso].Fondos.principal }
