@@ -59,3 +59,16 @@
 .centrar {
     margin: auto;
 }
+
+.formularioEnviado {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    height: 20%;
+    width: 30%;
+    display: flex;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border: 5px solid black;
+    border-radius: 20px;
+}

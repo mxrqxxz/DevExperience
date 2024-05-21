@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\HomeController;
 use App\Http\Controllers\API\PerfilController;
+use App\Http\Controllers\API\TecnologiaController;
 use App\Http\Controllers\API\TokenController;
 use App\Http\Middleware\ComprobarTipoUsuario;
 
@@ -23,6 +24,8 @@ Route::prefix('v1')->group(function () {
     Route::get('datosHome', [HomeController::class, 'index']);
     Route::get('estadisticas', [EstadisticasController::class, 'estadisticas']);
     Route::post('enviarCorreoForm', [EnviarCorreos::class, 'enviarCorreoForm']);
+    Route::get('tecnologias', [TecnologiaController::class, 'index']);
+    Route::get('tecnologias/{type}', [TecnologiaController::class, 'getByType']);
 
     //Rutas accesibles solo con autenticación
     Route::middleware('auth:sanctum')->group(function () {

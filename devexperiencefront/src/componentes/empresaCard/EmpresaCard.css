@@ -1,0 +1,26 @@
+.cardEmpresa {
+    text-align: center;
+    margin: auto;
+    width: 60%;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+.colorAzul {
+    color: #149ECA;
+}
+
+.fotoCard {
+    max-width: 100%;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.cabecera {
+    display: flex;
+}
+
+.imgtecnoCard {
+    max-width: 40px;
+    padding: 5px;
+}

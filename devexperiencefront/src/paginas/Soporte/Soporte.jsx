@@ -5,7 +5,7 @@ import fotoSoporte from '../../assets/imgs/soporte.png';
 import './Soporte.css';
 import ColoresContext from "../../contextos/ColoresContext";
 import { sendSoporteForm } from "../../servicios/sendSoporteForm.jsx";
-
+import Alerta from "../../componentes/alerta/alerta.jsx";
 
 function Soporte(props) {
 
@@ -13,15 +13,25 @@ function Soporte(props) {
 
     const [modoColor, setModoColor] = useState(props.infoGuardada.darkmode ? "Dark" : "Light");
 
+    const [modoColorInverso, setModoColorInverso] = useState(props.infoGuardada.darkmode ? "Light" : "Dark");
+
     useEffect(() => {
         const updateColorMode = () => {
             const newColorMode = props.infoGuardada.darkmode ? "Dark" : "Light";
             setModoColor(newColorMode);
-            console.log('cambio de color');
         };
 
         updateColorMode();
     }, [props.infoGuardada.darkmode]);
+
+    useEffect(() => {
+        const updateColorMode = () => {
+            const newColorMode = props.infoGuardada.darkmode ? "Light" : "Dark";
+            setModoColorInverso(newColorMode);
+        };
+
+        updateColorMode();
+    }, [modoColor]);
 
     // LOGICA FORMULARIO
 
@@ -29,10 +39,11 @@ function Soporte(props) {
         nombre: "Sin definir",
         email: "Sin definir",
         mensaje: "Sin definir",
-        disponible: false
     }
 
     const [formulario, setFormulario] = useState(formularioInicial);
+
+    const [soporteEnviado, setSoporteEnviado] = useState(false);
 
 
     // Al hacer click en enviar, se asignan los valores del formulario
@@ -42,25 +53,23 @@ function Soporte(props) {
             nombre: event.target.nombre.value,
             email: event.target.email.value,
             mensaje: event.target.mensaje.value,
-            disponible: true
         });
-    };
+    }
 
-    // Al asignar valores del formulario, se envía el formulario y se resetea
     useEffect(() => {
-        enviarSoporteForm()
-        setFormulario(formularioInicial);
-        vaciarFormulario();
-    }, [formulario.disponible === true]);
+        if (formulario.nombre !== "Sin definir" && formulario.email !== "Sin definir" && formulario.mensaje !== "Sin definir") {
+            enviarSoporteForm();
+            setFormulario(formularioInicial);
+            vaciarFormulario();
+            mostrarMensaje();
+        }
+    }, [formulario]);
 
     // Reseteo del formulario
     function vaciarFormulario() {
-        const campoNombre = document.getElementById("nombre");
-        const campoEmail = document.getElementById("email");
-        const campoMensaje = document.getElementById("mensaje");
-        campoNombre.value = "";
-        campoEmail.value = "";
-        campoMensaje.value = "";
+        document.getElementById("nombre").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("mensaje").value = "";
     }
 
     // Envío del formulario
@@ -71,6 +80,14 @@ function Soporte(props) {
             console.error("Error al enviar el formulario: ", error);
         }
     };
+
+    // Mensaje de formulario enviado
+    function mostrarMensaje() {
+        setSoporteEnviado(true);
+        setTimeout(() => {
+            setSoporteEnviado(false);
+        }, 2500);
+    }
 
     return (
         <>
@@ -103,6 +120,15 @@ function Soporte(props) {
                         <p style={{ color: colores[modoColor].Texto.principal }} className="pFooter" >&#169; DevExperience | Diseñado por: Manuel Fernández y Jesús Rial | Proyecto TFG DAW 2024</p>
                     </div>
                 </div>
+                
+                { /* Mensaje de enviado */ }
+                {soporteEnviado === true && (
+                    <Alerta 
+                    mensaje="Formulario enviado correctamente"
+                    colorFondo={ colores[modoColorInverso].Fondos.principal }
+                    colorTexto={ colores[modoColorInverso].Texto.principal }>
+                    </Alerta>
+                )}
             </div>
 
         </>

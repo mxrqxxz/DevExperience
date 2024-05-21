@@ -34,10 +34,13 @@ class EmpresasController extends Controller
             $tecnologias = $tecnologiasFormularios->whereIn('formulario_id', $formulariosEmpresa->pluck('id'))->pluck('tecnologia_id')->unique();
 
             $empresa = [
+                'id' => $empresa->id,
                 'nombre' => $empresa->nombre,
                 'remoto' => $this->traducirRemoto($remotos),
                 'tecnologiasFront' => $this->filtrarTecnologias($tecnologias, 'Front-end'),
                 'tecnologiasBack' => $this->filtrarTecnologias($tecnologias, 'Back-end'),
+                'notaMedia' => $formulariosEmpresa->where('empresa_id', $empresa->id)->avg('val_empresa'),
+                'imagen' => $empresa->imagen,
             ];
 
             array_push($output, $empresa);

@@ -1,0 +1,52 @@
+.tituloSeccion {
+    color: #149ECA;
+    padding: 15px;
+}
+
+.centrar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.centrar2 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.tituloFiltro {
+    margin-bottom: 0px;
+}
+
+.centrarMovil {
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .centrar {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: left;
+        margin-left: 20px!important;
+    }
+
+    .centrar2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: left;
+        margin-left: 20px!important;
+        margin-bottom: 25px;
+    }
+
+    .centrarMovil {
+        text-align: left;
+    }
+}
