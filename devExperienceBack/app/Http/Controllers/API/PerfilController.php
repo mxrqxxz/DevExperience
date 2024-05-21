@@ -27,6 +27,7 @@ class PerfilController extends Controller
             return [
                 'nombre' => $cuenta->nombre,
                 'avatar' => $cuenta->avatar,
+                'url' => $cuenta->pivot->url, // Se accede a la URL a través del atributo 'pivot
                 'descripcion' => $cuenta->descripcion
             ];
         });

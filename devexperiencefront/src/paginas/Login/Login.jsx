@@ -27,6 +27,7 @@ function Login(props) {
                 const newUser = {
                     token: token,
                     foto: respuesta.foto,
+                    rol: respuesta.rol,
                 };
                 props.cambiarUsuario(newUser);
                 setEmail('');

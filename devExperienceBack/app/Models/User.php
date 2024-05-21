@@ -68,7 +68,7 @@ class User extends Authenticatable
 
     public function formulario(): HasOne
     {
-        return $this->hasOne(Formulario::class);
+        return $this->hasOne(Formulario::class,'usuario_id');
     }
 
     public function comentarios(): HasMany

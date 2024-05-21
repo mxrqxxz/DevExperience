@@ -18,7 +18,8 @@ class TokenController extends Controller
      * @return \Illuminate\Http\Response
      */
     //falta el registro de usuario
-    public function register (Request $request) {
+    public function register(Request $request)
+    {
         //validacion de datos y si no se cumple se devuelve un mensaje de error
         $validator = validator()->make($request->all(), [
             'usuario' => 'required|string',
@@ -38,15 +39,15 @@ class TokenController extends Controller
         $email = $request->email;
         $dominio = substr($email, strpos($email, '@') + 1);
 
-        if($dominio != 'murciaeduca.es' && $dominio != 'alu.murciaeduca.es'){
+        if ($dominio != 'murciaeduca.es' && $dominio != 'alu.murciaeduca.es') {
             return response()->json([
                 'message' => 'El Email debe pertenecer a un dominio de correo de murciaeduca'
             ], 409);
-        }else if(User::where('usuario', $request->usuario)->exists()){
+        } else if (User::where('usuario', $request->usuario)->exists()) {
             return response()->json([
                 'message' => 'El Usuario ya existe'
             ], 409);
-        }else if (User::where('email', $request->email)->exists()) {
+        } else if (User::where('email', $request->email)->exists()) {
             return response()->json([
                 'message' => 'El Email ya existe'
             ], 409);
@@ -68,8 +69,6 @@ class TokenController extends Controller
             'token_type' => 'Bearer',
             'access_token' => $user->createToken('token_name')->plainTextToken
         ]);
-
-
     }
 
     public function login(Request $request)
@@ -81,11 +80,23 @@ class TokenController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
+        // Extraer el dominio del correo electrónico
+        $email = $user->email;
+        $domain = substr(strrchr($email, "@"), 1);
 
+        // Determinar el rol basado en el dominio
+        if (strpos($domain, 'alu.murciaeduca') !== false) {
+            $role = 'alumno';
+        } elseif (strpos($domain, 'murciaeduca') !== false) {
+            $role = 'profesor';
+        } else {
+            $role = 'desconocido'; // O cualquier otro rol predeterminado
+        }
         return response()->json([
             'token_type' => 'Bearer',
             'access_token' => $user->createToken('token_name')->plainTextToken,
             'user_image' => $user->avatar,
+            'rol' => $role
         ]);
     }
 

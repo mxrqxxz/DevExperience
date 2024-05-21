@@ -16,6 +16,7 @@ export async function sendLoginDetails (props) {
           const respuesta = {
             'access_token': data.access_token,
             'foto': data.user_image,
+            'rol': data.rol
           }
             return respuesta;
         } else {

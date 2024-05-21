@@ -4,7 +4,9 @@ import useDatosPerfil from '../../hooks/useDatosPerfil.jsx';
 import ColoresContext from "../../contextos/ColoresContext.jsx";
 import linkedIn from '../../assets//imgs/tecnologias/icons8-linkedin.svg';
 import github from '../../assets/imgs/tecnologias/icons8-github.svg';
+import aniadir from '../../assets/imgs/aniadir.svg';
 import './Perfil.css';
+import Boton from "../../componentes/boton/Boton.jsx";
 function Perfil(props) {
     const imagenes = {
         LinkedIn: linkedIn,
@@ -50,11 +52,17 @@ function Perfil(props) {
             {editableDatosPerfil && (
                 <div className="row datosPerfil d-flex justify-content-center" >
                     <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.principal }}>
-                        <div className="col-4 col-xl-3 p-0 d-flex justify-content-center align-items-center">
+                        <div className="col-4 col-xl-3 p-0 d-flex justify-content-center align-items-center position-relative">
                             <img
                                 className="img-fluid imgPerfil"
                                 src={datosPerfil.avatar}
                                 alt="Foto de perfil"
+                            />
+                            <img
+                                className="imgAgregar"
+                                src={aniadir}
+                                alt="Cambiar imagen"
+                                title="Cambiar imagen"
                             />
                         </div>
                         <div className="col-8 col-xl-9 p-0 d-flex align-items-center">
@@ -64,7 +72,7 @@ function Perfil(props) {
                                     {editableDatosPerfil && editableDatosPerfil.insignias && editableDatosPerfil.insignias.length > 0 ? (
                                         editableDatosPerfil.insignias.map((element, index) => (
                                             <div key={'Insig-' + index} className="col-3 col-md-2 col-xl-1 caja-img">
-                                                <img src={element.avatar} alt={element.nombre} className="avatares-perfil" />
+                                                <img src={`http://devexperience.test/storage/Insignias/${element.avatar}`} alt={element.nombre} className="avatares-perfil" title={element.nombre} />
                                             </div>
                                         ))
                                     ) : (
@@ -74,11 +82,21 @@ function Perfil(props) {
                                 <div className="row caja-general">
                                     <h2 className="col-12 p-0">Cuentas</h2>
                                     {editableDatosPerfil && editableDatosPerfil.cuentas && editableDatosPerfil.cuentas.length > 0 ? (
-                                        editableDatosPerfil.cuentas.map((element, index) => (
-                                            <div key={'Cuen-' + index} className="col-3 col-md-2 col-xl-1 caja-img">
-                                                <img src={imagenes[element.nombre]} alt={element.nombre} className="avatares-perfil" />
+                                        <>
+                                            {editableDatosPerfil.cuentas.map((element, index) => (
+                                                <div key={'Cuen-' + index} className="col-3 col-md-2 col-xl-1 caja-img">
+                                                    <a href={element.url} target="_blank" rel="noopener noreferrer">
+                                                        <img src={imagenes[element.nombre]} alt={element.nombre} className="avatares-perfil" title={element.url} />
+                                                    </a>
+                                                </div>
+                                            ))}
+                                            <div className="col-3 col-md-2 col-xl-1 caja-img">
+                                                <a href="/ruta/para/agregar/cuenta" target="_blank" rel="noopener noreferrer" className="caja-img">
+                                                    <img src={aniadir} alt="Añadir cuenta" className="avatares-perfil aniadir" title="Añadir cuenta" />
+                                                </a>
                                             </div>
-                                        ))
+                                        </>
+
                                     ) : (
                                         <p className="col-12">No hay cuentas disponibles.</p>
                                     )}
@@ -95,7 +113,7 @@ function Perfil(props) {
                                 name="usuario"
                                 value={editableDatosPerfil.usuario || ''}
                                 onChange={handleInputChange}
-                                style={{ width: '100%' }}
+                                style={{ width: '100%', padding: '5px' }}
                             />
                         </label>
                         <label className="col-12 col-lg-4 mt-3">
@@ -105,7 +123,7 @@ function Perfil(props) {
                                 name="nombre"
                                 value={editableDatosPerfil.nombre || ''}
                                 onChange={handleInputChange}
-                                style={{ width: '100%' }}
+                                style={{ width: '100%', padding: '5px' }}
                             />
                         </label>
                         <label className="col-12 col-lg-4 mt-3">
@@ -115,7 +133,7 @@ function Perfil(props) {
                                 name="apellidos"
                                 value={editableDatosPerfil.apellidos || ''}
                                 onChange={handleInputChange}
-                                style={{ width: '100%' }}
+                                style={{ width: '100%', padding: '5px' }}
                             />
                         </label>
                         <label className="col-12 col-lg-6 mt-3">
@@ -125,7 +143,8 @@ function Perfil(props) {
                                 name="centro_educativo"
                                 value={editableDatosPerfil.centro_educativo || ''}
                                 onChange={handleInputChange}
-                                style={{ width: '100%' }}
+                                style={{ width: '100%', padding: '5px' }}
+                                disabled={true}
                             />
                         </label>
                         <label className="col-12 col-lg-6 mt-3">
@@ -135,19 +154,37 @@ function Perfil(props) {
                                 name="email"
                                 value={editableDatosPerfil.email || ''}
                                 onChange={handleInputChange}
-                                style={{ width: '100%' }}
+                                style={{ width: '100%', padding: '5px' }}
                             />
                         </label>
-                        <label className="col-12 mt-3">
+                        <label className="col-12 col-lg-6 mt-3">
                             <p style={{ marginBottom: '0px' }}>Sobre mi:</p>
-                            <input
-                                type="text"
+                            <textarea
                                 name="sobre_mi"
                                 value={editableDatosPerfil.sobre_mi || ''}
                                 onChange={handleInputChange}
-                                style={{ width: '100%' }}
+                                style={{ width: '100%', minHeight: '100px', padding: '5px' }}
                             />
                         </label>
+                        <div className="row mt-3">
+                            <div className="col-12 d-flex justify-content-start align-items-center">
+                                <button className="boton d-felx justify-content-center align-items-center mt-3 mb-3 p-2" style={{ minWidth: '162px' }}>
+                                    <span>Guardar</span>
+                                </button>
+                                <span className="col-1"></span>
+                                {user.rol == 'profesor' ? (
+                                    <button className="boton d-flex justify-content-center align-items-center mt-3 mb-3 p-2" style={{ minWidth: '162px' }}>
+                                        <span>Enviar invitaciones</span>
+                                    </button>
+                                ) : (
+                                    <button className="boton d-flex justify-content-center align-items-center mt-3 mb-3 p-2" style={{ minWidth: '162px' }}>
+                                        <span>Realizar formulario</span>
+                                    </button>
+                                )}
+
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             )}
