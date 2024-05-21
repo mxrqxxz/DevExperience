@@ -10,6 +10,19 @@
     object-fit: cover; 
     margin: 10px 0; 
 }
+.avatares-perfil{
+    display: flex;
+    width: 60px;
+    justify-content: center;
+}
+.caja-img{
+    display: flex;
+    justify-content: center;
+
+}
+.caja-general{
+    padding-left: 30px;
+}
 @media (max-width: 768px) {
     .datosPerfil{
         margin: 50px 5%;

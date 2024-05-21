@@ -2,8 +2,14 @@ import React, { useContext, useState, useEffect } from "react";
 import Navbar from '../../componentes/navbar/Navbar.jsx';
 import useDatosPerfil from '../../hooks/useDatosPerfil.jsx';
 import ColoresContext from "../../contextos/ColoresContext.jsx";
+import linkedIn from '../../assets//imgs/tecnologias/icons8-linkedin.svg';
+import github from '../../assets/imgs/tecnologias/icons8-github.svg';
 import './Perfil.css';
 function Perfil(props) {
+    const imagenes = {
+        LinkedIn: linkedIn,
+        Github: github
+    };
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = user?.token || null;
     const { datosPerfil, isLoading, error } = useDatosPerfil(token);
@@ -51,8 +57,32 @@ function Perfil(props) {
                                 alt="Foto de perfil"
                             />
                         </div>
-                        <div className="col-8 col-xl-9 p-0">
+                        <div className="col-8 col-xl-9 p-0 d-flex align-items-center">
                             <div className="row">
+                                <div className="row caja-general">
+                                    <h2 className="col-12 p-0">Insignias</h2>
+                                    {editableDatosPerfil && editableDatosPerfil.insignias && editableDatosPerfil.insignias.length > 0 ? (
+                                        editableDatosPerfil.insignias.map((element, index) => (
+                                            <div key={'Insig-' + index} className="col-3 col-md-2 col-xl-1 caja-img">
+                                                <img src={element.avatar} alt={element.nombre} className="avatares-perfil" />
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p className="col-12">No hay cuentas disponibles.</p>
+                                    )}
+                                </div>
+                                <div className="row caja-general">
+                                    <h2 className="col-12 p-0">Cuentas</h2>
+                                    {editableDatosPerfil && editableDatosPerfil.cuentas && editableDatosPerfil.cuentas.length > 0 ? (
+                                        editableDatosPerfil.cuentas.map((element, index) => (
+                                            <div key={'Cuen-' + index} className="col-3 col-md-2 col-xl-1 caja-img">
+                                                <img src={imagenes[element.nombre]} alt={element.nombre} className="avatares-perfil" />
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p className="col-12">No hay cuentas disponibles.</p>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
