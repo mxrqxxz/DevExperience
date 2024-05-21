@@ -5,6 +5,7 @@ import ColoresContext from "../../contextos/ColoresContext.jsx";
 import ListaEmpresas from "../../componentes/listaEmpresas/ListaEmpresas.jsx";
 import "./Empresas.css";
 import Select from "../../componentes/select/Select.jsx";
+import useTecnologiasTipo from "../../hooks/useTecnologiasTipo.jsx";
 
 function Empresas(props) {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -21,9 +22,10 @@ function Empresas(props) {
         updateColorMode();
     }, [props.infoGuardada.darkmode]);
 
-    useEffect(() => {
-        console.log(listaEmpresas);
-    }, [listaEmpresas]);
+    // Listas de tecnologias para filtros
+    const { listaDatos: listaDatosFront } = useTecnologiasTipo("Front-end");
+    const { listaDatos: listaDatosBack } = useTecnologiasTipo("Back-end");
+
 
     if (isLoading) {
         return <div>Loading...</div>;
