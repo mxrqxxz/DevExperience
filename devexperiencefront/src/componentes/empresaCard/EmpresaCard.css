@@ -7,10 +7,20 @@
     margin-bottom: 50px;
 }
 
-.tituloCard {
-    padding: 10px 0px;
-}
-
 .colorAzul {
     color: #149ECA;
+}
+
+.fotoCard {
+    max-width: 100%;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.cabecera {
+    display: flex;
+}
+
+.imgtecnoCard {
+    max-width: 40px;
+    padding: 5px;
 }

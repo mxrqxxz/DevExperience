@@ -96,27 +96,27 @@ function Empresas(props) {
         <div>
             <Navbar infoGuardada={props.infoGuardada} cambiarDarkmode={props.cambiarDarkmode}></Navbar>
             <div className="container-fluid p-0">
-                <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.terciario }}>
+                <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.secundario }}>
                     <div className="col-12">
                         <h1 className="tituloSeccion centrarMovil">Empresas</h1>
                     </div>
                     <div className="col-12">
                         <div className="centrar">
-                            <p className="d-md-inline tituloFiltro"><strong>FILTRAR</strong></p>
-                            <Select nombre="front" id="front" placeholder="Front-end" opciones={listaDatosFront} />
-                            <Select nombre="back" id="back" placeholder="Back-end" opciones={listaDatosBack} />
-                            <Select nombre="modalidad" id="modalidad" placeholder="Modalidad" opciones={modalidad} />
+                            <p style={{ color: colores[modoColor].Texto.principal }} className="d-md-inline tituloFiltro"><strong>FILTRAR</strong></p>
+                            <Select color={colores[modoColor].Texto.principal} nombre="front" id="front" placeholder="Front-end" opciones={listaDatosFront} />
+                            <Select color={colores[modoColor].Texto.principal} nombre="back" id="back" placeholder="Back-end" opciones={listaDatosBack} />
+                            <Select color={colores[modoColor].Texto.principal} nombre="modalidad" id="modalidad" placeholder="Modalidad" opciones={modalidad} />
                         </div>
                     </div>
                     <div className="col-12">
                         <div className="centrar2">
-                            <p className="d-md-inline tituloFiltro"><strong>ORDENAR</strong></p>
-                            <Select nombre="ordenar" id="ordenar" placeholder="Valoración" opciones={valoraciones} />
+                            <p style={{ color: colores[modoColor].Texto.principal }} className="d-md-inline tituloFiltro"><strong>ORDENAR</strong></p>
+                            <Select color={colores[modoColor].Texto.principal} nombre="ordenar" id="ordenar" placeholder="Valoración" opciones={valoraciones} />
                         </div>
                     </div>
                 </div>
-                <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.terciario }}>
-                    <ListaEmpresas lista={listaEmpresas}></ListaEmpresas>
+                <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.secundario }}>
+                    <ListaEmpresas infoGuardada={props.infoGuardada} lista={listaEmpresas}></ListaEmpresas>
                 </div>
             </div>
         </div>

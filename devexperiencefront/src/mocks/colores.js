@@ -2,8 +2,8 @@ const Colores = {
     Dark: {
         Fondos: {
             principal: "#181A20",
-            secundario: "#23272F", 
-            terciario: "#3D4453", 
+            secundario: "#3D4453",  
+            terciario: "#23272F", 
             footer: "#3A3A3A"  
         },
         Texto: {
