@@ -25,6 +25,63 @@ function Empresas(props) {
     // Listas de tecnologias para filtros
     const { listaDatos: listaDatosFront } = useTecnologiasTipo("Front-end");
     const { listaDatos: listaDatosBack } = useTecnologiasTipo("Back-end");
+    const modalidad = [
+        {
+            id: 1,
+            nombre: "Presencial"
+        },
+        {
+            id: 2,
+            nombre: "Remoto"
+        },
+        {
+            id: 3,
+            nombre: "Presencial y remoto"
+        }
+    ];
+
+    const valoraciones = [
+        {
+            id: 1,
+            nombre: "1"
+        },
+        {
+            id: 2,
+            nombre: "2"
+        },
+        {
+            id: 3,
+            nombre: "3"
+        },
+        {
+            id: 4,
+            nombre: "4"
+        },
+        {
+            id: 5,
+            nombre: "5"
+        },
+        {
+            id: 6,
+            nombre: "6"
+        },
+        {
+            id: 7,
+            nombre: "7"
+        },
+        {
+            id: 8,
+            nombre: "8"
+        },
+        {
+            id: 9,
+            nombre: "9"
+        },
+        {
+            id: 10,
+            nombre: "10"
+        }
+    ];
 
 
     if (isLoading) {
@@ -41,11 +98,21 @@ function Empresas(props) {
             <div className="container-fluid p-0">
                 <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.terciario }}>
                     <div className="col-12">
-                        <h1 className="tituloSeccion">Empresas</h1>
+                        <h1 className="tituloSeccion centrarMovil">Empresas</h1>
                     </div>
                     <div className="col-12">
-                        <p>Filtrar</p>
-
+                        <div className="centrar">
+                            <p className="d-md-inline tituloFiltro"><strong>FILTRAR</strong></p>
+                            <Select nombre="front" id="front" placeholder="Front-end" opciones={listaDatosFront} />
+                            <Select nombre="back" id="back" placeholder="Back-end" opciones={listaDatosBack} />
+                            <Select nombre="modalidad" id="modalidad" placeholder="Modalidad" opciones={modalidad} />
+                        </div>
+                    </div>
+                    <div className="col-12">
+                        <div className="centrar2">
+                            <p className="d-md-inline tituloFiltro"><strong>ORDENAR</strong></p>
+                            <Select nombre="ordenar" id="ordenar" placeholder="Valoración" opciones={valoraciones} />
+                        </div>
                     </div>
                 </div>
                 <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.terciario }}>

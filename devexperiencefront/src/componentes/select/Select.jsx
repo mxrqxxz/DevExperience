@@ -1,13 +1,15 @@
 import React from "react";
+import "./Select.css";
 
 function Select(props) {
 
     function mostrarOpciones(params) {
-        return <option value={params.value}>{params.text}</option>;
+        return <option value={params.nombre}>{params.nombre}</option>;
     }
 
     return (
-        <select name={props.nombre} id={props.id}>
+        <select className="selectEmpresas" name={props.nombre} id={props.id}>
+            <option value="Sin definir">{props.placeholder}</option>
             {props.opciones.map(mostrarOpciones)}
         </select>
     );
