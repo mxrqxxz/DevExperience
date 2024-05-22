@@ -23,10 +23,12 @@ function ListaEmpresas(props) {
     }
 
     return (
-        <div className="col-12">
+        <div className="col-12" style={{ backgroundColor: colores[modoColor].Fondos.secundario }}>
             <h5 style={{ color: colores[modoColor].Texto.principal }} className="resultados"><strong>Resultados:</strong> <span className="colorAzul">{props.lista.length}</span> empresas encontradas</h5>
-            <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.terciario }}>
-                {props.lista.length === 0 ? <h1>No hay empresas con estos filtros</h1> : props.lista.map(muestraEmpresa)}
+            <div className="almacen" style={{ backgroundColor: colores[modoColor].Fondos.terciario }}>
+                <div className="row">
+                    {props.lista.length === 0 ? <h1>No hay empresas con estos filtros</h1> : props.lista.map(muestraEmpresa)}
+                </div>
             </div>
         </div>
     );

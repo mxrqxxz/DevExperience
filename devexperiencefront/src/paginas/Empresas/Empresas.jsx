@@ -115,8 +115,13 @@ function Empresas(props) {
                         </div>
                     </div>
                 </div>
-                <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.secundario }}>
+                <div className="row">
                     <ListaEmpresas infoGuardada={props.infoGuardada} lista={listaEmpresas}></ListaEmpresas>
+                </div>
+                <div className="row">
+                    <div className="col-12" style={{ backgroundColor: colores[modoColor].Fondos.footer }}>
+                        <p style={{ color: colores[modoColor].Texto.principal }} className="pFooter" >&#169; DevExperience | Diseñado por: Manuel Fernández y Jesús Rial | Proyecto TFG DAW 2024</p>
+                    </div>
                 </div>
             </div>
         </div>

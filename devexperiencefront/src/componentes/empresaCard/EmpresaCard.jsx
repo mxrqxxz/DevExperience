@@ -57,16 +57,14 @@ function EmpresaCard(props) {
         <div className="col-12 col-md-4">
             <div className="cardEmpresa">
                 <img src={fotoDefault} alt="portada de la empresa" className="fotoCard" />
-                <div className="cabecera">
-                    <h3 className="tituloCard colorAzul">{props.empresa.nombre}</h3>
-                    <h3 className="notaCard" style={{ color: colorNota }} >{nota}</h3>
-                </div>
-                <p>Front-end</p>
-                { props.empresa.tecnologiasFront.map(tecnologiasFotos) }
-                <p>Back-end</p>
-                { props.empresa.tecnologiasBack.map(tecnologiasFotos) }
-                <p>Modalidad</p>
-                <small>{props.empresa.remoto}</small>
+                <h3 className="tituloCard colorAzul">{props.empresa.nombre}</h3>
+                <h3 className="notaCard" style={{ color: colorNota }} >{nota}</h3>
+                <p className="seccionCard"><strong>Front-end</strong></p>
+                {props.empresa.tecnologiasFront.map(tecnologiasFotos)}
+                <p className="seccionCard"><strong>Back-end</strong></p>
+                {props.empresa.tecnologiasBack.map(tecnologiasFotos)}
+                <p className="seccionCard"><strong>Modalidad</strong></p>
+                <p className="seccionCard">{props.empresa.remoto}</p>
                 <BotonEnlace contenido="Saber más..." enlace={`/empresa/${props.empresa.id}`}></BotonEnlace>
             </div>
         </div>

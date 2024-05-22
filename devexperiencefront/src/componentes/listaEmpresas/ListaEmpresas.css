@@ -1,3 +1,17 @@
 .resultados {
+    margin-top: 20px;
     margin-left: 20px;
+    text-align: center;
+}
+
+.almacen {
+    margin: 15px 20px;
+    border-radius: 10px;
+    padding-top: 30px;
+}
+
+@media screen and (min-width: 768px) {
+    .resultados {
+        text-align: left;
+    }
 }
