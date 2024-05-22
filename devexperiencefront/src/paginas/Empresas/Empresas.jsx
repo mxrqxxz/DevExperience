@@ -43,46 +43,67 @@ function Empresas(props) {
     const valoraciones = [
         {
             id: 1,
-            nombre: "1"
+            nombre: "Más valoradas"
         },
         {
             id: 2,
-            nombre: "2"
+            nombre: "Menos valoradas"
         },
-        {
-            id: 3,
-            nombre: "3"
-        },
-        {
-            id: 4,
-            nombre: "4"
-        },
-        {
-            id: 5,
-            nombre: "5"
-        },
-        {
-            id: 6,
-            nombre: "6"
-        },
-        {
-            id: 7,
-            nombre: "7"
-        },
-        {
-            id: 8,
-            nombre: "8"
-        },
-        {
-            id: 9,
-            nombre: "9"
-        },
-        {
-            id: 10,
-            nombre: "10"
-        }
     ];
 
+
+    // Lógica de filtros
+
+    const [filtros, setFiltros] = useState({
+        front: "Sin definir",
+        back: "Sin definir",
+        modalidad: "Sin definir",
+        valoracion: "Sin definir"
+    });
+
+    function asignarFront(valorNuevo) {
+        setFiltros({ ...filtros, front: valorNuevo });
+    }
+
+    function asignarBack(valorNuevo) {
+        setFiltros({ ...filtros, back: valorNuevo });
+    }
+
+    function asignarModalidad(valorNuevo) {
+        setFiltros({ ...filtros, modalidad: valorNuevo });
+    }
+
+    function asignarValoracion(valorNuevo) {
+        setFiltros({ ...filtros, valoracion: valorNuevo });
+    }
+
+    function aplicarFiltros(empresa) {
+        if (filtros.front !== "Sin definir" && !empresa.tecnologiasFront.includes(filtros.front)) {
+            return false;
+        }
+
+        if (filtros.back !== "Sin definir" && !empresa.tecnologiasBack.includes(filtros.back)) {
+            return false;
+        }
+
+        if (filtros.modalidad !== "Sin definir" && empresa.remoto !== filtros.modalidad) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function ordenarEmpresas(empresas) {
+        const { valoracion } = filtros;
+
+        if (valoracion === "Más valoradas") {
+            return empresas.sort((a, b) => b.notaMedia - a.notaMedia);
+        } else if (valoracion === "Menos valoradas") {
+            return empresas.sort((a, b) => a.notaMedia - b.notaMedia);
+        } else {
+            return empresas;
+        }
+    }
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -103,20 +124,20 @@ function Empresas(props) {
                     <div className="col-12">
                         <div className="centrar">
                             <p style={{ color: colores[modoColor].Texto.principal }} className="d-md-inline tituloFiltro"><strong>FILTRAR</strong></p>
-                            <Select color={colores[modoColor].Texto.principal} nombre="front" id="front" placeholder="Front-end" opciones={listaDatosFront} />
-                            <Select color={colores[modoColor].Texto.principal} nombre="back" id="back" placeholder="Back-end" opciones={listaDatosBack} />
-                            <Select color={colores[modoColor].Texto.principal} nombre="modalidad" id="modalidad" placeholder="Modalidad" opciones={modalidad} />
+                            <Select gestion={asignarFront} color={colores[modoColor].Texto.principal} nombre="front" id="front" placeholder="Front-end" opciones={listaDatosFront} />
+                            <Select gestion={asignarBack} color={colores[modoColor].Texto.principal} nombre="back" id="back" placeholder="Back-end" opciones={listaDatosBack} />
+                            <Select gestion={asignarModalidad} color={colores[modoColor].Texto.principal} nombre="modalidad" id="modalidad" placeholder="Modalidad" opciones={modalidad} />
                         </div>
                     </div>
                     <div className="col-12">
                         <div className="centrar2">
                             <p style={{ color: colores[modoColor].Texto.principal }} className="d-md-inline tituloFiltro"><strong>ORDENAR</strong></p>
-                            <Select color={colores[modoColor].Texto.principal} nombre="ordenar" id="ordenar" placeholder="Valoración" opciones={valoraciones} />
+                            <Select gestion={asignarValoracion} color={colores[modoColor].Texto.principal} nombre="ordenar" id="ordenar" placeholder="Valoración" opciones={valoraciones} />
                         </div>
                     </div>
                 </div>
                 <div className="row">
-                    <ListaEmpresas infoGuardada={props.infoGuardada} lista={listaEmpresas}></ListaEmpresas>
+                    <ListaEmpresas infoGuardada={props.infoGuardada} lista={ordenarEmpresas(listaEmpresas.filter(aplicarFiltros))}></ListaEmpresas>
                 </div>
                 <div className="row">
                     <div className="col-12" style={{ backgroundColor: colores[modoColor].Fondos.footer }}>
