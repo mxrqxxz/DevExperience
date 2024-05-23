@@ -6,6 +6,7 @@ import linkedIn from '../../assets//imgs/tecnologias/icons8-linkedin.svg';
 import github from '../../assets/imgs/tecnologias/icons8-github.svg';
 import aniadir from '../../assets/imgs/aniadir.svg';
 import './Perfil.css';
+import Avatar from '../../assets/imgs/Avatar.svg';
 import Boton from "../../componentes/boton/Boton.jsx";
 function Perfil(props) {
     const imagenes = {
@@ -38,6 +39,20 @@ function Perfil(props) {
         }
     }, [datosPerfil]);
 
+    const [urlFoto, setUrlFoto] = useState(Avatar);
+
+    useEffect(() => {
+        if (datosPerfil && datosPerfil.avatar !== null && datosPerfil.avatar !== "" && datosPerfil.avatar !== undefined && datosPerfil.avatar !== "url_example") {
+            // Si es una foto almacenada
+            if (datosPerfil.avatar.startsWith("imagenesPerfil/")){
+                setUrlFoto("http://devexperience.test/storage/" + datosPerfil.avatar);
+            } else {
+            // Si es una foto de google
+                setUrlFoto(datosPerfil.avatar);
+            }
+        }
+    }, [datosPerfil]);
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -55,7 +70,7 @@ function Perfil(props) {
                         <div className="col-4 col-xl-3 p-0 d-flex justify-content-center align-items-center position-relative">
                             <img
                                 className="img-fluid imgPerfil"
-                                src={datosPerfil.avatar}
+                                src={urlFoto}
                                 alt="Foto de perfil"
                             />
                             <img

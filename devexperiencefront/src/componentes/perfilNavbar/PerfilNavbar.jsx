@@ -51,9 +51,25 @@ function PerfilNavbar(props) {
         updateColorMode();
     }, [props.tema]);
 
+    const [urlFoto, setUrlFoto] = useState(Avatar);
+
+    useEffect(() => {
+        if (usuario && usuario.foto !== null && usuario.foto !== "" && usuario.foto !== undefined && usuario.foto !== "url_example") {
+            // Si es una foto almacenada
+            if (usuario.foto.startsWith("imagenesPerfil/")){
+                setUrlFoto("http://devexperience.test/storage/" + usuario.foto);
+            } else {
+            // Si es una foto de google
+                setUrlFoto(usuario.foto);
+            }
+        } else {
+            setUrlFoto(Avatar);
+        }
+    }, [usuario]);
+
     return (
         <div className="perfil-navbar">
-            <img src={usuario ? usuario.foto : Avatar} alt={"Foto de perfil"} className="user-image" onClick={toggleMenu} />
+            <img src={urlFoto} alt={"Foto de perfil"} className="user-image" onClick={toggleMenu} />
             
             <svg className={`dropdown-arrow ${isMenuOpen ? 'open' : ''}`} width="10" height="10" viewBox="0 0 16 16" fill={colores[modoColor].Flecha} xmlns="http://www.w3.org/2000/svg" onClick={toggleMenu}>
                 <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
