@@ -79,7 +79,8 @@ class PerfilController extends Controller
     {
         // Obtener el usuario autenticado
         $user = Auth::user();
-        /* $cuentas = json_decode($request->cuentas, true); */
+        // Decodificar el JSON de cuentas
+       /*  $cuentas = json_decode($request->cuentas, true); */
         // Validar el avatar
         if ($request->file('avatar')) {
             $request->validate([
@@ -91,11 +92,11 @@ class PerfilController extends Controller
 
             $path = $request->file('avatar')->store('imagenesPerfil', ['disk' => 'public']);
             $user->avatar = $path;
-        } else {
-            $user->avatar = $user->avatar;
+        }else{
+            $user->avatar = $request->avatar;
         }
-        /* // Actualizar las cuentas, recorriendo el array de cuentas
-        foreach ($cuentas as $cuenta) {
+        // Actualizar las cuentas, recorriendo el array de cuentas
+      /*   foreach ($cuentas as $cuenta) {
             $pivotData = ['url' => $cuenta['url']];
 
             // Primero intenta obtener el registro pivot
@@ -114,11 +115,13 @@ class PerfilController extends Controller
         $user->apellidos = $request->apellidos;
         $user->sobre_mi = $request->sobre_mi;
         $user->email = $request->email;
+
         //Guardar los cambios
         $user->save();
 
         return response()->json([
             'message' => 'Perfil actualizado correctamente',
+            'avatar' => $user->avatar
         ]);
     }
 }

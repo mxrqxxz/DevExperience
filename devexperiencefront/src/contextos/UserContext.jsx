@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         // Recuperar el usuario del localStorage cuando la aplicación se monte
         const storedUser = localStorage.getItem('user');
+        // Si hay un usuario almacenado, actualizar el estado
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

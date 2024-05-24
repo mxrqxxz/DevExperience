@@ -13,8 +13,6 @@ function Soporte(props) {
 
     const [modoColor, setModoColor] = useState(props.infoGuardada.darkmode ? "Dark" : "Light");
 
-    const [modoColorInverso, setModoColorInverso] = useState(props.infoGuardada.darkmode ? "Light" : "Dark");
-
     useEffect(() => {
         const updateColorMode = () => {
             const newColorMode = props.infoGuardada.darkmode ? "Dark" : "Light";
@@ -27,7 +25,6 @@ function Soporte(props) {
     useEffect(() => {
         const updateColorMode = () => {
             const newColorMode = props.infoGuardada.darkmode ? "Light" : "Dark";
-            setModoColorInverso(newColorMode);
         };
 
         updateColorMode();
@@ -124,9 +121,8 @@ function Soporte(props) {
                 { /* Mensaje de enviado */ }
                 {soporteEnviado === true && (
                     <Alerta 
-                    mensaje="Formulario enviado correctamente"
-                    colorFondo={ colores[modoColorInverso].Fondos.principal }
-                    colorTexto={ colores[modoColorInverso].Texto.principal }>
+                    mensaje="Mensaje enviado correctamente"
+                    tipo="correcto">
                     </Alerta>
                 )}
             </div>

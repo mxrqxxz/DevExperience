@@ -1,17 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './alerta.css';
 
-function Alerta(props) {
+function Alerta({ mensaje, tipo}) {
     return (
-        <>
-            <div className="overlay"></div>
-            <div className="formularioEnviado" style={{ backgroundColor: props.colorFondo }}>
-                <p className="pMensaje" style={{ color: props.colorTexto }}>
-                    {props.mensaje}
-                </p>
-            </div>
-        </>
-    )
+
+        <div className={`alerta show ${tipo}`}>
+            <p className="pMensaje">
+                {mensaje}
+            </p>
+        </div>
+    );
 }
 
 export default Alerta;

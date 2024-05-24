@@ -9,12 +9,16 @@ import './Perfil.css';
 import Avatar from '../../assets/imgs/Avatar.svg';
 import ModalImgPerfil from "../../componentes/modalImgPerfil/ModalImgPerfil.jsx";
 import { actualizarPerfil } from "../../servicios/actualizarPerfil.jsx";
+import Alerta from "../../componentes/alerta/alerta.jsx";
 
 function Perfil(props) {
     const imagenes = {
         LinkedIn: linkedIn,
         Github: github
     };
+    const [alertaTipo, setAlertaTipo] = useState('correcto'); 
+
+    const [perfilActualizado, setPerfilActualizado] = useState(false);
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = user?.token || null;
     const { datosPerfil, isLoading, error } = useDatosPerfil(token);
@@ -46,13 +50,14 @@ function Perfil(props) {
             setEditableDatosPerfil({ ...editableDatosPerfil, avatar: image });
             setSelectedImage(URL.createObjectURL(image)); // Genera una URL de objeto para la vista previa
         }
-        console.log(image);
     };
     const actualizarDatosPerfil = async () => {
         const res = await actualizarPerfil(token, editableDatosPerfil);
         if (res) {
-            console.log("Perfil actualizado correctamente");
+            mostrarMensaje();
+            setAlertaTipo('correcto'); 
         } else {
+            setAlertaTipo('error'); 
             console.log("Error al actualizar el perfil");
         }
     }
@@ -61,6 +66,7 @@ function Perfil(props) {
         const updateColorMode = () => {
             const newColorMode = props.infoGuardada.darkmode ? "Dark" : "Light";
             setModoColor(newColorMode);
+
         };
         updateColorMode();
     }, [props.infoGuardada.darkmode]);
@@ -91,6 +97,15 @@ function Perfil(props) {
 
     if (error) {
         return <div>Error: {error.message || "Error al cargar los datos del perfil"}</div>;
+    }
+
+     // Mensaje de formulario enviado
+     function mostrarMensaje() {
+        setPerfilActualizado(true);
+        setTimeout(() => {
+            setPerfilActualizado(false);
+            window.location.reload();
+        }, 2500);
     }
 
     return (
@@ -238,6 +253,14 @@ function Perfil(props) {
                 </div>
             )}
             <ModalImgPerfil show={showImgModal} handleImgPerfil={handleImgPerfil} handleClose={handleImgClose} modoColor={modoColor} url={urlFoto}></ModalImgPerfil>
+
+            { /* Mensaje de enviado */ }
+                {perfilActualizado === true && (
+                    <Alerta 
+                    mensaje="Perfil actualizado correctamente"
+                    tipo={alertaTipo}>
+                    </Alerta>
+                )}
         </div>
 
     );
