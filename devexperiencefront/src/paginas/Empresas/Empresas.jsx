@@ -6,6 +6,8 @@ import ListaEmpresas from "../../componentes/listaEmpresas/ListaEmpresas.jsx";
 import "./Empresas.css";
 import Select from "../../componentes/select/Select.jsx";
 import useTecnologiasTipo from "../../hooks/useTecnologiasTipo.jsx";
+import CrearEmpresa from "../../componentes/crearEmpresa/CrearEmpresa.jsx";
+import Boton from '../../componentes/boton/Boton';
 
 function Empresas(props) {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -105,6 +107,35 @@ function Empresas(props) {
         }
     }
 
+    function resetFiltros() {
+        // Reset estado filtros
+        setFiltros({
+            front: "Sin definir",
+            back: "Sin definir",
+            modalidad: "Sin definir",
+            valoracion: "Sin definir"
+        });
+        // Reset de los select
+        document.getElementById("front").value = "Sin definir"; 
+        document.getElementById("back").value = "Sin definir";
+        document.getElementById("modalidad").value = "Sin definir";
+        document.getElementById("ordenar").value = "Sin definir";
+    }
+
+    const [showCrearEmpresaModal, setShowCrearEmpresaModal] = useState(() => {
+        const storedShowCrearEmpresaModal = localStorage.getItem('showCrearEmpresaModal');
+        localStorage.removeItem('showCrearEmpresaModal'); 
+        return storedShowCrearEmpresaModal === 'true';
+    });
+
+    const handleCrearEmpresaClick = () => {
+        setShowCrearEmpresaModal(true);
+    };
+
+    const handleCrearEmpresaClose = () => {
+        setShowCrearEmpresaModal(false);
+    };
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -135,6 +166,12 @@ function Empresas(props) {
                             <Select gestion={asignarValoracion} color={colores[modoColor].Texto.principal} nombre="ordenar" id="ordenar" placeholder="Valoración" opciones={valoraciones} />
                         </div>
                     </div>
+                    <div className="col-12">
+                        <div className="centrar2">
+                            <button onClick={resetFiltros} className="resetFiltros">Borrar filtros</button>
+                            <Boton contenido="Crear empresa" onClick={handleCrearEmpresaClick} />
+                        </div>
+                    </div>
                 </div>
                 <div className="row">
                     <ListaEmpresas infoGuardada={props.infoGuardada} lista={ordenarEmpresas(listaEmpresas.filter(aplicarFiltros))}></ListaEmpresas>
@@ -144,6 +181,7 @@ function Empresas(props) {
                         <p style={{ color: colores[modoColor].Texto.principal }} className="pFooter" >&#169; DevExperience | Diseñado por: Manuel Fernández y Jesús Rial | Proyecto TFG DAW 2024</p>
                     </div>
                 </div>
+                <CrearEmpresa show={showCrearEmpresaModal} handleClose={handleCrearEmpresaClose} modoColor={modoColor}/>
             </div>
         </div>
     );

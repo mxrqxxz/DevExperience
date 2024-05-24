@@ -8,6 +8,12 @@
     margin: 15px 20px;
     border-radius: 10px;
     padding-top: 30px;
+    min-height: 40vh;
+}
+
+.sinResultados {
+    text-align: center;
+    margin-top: 40px;
 }
 
 @media screen and (min-width: 768px) {

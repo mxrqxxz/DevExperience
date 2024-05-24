@@ -28,6 +28,14 @@
     text-align: center;
 }
 
+.resetFiltros {
+    padding: 10px;
+    background-color: #ff4c4c;
+    color: white;
+    border-radius: 10px;
+    border: none;
+}
+
 @media (min-width: 768px) {
     .centrar {
         display: flex;
