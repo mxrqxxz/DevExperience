@@ -7,7 +7,9 @@ import github from '../../assets/imgs/tecnologias/icons8-github.svg';
 import aniadir from '../../assets/imgs/aniadir.svg';
 import './Perfil.css';
 import Avatar from '../../assets/imgs/Avatar.svg';
-import Boton from "../../componentes/boton/Boton.jsx";
+import ModalImgPerfil from "../../componentes/modalImgPerfil/ModalImgPerfil.jsx";
+import { actualizarPerfil } from "../../servicios/actualizarPerfil.jsx";
+
 function Perfil(props) {
     const imagenes = {
         LinkedIn: linkedIn,
@@ -24,6 +26,36 @@ function Perfil(props) {
         const { name, value } = e.target;
         setEditableDatosPerfil({ ...editableDatosPerfil, [name]: value });
     };
+    const [showImgModal, setShowImgModal] = useState(false);
+
+    const handleImgClick = () => {
+        setShowImgModal(true);
+    };
+    const handleImgClose = () => {
+        setShowImgModal(false);
+    };
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const handleImgPerfil = (image) => {
+        if (typeof image === 'string') {
+            // Es una ruta de imagen predefinida
+            setEditableDatosPerfil({ ...editableDatosPerfil, avatar: image });
+            setSelectedImage(image);
+        } else {
+            // Es un archivo
+            setEditableDatosPerfil({ ...editableDatosPerfil, avatar: image });
+            setSelectedImage(URL.createObjectURL(image)); // Genera una URL de objeto para la vista previa
+        }
+        console.log(image);
+    };
+    const actualizarDatosPerfil = async () => {
+        const res = await actualizarPerfil(token, editableDatosPerfil);
+        if (res) {
+            console.log("Perfil actualizado correctamente");
+        } else {
+            console.log("Error al actualizar el perfil");
+        }
+    }
 
     useEffect(() => {
         const updateColorMode = () => {
@@ -44,10 +76,10 @@ function Perfil(props) {
     useEffect(() => {
         if (datosPerfil && datosPerfil.avatar !== null && datosPerfil.avatar !== "" && datosPerfil.avatar !== undefined && datosPerfil.avatar !== "url_example") {
             // Si es una foto almacenada
-            if (datosPerfil.avatar.startsWith("imagenesPerfil/")){
+            if (datosPerfil.avatar.startsWith("imagenesPerfil/")) {
                 setUrlFoto("http://devexperience.test/storage/" + datosPerfil.avatar);
             } else {
-            // Si es una foto de google
+                // Si es una foto de google
                 setUrlFoto(datosPerfil.avatar);
             }
         }
@@ -70,12 +102,13 @@ function Perfil(props) {
                         <div className="col-4 col-xl-3 p-0 d-flex justify-content-center align-items-center position-relative">
                             <img
                                 className="img-fluid imgPerfil"
-                                src={urlFoto}
+                                src={selectedImage === null ? urlFoto : selectedImage}
                                 alt="Foto de perfil"
                             />
                             <img
                                 className="imgAgregar"
                                 src={aniadir}
+                                onClick={handleImgClick}
                                 alt="Cambiar imagen"
                                 title="Cambiar imagen"
                             />
@@ -129,6 +162,7 @@ function Perfil(props) {
                                 value={editableDatosPerfil.usuario || ''}
                                 onChange={handleInputChange}
                                 style={{ width: '100%', padding: '5px' }}
+                                disabled={true}
                             />
                         </label>
                         <label className="col-12 col-lg-4 mt-3">
@@ -183,7 +217,7 @@ function Perfil(props) {
                         </label>
                         <div className="row mt-3">
                             <div className="col-12 d-flex justify-content-start align-items-center">
-                                <button className="boton d-felx justify-content-center align-items-center mt-3 mb-3 p-2" style={{ minWidth: '162px' }}>
+                                <button className="boton d-felx justify-content-center align-items-center mt-3 mb-3 p-2" style={{ minWidth: '162px' }} onClick={actualizarDatosPerfil}>
                                     <span>Guardar</span>
                                 </button>
                                 <span className="col-1"></span>
@@ -203,7 +237,9 @@ function Perfil(props) {
                     </div>
                 </div>
             )}
+            <ModalImgPerfil show={showImgModal} handleImgPerfil={handleImgPerfil} handleClose={handleImgClose} modoColor={modoColor} url={urlFoto}></ModalImgPerfil>
         </div>
+
     );
 }
 

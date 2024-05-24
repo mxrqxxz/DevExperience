@@ -79,11 +79,11 @@ class PerfilController extends Controller
     {
         // Obtener el usuario autenticado
         $user = Auth::user();
-        $cuentas = json_decode($request->cuentas, true);
+        /* $cuentas = json_decode($request->cuentas, true); */
         // Validar el avatar
         if ($request->file('avatar')) {
             $request->validate([
-                'avatar' => 'mimes:png,jpg,jpeg|max:5120', // Se permiten imagenes de hasta 5 MB
+                'avatar' => 'mimes:png,jpg,jpeg,svg|max:10000', // Se permiten imagenes de hasta 5 MB
             ], [
                 'avatar.mimes' => 'El avatar debe ser una imagen.',
                 'avatar.max' => 'El tamaño del avatar no debe ser mayor a 5 MB.',
@@ -94,7 +94,7 @@ class PerfilController extends Controller
         } else {
             $user->avatar = $user->avatar;
         }
-        // Actualizar las cuentas, recorriendo el array de cuentas
+        /* // Actualizar las cuentas, recorriendo el array de cuentas
         foreach ($cuentas as $cuenta) {
             $pivotData = ['url' => $cuenta['url']];
 
@@ -108,9 +108,8 @@ class PerfilController extends Controller
                 // Adjuntar si no existe
                 $user->cuentas()->attach($cuenta['cuenta_id'], $pivotData);
             }
-        }
+        } */
         // Actualizar los datos del usuario
-        $user->usuario = $request->usuario;
         $user->nombre = $request->nombre;
         $user->apellidos = $request->apellidos;
         $user->sobre_mi = $request->sobre_mi;

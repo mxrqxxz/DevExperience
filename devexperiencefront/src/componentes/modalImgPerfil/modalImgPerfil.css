@@ -1,0 +1,22 @@
+.modal-header-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.imgModalPerfil {
+    width: 60px;
+    aspect-ratio: 1 / 1;
+    border-radius: 100%;
+    object-fit: cover;
+    margin: 10px 0;
+    margin-right: 10px;
+}
+
+.text-modal-cabecera {
+    line-height: 60px; 
+    margin: 0; 
+}
+.imgModalPerfil.selected {
+    border: 2px solid #00bfff; /* Puedes cambiar el color y el grosor del borde según tus preferencias */
+}

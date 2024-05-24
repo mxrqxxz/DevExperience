@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import './PerfilNavbar.css';  
 import Avatar from '../../assets/imgs/Avatar.svg';
 import ColoresContext from "../../contextos/ColoresContext";
-import { Link } from 'react-router-dom';
 import Login from '../../paginas/Login/Login';
 import { UserContext } from '../../contextos/UserContext';
 import { useNavigate } from 'react-router-dom';
