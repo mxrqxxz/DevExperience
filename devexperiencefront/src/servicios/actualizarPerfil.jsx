@@ -1,10 +1,12 @@
-export async function actualizarPerfil(token, editableDatosPerfil) {
+export async function actualizarPerfil(token, editableDatosPerfil, cuentasActualizadas) {
     const formData = new FormData();
     
     formData.append('nombre', editableDatosPerfil.nombre);
     formData.append('apellidos', editableDatosPerfil.apellidos);
     formData.append('sobre_mi', editableDatosPerfil.sobre_mi);
     formData.append('email', editableDatosPerfil.email);
+    
+    formData.append('cuentas', JSON.stringify(cuentasActualizadas));
 
     if (editableDatosPerfil.avatar) {
         formData.append('avatar', editableDatosPerfil.avatar);

@@ -10,6 +10,7 @@ import Avatar from '../../assets/imgs/Avatar.svg';
 import ModalImgPerfil from "../../componentes/modalImgPerfil/ModalImgPerfil.jsx";
 import { actualizarPerfil } from "../../servicios/actualizarPerfil.jsx";
 import Alerta from "../../componentes/alerta/alerta.jsx";
+import ModalCuentas from "../../componentes/modalCuentas/ModalCuentas.jsx";
 
 function Perfil(props) {
     const imagenes = {
@@ -25,18 +26,25 @@ function Perfil(props) {
     const colores = useContext(ColoresContext);
     const [modoColor, setModoColor] = useState(props.infoGuardada.darkmode ? "Dark" : "Light");
     const [editableDatosPerfil, setEditableDatosPerfil] = useState(datosPerfil || {});
-
+    const [cuentasActualizadas, setCuentasActualizadas] = useState([]);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setEditableDatosPerfil({ ...editableDatosPerfil, [name]: value });
     };
     const [showImgModal, setShowImgModal] = useState(false);
+    const [showCtaModal, setShowCtaModal] = useState(false);
 
     const handleImgClick = () => {
         setShowImgModal(true);
     };
     const handleImgClose = () => {
         setShowImgModal(false);
+    };
+    const handleCtaClose = () => {
+        setShowCtaModal(false);
+    };
+    const handleCtaClick = () => {
+        setShowCtaModal(true);
     };
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -51,8 +59,22 @@ function Perfil(props) {
             setSelectedImage(URL.createObjectURL(image)); // Genera una URL de objeto para la vista previa
         }
     };
+    const handleCtaPerfil = (cuentasActualizadas) => {
+        //quiero actualizar la url dentro de cuentas
+        let cuentas = editableDatosPerfil.cuentas;
+        cuentasActualizadas.forEach(cuenta => {
+            cuentas.forEach(cuentaPerfil => {
+                if (cuentaPerfil.nombre == editableDatosPerfil.cat_cuentas.find(cat => cat.id == cuenta.id).nombre) {
+                    cuentaPerfil.url = cuenta.url;
+                }
+            });
+        });
+        setCuentasActualizadas(cuentasActualizadas);
+        setEditableDatosPerfil({ ...editableDatosPerfil, cuentas: cuentas });
+    };
+
     const actualizarDatosPerfil = async () => {
-        const res = await actualizarPerfil(token, editableDatosPerfil);
+        const res = await actualizarPerfil(token, editableDatosPerfil, cuentasActualizadas);
         if (res) {
             mostrarMensaje();
             setAlertaTipo('correcto'); 
@@ -104,6 +126,8 @@ function Perfil(props) {
         setPerfilActualizado(true);
         setTimeout(() => {
             setPerfilActualizado(false);
+            //solo quiero que se reacargue si se ha cambiado el avatar
+            if (selectedImage !== null || cuentasActualizadas.length > 0)
             window.location.reload();
         }, 2500);
     }
@@ -154,8 +178,8 @@ function Perfil(props) {
                                                 </div>
                                             ))}
                                             <div className="col-3 col-md-2 col-xl-1 caja-img">
-                                                <a href="/ruta/para/agregar/cuenta" target="_blank" rel="noopener noreferrer" className="caja-img">
-                                                    <img src={aniadir} alt="Añadir cuenta" className="avatares-perfil aniadir" title="Añadir cuenta" />
+                                                <a rel="noopener noreferrer" className="caja-img" onClick={handleCtaClick}>
+                                                    <img src={aniadir} alt="Añadir cuenta"  className="avatares-perfil aniadir" title="Añadir cuenta" style={{cursor:"pointer"}}/>
                                                 </a>
                                             </div>
                                         </>
@@ -253,6 +277,7 @@ function Perfil(props) {
                 </div>
             )}
             <ModalImgPerfil show={showImgModal} handleImgPerfil={handleImgPerfil} handleClose={handleImgClose} modoColor={modoColor} url={urlFoto}></ModalImgPerfil>
+            <ModalCuentas show={showCtaModal} handleCtaPerfil={handleCtaPerfil} handleClose={handleCtaClose} modoColor={modoColor} catCuentas={editableDatosPerfil.cat_cuentas} cuentas={editableDatosPerfil.cuentas}></ModalCuentas>
 
             { /* Mensaje de enviado */ }
                 {perfilActualizado === true && (

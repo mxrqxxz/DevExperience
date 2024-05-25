@@ -15,7 +15,6 @@ function ModalImgPerfil(props) {
     const colores = useContext(ColoresContext);
 
     const [selectedImage, setSelectedImage] = useState(null);
-    const [customImage, setCustomImage] = useState(null);
 
     const handleImageClick = (image) => {
         setSelectedImage(image);

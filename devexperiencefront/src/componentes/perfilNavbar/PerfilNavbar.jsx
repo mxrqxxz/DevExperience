@@ -6,6 +6,7 @@ import Login from '../../paginas/Login/Login';
 import { UserContext } from '../../contextos/UserContext';
 import { useNavigate } from 'react-router-dom';
 import Register from '../../paginas/Register/Register';
+
 function PerfilNavbar(props) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(() => {

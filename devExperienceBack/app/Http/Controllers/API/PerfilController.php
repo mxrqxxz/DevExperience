@@ -80,7 +80,7 @@ class PerfilController extends Controller
         // Obtener el usuario autenticado
         $user = Auth::user();
         // Decodificar el JSON de cuentas
-       /*  $cuentas = json_decode($request->cuentas, true); */
+         $cuentas = json_decode($request->cuentas, true);
         // Validar el avatar
         if ($request->file('avatar')) {
             $request->validate([
@@ -95,21 +95,15 @@ class PerfilController extends Controller
         }else{
             $user->avatar = $request->avatar;
         }
-        // Actualizar las cuentas, recorriendo el array de cuentas
-      /*   foreach ($cuentas as $cuenta) {
-            $pivotData = ['url' => $cuenta['url']];
+        // Actualizar la cuenta si el usuario ya tiene, si no, crearla
+        foreach ($cuentas as $cuenta) {
+            $user->cuentas()->syncWithoutDetaching([
+                $cuenta['id'] => [
+                    'url' => $cuenta['url']
+                ]
+            ]);
+        }
 
-            // Primero intenta obtener el registro pivot
-            $pivot = $user->cuentas()->wherePivot('cuenta_id', $cuenta['cuenta_id'])->first();
-
-            if ($pivot) {
-                // Actualizar si existe
-                $user->cuentas()->updateExistingPivot($cuenta['cuenta_id'], $pivotData);
-            } else {
-                // Adjuntar si no existe
-                $user->cuentas()->attach($cuenta['cuenta_id'], $pivotData);
-            }
-        } */
         // Actualizar los datos del usuario
         $user->nombre = $request->nombre;
         $user->apellidos = $request->apellidos;
@@ -121,7 +115,7 @@ class PerfilController extends Controller
 
         return response()->json([
             'message' => 'Perfil actualizado correctamente',
-            'avatar' => $user->avatar
+            'avatar' => $user->avatar,
         ]);
     }
 }
