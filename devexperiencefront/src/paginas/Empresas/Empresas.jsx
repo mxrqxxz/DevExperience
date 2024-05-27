@@ -8,13 +8,21 @@ import Select from "../../componentes/select/Select.jsx";
 import useTecnologiasTipo from "../../hooks/useTecnologiasTipo.jsx";
 import CrearEmpresa from "../../componentes/crearEmpresa/CrearEmpresa.jsx";
 import Boton from '../../componentes/boton/Boton';
-
+import ModalAñadirEmpresa from "../../componentes/modalAñadireEmpresa/ModalAñadirEmpresa.jsx";
 function Empresas(props) {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = user?.token || null;
     const { listaEmpresas, isLoading, error } = useEmpresas(token);
     const colores = useContext(ColoresContext);
     const [modoColor, setModoColor] = useState(props.infoGuardada.darkmode ? "Dark" : "Light");
+    const [showModalAñadirEmpresa, setShowModalAñadirEmpresa] = useState(false);
+
+    const handleShowModalAñadirEmpresa = () => {
+        setShowModalAñadirEmpresa(true);
+    };
+    const handleCloseModalAñadirEmpresa = () => {
+        setShowModalAñadirEmpresa(false);
+    };
 
     useEffect(() => {
         const updateColorMode = () => {
@@ -128,14 +136,6 @@ function Empresas(props) {
         return storedShowCrearEmpresaModal === 'true';
     });
 
-    const handleCrearEmpresaClick = () => {
-        setShowCrearEmpresaModal(true);
-    };
-
-    const handleCrearEmpresaClose = () => {
-        setShowCrearEmpresaModal(false);
-    };
-
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -169,7 +169,7 @@ function Empresas(props) {
                     <div className="col-12">
                         <div className="centrar2">
                             <button onClick={resetFiltros} className="resetFiltros">Borrar filtros</button>
-                            <Boton contenido="Crear empresa" onClick={handleCrearEmpresaClick} />
+                            <button contenido="Crear empresa" onClick={handleShowModalAñadirEmpresa} >Añadir Empresa</button>
                         </div>
                     </div>
                 </div>
@@ -181,7 +181,8 @@ function Empresas(props) {
                         <p style={{ color: colores[modoColor].Texto.principal }} className="pFooter" >&#169; DevExperience | Diseñado por: Manuel Fernández y Jesús Rial | Proyecto TFG DAW 2024</p>
                     </div>
                 </div>
-                <CrearEmpresa show={showCrearEmpresaModal} handleClose={handleCrearEmpresaClose} modoColor={modoColor}/>
+                {/* <CrearEmpresa show={showCrearEmpresaModal} handleClose={handleCrearEmpresaClose} modoColor={modoColor}/> */}
+                <ModalAñadirEmpresa show={showModalAñadirEmpresa} handleClose={handleCloseModalAñadirEmpresa} modoColor={modoColor}/>
             </div>
         </div>
     );
