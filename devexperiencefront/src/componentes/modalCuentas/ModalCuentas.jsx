@@ -16,6 +16,8 @@ function ModalCuentas(props) {
         const selectedCuentaObj = props.cuentas.find(cuenta => cuenta.nombre === nombreCuenta);
         if (selectedCuentaObj) {
             setPerfil(selectedCuentaObj.url);
+        }else {
+            setPerfil('');
         }
     };
 
@@ -50,13 +52,20 @@ function ModalCuentas(props) {
         setCuentasActualizadas([]);
         setPerfil('');
         setSelectedCuenta('');
-        
+
         // Cerrar el modal
         props.handleClose();
     };
 
+    const cerrarModal = () => {
+        setCuentasActualizadas([]);
+        setPerfil('');
+        setSelectedCuenta('');
+        props.handleClose();
+    }
+
     return (
-        <Modal show={props.show} onHide={props.handleClose} body={false} >
+        <Modal show={props.show} onHide={cerrarModal} body={false} >
             <Modal.Header
                 closeButton
                 style={{
@@ -88,7 +97,7 @@ function ModalCuentas(props) {
                     </div>
                     <div className='col-12'>
                         <label style={{ marginTop: "10px" }}>
-                            <h5>Perfil</h5>
+                            <h5>Url cuenta</h5>
                             <div className='row'>
 
                             </div>
@@ -97,6 +106,7 @@ function ModalCuentas(props) {
                                 name="perfil"
                                 value={perfil}
                                 onChange={handleInputChange}
+                                disabled={!selectedCuenta}
                                 style={{ width: '450px', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }}
                             />
                         </label>

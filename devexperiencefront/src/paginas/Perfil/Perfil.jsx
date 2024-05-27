@@ -11,13 +11,14 @@ import ModalImgPerfil from "../../componentes/modalImgPerfil/ModalImgPerfil.jsx"
 import { actualizarPerfil } from "../../servicios/actualizarPerfil.jsx";
 import Alerta from "../../componentes/alerta/alerta.jsx";
 import ModalCuentas from "../../componentes/modalCuentas/ModalCuentas.jsx";
+import ModalFormulario from "../../componentes/modalFormulario/ModalFormulario.jsx";
 
 function Perfil(props) {
     const imagenes = {
         LinkedIn: linkedIn,
         Github: github
     };
-    const [alertaTipo, setAlertaTipo] = useState('correcto'); 
+    const [alertaTipo, setAlertaTipo] = useState('correcto');
 
     const [perfilActualizado, setPerfilActualizado] = useState(false);
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -27,13 +28,25 @@ function Perfil(props) {
     const [modoColor, setModoColor] = useState(props.infoGuardada.darkmode ? "Dark" : "Light");
     const [editableDatosPerfil, setEditableDatosPerfil] = useState(datosPerfil || {});
     const [cuentasActualizadas, setCuentasActualizadas] = useState([]);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setEditableDatosPerfil({ ...editableDatosPerfil, [name]: value });
     };
     const [showImgModal, setShowImgModal] = useState(false);
     const [showCtaModal, setShowCtaModal] = useState(false);
+    const [showFormModal, setShowFormModal] = useState(false);
+    const handleFormClose = () => {
+        setShowFormModal(false);
+    };
+    const handleFormPerfil = (formData) => {
+        setShowFormModal(false);
+    };
 
+    const handleFormClick = () => {
+
+        setShowFormModal(true);
+    };
     const handleImgClick = () => {
         setShowImgModal(true);
     };
@@ -77,9 +90,9 @@ function Perfil(props) {
         const res = await actualizarPerfil(token, editableDatosPerfil, cuentasActualizadas);
         if (res) {
             mostrarMensaje();
-            setAlertaTipo('correcto'); 
+            setAlertaTipo('correcto');
         } else {
-            setAlertaTipo('error'); 
+            setAlertaTipo('error');
             console.log("Error al actualizar el perfil");
         }
     }
@@ -121,14 +134,14 @@ function Perfil(props) {
         return <div>Error: {error.message || "Error al cargar los datos del perfil"}</div>;
     }
 
-     // Mensaje de formulario enviado
-     function mostrarMensaje() {
+    // Mensaje de formulario enviado
+    function mostrarMensaje() {
         setPerfilActualizado(true);
         setTimeout(() => {
             setPerfilActualizado(false);
             //solo quiero que se reacargue si se ha cambiado el avatar
             if (selectedImage !== null || cuentasActualizadas.length > 0)
-            window.location.reload();
+                window.location.reload();
         }, 2500);
     }
 
@@ -163,7 +176,7 @@ function Perfil(props) {
                                             </div>
                                         ))
                                     ) : (
-                                        <p className="col-12">No hay cuentas disponibles.</p>
+                                        <p className="col-12">No hay insignias disponibles.</p>
                                     )}
                                 </div>
                                 <div className="row caja-general">
@@ -179,14 +192,17 @@ function Perfil(props) {
                                             ))}
                                             <div className="col-3 col-md-2 col-xl-1 caja-img">
                                                 <a rel="noopener noreferrer" className="caja-img" onClick={handleCtaClick}>
-                                                    <img src={aniadir} alt="Añadir cuenta"  className="avatares-perfil aniadir" title="Añadir cuenta" style={{cursor:"pointer"}}/>
+                                                    <img src={aniadir} alt="Añadir cuenta" className="avatares-perfil aniadir" title="Añadir cuenta" style={{ cursor: "pointer" }} />
                                                 </a>
                                             </div>
                                         </>
 
                                     ) : (
-                                        <p className="col-12">No hay cuentas disponibles.</p>
-                                    )}
+                                        <div className="col-3 col-md-2 col-xl-1 caja-img">
+                                            <a rel="noopener noreferrer" className="caja-img" onClick={handleCtaClick}>
+                                                <img src={aniadir} alt="Añadir cuenta" className="avatares-perfil aniadir" title="Añadir cuenta" style={{ cursor: "pointer" }} />
+                                            </a>
+                                        </div>)}
                                 </div>
                             </div>
                         </div>
@@ -265,7 +281,7 @@ function Perfil(props) {
                                         <span>Enviar invitaciones</span>
                                     </button>
                                 ) : (
-                                    <button className="boton d-flex justify-content-center align-items-center mt-3 mb-3 p-2" style={{ minWidth: '162px' }}>
+                                    <button className="boton d-flex justify-content-center align-items-center mt-3 mb-3 p-2" style={{ minWidth: '162px' }} onClick={handleFormClick}>
                                         <span>Realizar formulario</span>
                                     </button>
                                 )}
@@ -278,14 +294,14 @@ function Perfil(props) {
             )}
             <ModalImgPerfil show={showImgModal} handleImgPerfil={handleImgPerfil} handleClose={handleImgClose} modoColor={modoColor} url={urlFoto}></ModalImgPerfil>
             <ModalCuentas show={showCtaModal} handleCtaPerfil={handleCtaPerfil} handleClose={handleCtaClose} modoColor={modoColor} catCuentas={editableDatosPerfil.cat_cuentas} cuentas={editableDatosPerfil.cuentas}></ModalCuentas>
-
-            { /* Mensaje de enviado */ }
-                {perfilActualizado === true && (
-                    <Alerta 
+            <ModalFormulario show={showFormModal} handleFormPerfil={handleFormPerfil} handleClose={handleFormClose} modoColor={modoColor} ></ModalFormulario>
+            { /* Mensaje de enviado */}
+            {perfilActualizado === true && (
+                <Alerta
                     mensaje="Perfil actualizado correctamente"
                     tipo={alertaTipo}>
-                    </Alerta>
-                )}
+                </Alerta>
+            )}
         </div>
 
     );
