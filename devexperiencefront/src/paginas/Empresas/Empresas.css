@@ -36,6 +36,14 @@
     border: none;
 }
 
+.newEmpresa {
+    padding: 10px;
+    background-color: #149ECA;
+    color: white;
+    border-radius: 10px;
+    border: none;
+}
+
 @media (min-width: 768px) {
     .centrar {
         display: flex;

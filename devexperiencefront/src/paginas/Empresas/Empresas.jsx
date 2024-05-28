@@ -6,9 +6,8 @@ import ListaEmpresas from "../../componentes/listaEmpresas/ListaEmpresas.jsx";
 import "./Empresas.css";
 import Select from "../../componentes/select/Select.jsx";
 import useTecnologiasTipo from "../../hooks/useTecnologiasTipo.jsx";
-import CrearEmpresa from "../../componentes/crearEmpresa/CrearEmpresa.jsx";
-import Boton from '../../componentes/boton/Boton';
 import ModalAñadirEmpresa from "../../componentes/modalAñadireEmpresa/ModalAñadirEmpresa.jsx";
+
 function Empresas(props) {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = user?.token || null;
@@ -129,13 +128,7 @@ function Empresas(props) {
         document.getElementById("modalidad").value = "Sin definir";
         document.getElementById("ordenar").value = "Sin definir";
     }
-
-    const [showCrearEmpresaModal, setShowCrearEmpresaModal] = useState(() => {
-        const storedShowCrearEmpresaModal = localStorage.getItem('showCrearEmpresaModal');
-        localStorage.removeItem('showCrearEmpresaModal'); 
-        return storedShowCrearEmpresaModal === 'true';
-    });
-
+        
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -169,7 +162,9 @@ function Empresas(props) {
                     <div className="col-12">
                         <div className="centrar2">
                             <button onClick={resetFiltros} className="resetFiltros">Borrar filtros</button>
-                            <button contenido="Crear empresa" onClick={handleShowModalAñadirEmpresa} >Añadir Empresa</button>
+                            {user.rol === "profesor" && (
+                            <button contenido="Crear empresa" onClick={handleShowModalAñadirEmpresa} className="newEmpresa" >Añadir Empresa</button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -181,8 +176,15 @@ function Empresas(props) {
                         <p style={{ color: colores[modoColor].Texto.principal }} className="pFooter" >&#169; DevExperience | Diseñado por: Manuel Fernández y Jesús Rial | Proyecto TFG DAW 2024</p>
                     </div>
                 </div>
-                {/* <CrearEmpresa show={showCrearEmpresaModal} handleClose={handleCrearEmpresaClose} modoColor={modoColor}/> */}
-                <ModalAñadirEmpresa show={showModalAñadirEmpresa} handleClose={handleCloseModalAñadirEmpresa} modoColor={modoColor}/>
+
+                {user.rol === "profesor" && (
+                <ModalAñadirEmpresa 
+                    token={token} 
+                    show={showModalAñadirEmpresa} 
+                    handleClose={handleCloseModalAñadirEmpresa} 
+                    modoColor={modoColor}
+                />
+            )}
             </div>
         </div>
     );
