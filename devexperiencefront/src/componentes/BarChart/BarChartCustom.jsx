@@ -4,16 +4,12 @@ import "./BarChartCustom.css"
 
 function BarChartCustom(props) {
     const chartSetting = {
-        xAxis: [
-            {
-                label: 'uso (%)',
-            },
-        ],
-        width: 500,
+        xAxis: [],
+        width: 600,
         height: 400
     };
 
-    const valueFormatter = (value) => `${value}%`;
+    const valueFormatter = (value) => `${value + props.unidadMedida}`;
 
     return (
             <BarChart
@@ -29,7 +25,7 @@ function BarChartCustom(props) {
                         color: ['#087EA4', '#149ECA']
                     },
                     min: 0,
-                    max: 100,
+                    max: props.maxValue,
                 }
             ]}
             borderRadius={5}

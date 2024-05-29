@@ -3,6 +3,7 @@ import Navbar from '../../componentes/navbar/Navbar.jsx';
 import ColoresContext from "../../contextos/ColoresContext";
 import BarChartCustom from "../../componentes/BarChart/BarChartCustom.jsx";
 import useEstadisticasGenerales from "../../hooks/useEstadisticasGenerales";
+import "./Estadisticas.css";
 
 function Estadisticas(props) {
 
@@ -29,15 +30,98 @@ function Estadisticas(props) {
 
     const { listaDatos } = useEstadisticasGenerales();
 
+    // LÓGICA DE LA BARRA LATERAL
+
+    const [clickedIndex, setClickedIndex] = useState(null);
+
+    const handleItemClick = (index, item) => {
+        setClickedIndex(index);
+        seccionGraficos(item);
+    };
+
+    const items = ['TECNOLOGÍAS', 'EMPRESAS', 'CENTROS', 'HORARIOS'];
+
+    // LÓGICA CARGAR GRÁFICOS
+
+    const [selectedGraphData, setSelectedGraphData] = useState(null);
+    const [unidadMedida, setUnidadMedida] = useState(null);
+    const [maxValue, setMaxValue] = useState(null);
+    const [titulos, setTitulos] = useState([]);
+
+    function seccionGraficos(titulo) {
+        switch (titulo) {
+            case 'TECNOLOGÍAS':
+                setSelectedGraphData(listaDatos.estadisticas_tecnologias);
+                setUnidadMedida(' %');
+                setTitulos(['FRONT-END', 'BACK-END', 'BASE DE DATOS', 'CONTROL DE VERSIONES']);
+                break;
+            case 'EMPRESAS':
+                setSelectedGraphData(listaDatos.estadisticas_empresas);
+                setUnidadMedida(' %');
+                setTitulos(['PRÁCTICAS (%)', 'PORCENTAJE DE LAS CONTRATACIONES TOTALES', 'SALARIOS', 'REMOTO (%)']);
+                break;
+            case 'CENTROS':
+                setSelectedGraphData(listaDatos.estadisticas_centros);
+                setUnidadMedida(' %');
+                setTitulos(['CON MÁS CONTRATACIONES (%)', 'MEDIA DE SALARIOS MÁS ALTOS', 'PRÁCTICAS EN REMOTO', 'EMPRESAS ASOCIADAS (%)']);
+                break;
+            case 'HORARIOS':
+                setSelectedGraphData(listaDatos.estadisticas_horarios);
+                setUnidadMedida(' %');
+                setTitulos(['HORA DE ENTRADA (%)', 'HORA DE SALIDA (%)', 'TIPO DE JORNADA', 'TIEMPO DE DESCANSO (%)']);
+                break;
+            default:
+                setSelectedGraphData(null);
+                setUnidadMedida(null);
+                setTitulos([]);
+                break;
+        }
+    }
+
+    function renderCharts(data) {
+        if (!data) return null;
+        return Object.keys(data).map((key, index) => (
+            <>
+                <h3 style={{ color: colores[modoColor].Texto.principal }}>{titulos[index]}</h3>
+                <BarChartCustom key={index} data={data[key]} unidadMedida={unidadMedida} maxValue={maxValue} />
+            </>
+        ));
+    }
+
     return (
         <div>
             <Navbar infoGuardada={props.infoGuardada} cambiarDarkmode={props.cambiarDarkmode}></Navbar>
             <div className="container-fluid p-0">
                 <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.secundario }}>
-                    {
-                        listaDatos.estadisticas_tecnologias && 
-                        <BarChartCustom data={listaDatos.estadisticas_tecnologias.front}/>
-                    }
+                    <div className="col-3">
+                        <div className="barraLateral">
+                            {/* TITULOS DE LA BARRA LATERAL */}
+                            <div className="grupoTitulos">
+                                {items.map((item, index) => (
+                                    <p
+                                        key={index}
+                                        className="tituloLateral"
+                                        style={{
+                                            color: colores[modoColor].Texto.principal,
+                                            backgroundColor: clickedIndex === index ? '#149ECA' : 'transparent',
+                                        }}
+                                        onClick={() => handleItemClick(index, item)}
+                                    >
+                                        <strong>
+                                            {item}
+                                        </strong>
+                                    </p>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-9 p-0">
+                        <div className="seccionEstadistica">
+                            <div className="grafico">
+                                {renderCharts(selectedGraphData)}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="row">
                     <div className="col-12" style={{ backgroundColor: colores[modoColor].Fondos.footer }}>

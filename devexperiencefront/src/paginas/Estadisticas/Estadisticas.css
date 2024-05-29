@@ -1,0 +1,28 @@
+.barraLateral {
+    background-color: #23272F;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    width: 20%;
+}
+
+.tituloLateral {
+    text-align: center;
+    padding: 15px 0px;
+    margin-bottom: 0px;
+}
+
+.seccionEstadistica {
+    display: flex;
+    flex-direction: column;
+}
+
+.grafico {
+    margin: auto;
+}
+
+.grupoTitulos {
+    margin-top: auto;
+    margin-bottom: auto;
+}
