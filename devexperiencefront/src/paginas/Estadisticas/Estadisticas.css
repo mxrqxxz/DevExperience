@@ -18,8 +18,8 @@
     flex-direction: column;
 }
 
-.grafico {
-    margin: auto;
+.tituloGrafico {
+    padding: 30px 0px;
 }
 
 .grupoTitulos {

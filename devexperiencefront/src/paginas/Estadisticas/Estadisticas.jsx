@@ -32,8 +32,7 @@ function Estadisticas(props) {
 
     // LÓGICA DE LA BARRA LATERAL
 
-    const [clickedIndex, setClickedIndex] = useState(null);
-
+    const [clickedIndex, setClickedIndex] = useState(0); // Marca por default el primer item de la barra lateral
     const handleItemClick = (index, item) => {
         setClickedIndex(index);
         seccionGraficos(item);
@@ -72,7 +71,7 @@ function Estadisticas(props) {
                 break;
             default:
                 setSelectedGraphData(null);
-                setUnidadMedida(null);
+                setUnidadMedida('');
                 setTitulos([]);
                 break;
         }
@@ -82,11 +81,18 @@ function Estadisticas(props) {
         if (!data) return null;
         return Object.keys(data).map((key, index) => (
             <>
-                <h3 style={{ color: colores[modoColor].Texto.principal }}>{titulos[index]}</h3>
+                <h3 style={{ color: colores[modoColor].Texto.principal }} className="tituloGrafico">{titulos[index]}</h3>
                 <BarChartCustom key={index} data={data[key]} unidadMedida={unidadMedida} maxValue={maxValue} />
+                <hr style={{ color: colores[modoColor].Texto.principal }} />
             </>
         ));
     }
+
+    useEffect(() => {
+        setSelectedGraphData(listaDatos.estadisticas_tecnologias);
+        setUnidadMedida(' %');
+        setTitulos(['FRONT-END', 'BACK-END', 'BASE DE DATOS', 'CONTROL DE VERSIONES']);
+    }, [selectedGraphData == null]);
 
     return (
         <div>
