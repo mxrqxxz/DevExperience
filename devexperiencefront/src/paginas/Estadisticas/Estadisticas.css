@@ -13,6 +13,12 @@
     margin-bottom: 0px;
 }
 
+.iconoLateral {
+    display: block;
+    margin: auto;
+    padding: 15px 30px;
+}
+
 .seccionEstadistica {
     display: flex;
     flex-direction: column;
