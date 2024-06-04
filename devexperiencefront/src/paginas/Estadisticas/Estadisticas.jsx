@@ -200,7 +200,7 @@ function Estadisticas(props) {
                 </div>
                 <div className="row">
                     <div className="col-12" style={{ backgroundColor: colores[modoColor].Fondos.footer }}>
-                        <p style={{ color: colores[modoColor].Texto.principal }} className="pFooter" >&#169; DevExperience | Diseñado por: Manuel Fernández y Jesús Rial | Proyecto TFG DAW 2024</p>
+                        <p style={{ color: colores[modoColor].Texto.principal }} className="pFooterEspecial" >&#169; DevExperience | Diseñado por: Manuel Fernández y Jesús Rial | Proyecto TFG DAW 2024</p>
                     </div>
                 </div>
             </div>

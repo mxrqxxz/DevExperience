@@ -32,3 +32,11 @@
     margin-top: auto;
     margin-bottom: auto;
 }
+
+.pFooterEspecial {
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+    font-weight: normal;
+    margin: auto;
+}
