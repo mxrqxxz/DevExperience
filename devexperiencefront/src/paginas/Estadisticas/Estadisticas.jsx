@@ -4,6 +4,14 @@ import ColoresContext from "../../contextos/ColoresContext";
 import BarChartCustom from "../../componentes/BarChart/BarChartCustom.jsx";
 import useEstadisticasGenerales from "../../hooks/useEstadisticasGenerales";
 import "./Estadisticas.css";
+import desarrolloBlanco from "../../assets/imgs/iconosEstadisticas/dblanco.png"
+import desarrolloNegro from "../../assets/imgs/iconosEstadisticas/dnegro.png"
+import relojBlanco from "../../assets/imgs/iconosEstadisticas/horarios 1.png"
+import relojNegro from "../../assets/imgs/iconosEstadisticas/horarios 2.png"
+import oficinaNegro from "../../assets/imgs/iconosEstadisticas/oficina 2.png"
+import oficinaBlanco from "../../assets/imgs/iconosEstadisticas/oficina 1.png"
+import gorroBlanco from "../../assets/imgs/iconosEstadisticas/gorro 1.png"
+import gorroNegro from "../../assets/imgs/iconosEstadisticas/gorro 2.png"
 
 function Estadisticas(props) {
 
@@ -39,6 +47,61 @@ function Estadisticas(props) {
     };
 
     const items = ['TECNOLOGÍAS', 'EMPRESAS', 'CENTROS', 'HORARIOS'];
+
+    function sacarIcono(item, index) {
+        switch (item) {
+            case 'TECNOLOGÍAS':
+                return <img
+                    style={{
+                        backgroundColor: clickedIndex === index ? '#149ECA' : 'transparent',
+                    }}
+                    key={index}
+                    src={modoColor === 'Light' ? desarrolloNegro : desarrolloBlanco}
+                    alt="Tecnologías"
+                    className="iconoLateral"
+                    onClick={() => handleItemClick(index, item)}
+                />
+
+            case 'EMPRESAS':
+                return <img
+                    style={{
+                        color: colores[modoColor].Texto.principal,
+                        backgroundColor: clickedIndex === index ? '#149ECA' : 'transparent',
+                    }}
+                    key={index}
+                    src={modoColor === 'Light' ? oficinaNegro : oficinaBlanco}
+                    alt="Empresas"
+                    className="iconoLateral"
+                    onClick={() => handleItemClick(index, item)}
+                />
+            case 'CENTROS':
+                return <img
+                    style={{
+                        color: colores[modoColor].Texto.principal,
+                        backgroundColor: clickedIndex === index ? '#149ECA' : 'transparent',
+                    }}
+                    key={index}
+                    src={modoColor === 'Light' ? gorroNegro : gorroBlanco}
+                    alt="gorro"
+                    className="iconoLateral"
+                    onClick={() => handleItemClick(index, item)}
+                />
+            case 'HORARIOS':
+                return <img
+                    style={{
+                        color: colores[modoColor].Texto.principal,
+                        backgroundColor: clickedIndex === index ? '#149ECA' : 'transparent',
+                    }} 
+                    key={index} 
+                    src={modoColor === 'Light' ? relojNegro : relojBlanco} 
+                    alt="reloj" 
+                    className="iconoLateral" 
+                    onClick={() => handleItemClick(index, item)} />
+            default:
+                break;
+        }
+
+    }
 
     // LÓGICA CARGAR GRÁFICOS
 
@@ -102,7 +165,7 @@ function Estadisticas(props) {
                     <div className="col-3">
                         <div className="barraLateral">
                             {/* TITULOS DE LA BARRA LATERAL */}
-                            <div className="grupoTitulos">
+                            <div className="d-none d-md-block grupoTitulos">
                                 {items.map((item, index) => (
                                     <p
                                         key={index}
@@ -119,6 +182,12 @@ function Estadisticas(props) {
                                     </p>
                                 ))}
                             </div>
+
+                            <div className="d-block d-md-none grupoTitulos">
+                                {items.map((item, index) => (
+                                    sacarIcono(item, index)
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <div className="col-9 p-0">
@@ -131,7 +200,7 @@ function Estadisticas(props) {
                 </div>
                 <div className="row">
                     <div className="col-12" style={{ backgroundColor: colores[modoColor].Fondos.footer }}>
-                        <p style={{ color: colores[modoColor].Texto.principal }} className="pFooter" >&#169; DevExperience | Diseñado por: Manuel Fernández y Jesús Rial | Proyecto TFG DAW 2024</p>
+                        <p style={{ color: colores[modoColor].Texto.principal }} className="pFooterEspecial" >&#169; DevExperience | Diseñado por: Manuel Fernández y Jesús Rial | Proyecto TFG DAW 2024</p>
                     </div>
                 </div>
             </div>
