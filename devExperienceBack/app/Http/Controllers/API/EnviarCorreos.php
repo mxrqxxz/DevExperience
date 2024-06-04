@@ -25,7 +25,7 @@ class EnviarCorreos extends Controller
 
         Mail::to($destinatariosConCorreo)->send(new EnviarCorreoMasa());
 
-        return 'Correos enviados correctamente';
+        return response()->json(['message' => 'Correos enviados correctamente'], 200);
     }
 
     public function enviarCorreoForm(Request $request)

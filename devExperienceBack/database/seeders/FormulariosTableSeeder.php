@@ -18,7 +18,7 @@ class FormulariosTableSeeder extends Seeder
     {
         Formulario::truncate();
 
-        $users = User::all()->where('practicas_realizadas', 1);
+        $users = User::all()->where('formulario_realizado', 1);
         $centros = Centro::all();
         $empresas = Empresa::all();
 

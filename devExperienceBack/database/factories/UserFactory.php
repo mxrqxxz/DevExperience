@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'apellidos' => fake()->lastName(),
             'sobre_mi' => fake()->sentence(),
             'avatar' => 'https://phantom-expansion.unidadeditorial.es/e657e4b9272ba13c4183efcc1f33cb55/resize/828/f/webp/assets/multimedia/imagenes/2023/10/03/16963306273937.png',
-            'practicas_realizadas' => fake()->boolean(),
+            'formulario_realizado' => fake()->boolean(),
             'usuario' => fake()->userName(),
             'email' => $correo,
             'email_verified_at' => now(),

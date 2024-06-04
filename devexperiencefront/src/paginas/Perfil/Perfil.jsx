@@ -12,6 +12,7 @@ import { actualizarPerfil } from "../../servicios/actualizarPerfil.jsx";
 import Alerta from "../../componentes/alerta/alerta.jsx";
 import ModalCuentas from "../../componentes/modalCuentas/ModalCuentas.jsx";
 import ModalFormulario from "../../componentes/modalFormulario/ModalFormulario.jsx";
+import ModalInvitaciones from "../../componentes/modalInvitaciones/ModalInvitaciones.jsx";
 
 function Perfil(props) {
     const imagenes = {
@@ -39,10 +40,16 @@ function Perfil(props) {
     const handleFormClose = () => {
         setShowFormModal(false);
     };
-    const handleFormPerfil = (formData) => {
+    const handleFormPerfil = () => {
         setShowFormModal(false);
     };
-
+    const [showInvitacionModal, setShowInvitacionModal] = useState(false);
+    const handleInvitacionClose = () => {
+        setShowInvitacionModal(false);
+    };
+    const handleInvitacionClick = () => {
+        setShowInvitacionModal(true);
+    };
     const handleFormClick = () => {
 
         setShowFormModal(true);
@@ -277,14 +284,15 @@ function Perfil(props) {
                                 </button>
                                 <span className="col-1"></span>
                                 {user.rol == 'profesor' ? (
-                                    <button className="boton d-flex justify-content-center align-items-center mt-3 mb-3 p-2" style={{ minWidth: '162px' }}>
+                                    <button className="boton d-flex justify-content-center align-items-center mt-3 mb-3 p-2" style={{ minWidth: '162px' }} onClick={handleInvitacionClick}>
                                         <span>Enviar invitaciones</span>
                                     </button>
-                                ) : (
+                                ) : editableDatosPerfil.formulario_realizado == 0 ? (
                                     <button className="boton d-flex justify-content-center align-items-center mt-3 mb-3 p-2" style={{ minWidth: '162px' }} onClick={handleFormClick}>
                                         <span>Realizar formulario</span>
                                     </button>
-                                )}
+                                ) : null}
+
 
                             </div>
 
@@ -294,7 +302,8 @@ function Perfil(props) {
             )}
             <ModalImgPerfil show={showImgModal} handleImgPerfil={handleImgPerfil} handleClose={handleImgClose} modoColor={modoColor} url={urlFoto}></ModalImgPerfil>
             <ModalCuentas show={showCtaModal} handleCtaPerfil={handleCtaPerfil} handleClose={handleCtaClose} modoColor={modoColor} catCuentas={editableDatosPerfil.cat_cuentas} cuentas={editableDatosPerfil.cuentas}></ModalCuentas>
-            <ModalFormulario show={showFormModal} handleFormPerfil={handleFormPerfil} handleClose={handleFormClose} modoColor={modoColor} ></ModalFormulario>
+            <ModalFormulario show={showFormModal} handleFormPerfil={handleFormPerfil} handleClose={handleFormClose} modoColor={modoColor} token={token}></ModalFormulario>
+            <ModalInvitaciones show={showInvitacionModal} handleClose={handleInvitacionClose} modoColor={modoColor} token={token}></ModalInvitaciones>    
             { /* Mensaje de enviado */}
             {perfilActualizado === true && (
                 <Alerta

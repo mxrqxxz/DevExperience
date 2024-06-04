@@ -61,7 +61,7 @@ class TokenController extends Controller
                 'apellidos' => $request->apellidos,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'practicas_realizadas' => '0'
+                'formulario_realizado' => '0'
             ]
 
         );

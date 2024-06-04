@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'apellidos' => 'admin',
             'sobre_mi' => 'admin',
             'avatar' => 'admin',
-            'practicas_realizadas' => '0',
+            'formulario_realizado' => '0',
         ]);
 
         $this->call(CentrosTableSeeder::class);

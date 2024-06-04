@@ -70,7 +70,8 @@ class PerfilController extends Controller
                 'practicas' => $user->practicas_realizadas,
                 'insignias' => $insignias,
                 'cuentas' => $cuentas,
-                'cat_cuentas' => $cat_cuentas
+                'cat_cuentas' => $cat_cuentas,
+                'formulario_realizado' => $user->formulario_realizado
             ]);
         }
     }

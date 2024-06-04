@@ -13,6 +13,7 @@ use App\Http\Controllers\API\HomeController;
 use App\Http\Controllers\API\PerfilController;
 use App\Http\Controllers\API\TecnologiaController;
 use App\Http\Controllers\API\TokenController;
+use App\Http\Controllers\API\CatalogosController;
 use App\Http\Middleware\ComprobarTipoUsuario;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -26,7 +27,7 @@ Route::prefix('v1')->group(function () {
     Route::post('enviarCorreoForm', [EnviarCorreos::class, 'enviarCorreoForm']);
     Route::get('tecnologias', [TecnologiaController::class, 'index']);
     Route::get('tecnologias/{type}', [TecnologiaController::class, 'getByType']);
-
+    Route::get('catalogos', [CatalogosController::class, 'getCatalogos']);
     //Rutas accesibles solo con autenticación
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('checkToken', [TokenController::class, 'checkToken']);

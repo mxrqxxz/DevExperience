@@ -29,7 +29,7 @@ class User extends Authenticatable
         'apellidos',
         'sobre_mi',
         'avatar',
-        'practicas_realizadas',
+        'formulario_realizado',
         'password',
     ];
 

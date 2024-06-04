@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('apellidos', 40);
             $table->string('sobre_mi')->nullable();
             $table->string('avatar', 500)->nullable();
-            $table->boolean('practicas_realizadas')->default(false);
+            $table->boolean('formulario_realizado')->default(false);
         });
     }
 

@@ -70,7 +70,7 @@ class CreateDatabaseTriggers extends Command
         END;
     ');
 
-    DB::unprepared('
+        DB::unprepared('
         CREATE EVENT IF NOT EXISTS `asignar_usuario_1_mes`
         ON SCHEDULE EVERY 1 DAY
         DO
@@ -83,7 +83,7 @@ class CreateDatabaseTriggers extends Command
         END;
     ');
 
-    DB::unprepared('
+        DB::unprepared('
         CREATE EVENT IF NOT EXISTS `asignar_usuario_6_meses`
         ON SCHEDULE EVERY 1 DAY
         DO
@@ -96,7 +96,7 @@ class CreateDatabaseTriggers extends Command
         END;
     ');
 
-    DB::unprepared('
+        DB::unprepared('
         CREATE EVENT IF NOT EXISTS `asignar_usuario_1_ano`
         ON SCHEDULE EVERY 1 DAY
         DO
@@ -108,6 +108,17 @@ class CreateDatabaseTriggers extends Command
             ON DUPLICATE KEY UPDATE insignia_id = 7, updated_at = NOW();
         END;
     ');
+
+        // Crear trigger para actualizar formulario_realizado
+        DB::unprepared('
+     CREATE TRIGGER `FORMULARIO_REALIZADO` AFTER INSERT ON `formularios`
+     FOR EACH ROW
+     BEGIN
+         UPDATE users
+         SET formulario_realizado = 1
+         WHERE id = NEW.usuario_id;
+     END;
+ ');
 
 
         $this->info('Database triggers created successfully.');
