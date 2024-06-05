@@ -85,7 +85,7 @@ function App() {
                 <Route path="/perfil" element={<Perfil infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Perfil>}></Route>
                 <Route path="/estadisticas" element={<Estadisticas infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Estadisticas>}></Route>
                 <Route path="/empresas" element={<Empresas infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Empresas>}></Route>
-                <Route path="/empresa/:nombre" element={<Empresa infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Empresa>}></Route>
+                <Route path="/empresa/:idEmpresa" element={<Empresa infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Empresa>}></Route>
                 <Route path="/soporte" element={<Soporte infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Soporte>}></Route>
               </>
             )}
