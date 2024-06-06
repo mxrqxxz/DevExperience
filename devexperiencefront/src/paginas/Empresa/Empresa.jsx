@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from '../../componentes/navbar/Navbar.jsx';
 import useEmpresa from "../../hooks/useEmpresa.jsx";
 import fotoDefault from "../../assets/imgs/empresas/portadaEmpresa.jpg";
+import PieChartCustom from "../../componentes/PieChart/PieChartCustom.jsx";
 
 
 function Empresa(props) {
@@ -32,8 +33,6 @@ function Empresa(props) {
     const { idEmpresa } = useParams();
 
     const { listaDatos } = useEmpresa(token, idEmpresa);
-
-    console.log(listaDatos);
 
     const nota = Math.round(listaDatos?.cabecera?.val_media * 10) / 10;
     const colorNota = nota >= 8 ? "green" : nota >= 5 ? "yellow" : "red";
@@ -70,8 +69,59 @@ function Empresa(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-12" style={{ height: 400 }}>
 
+                    {/* QUESITOS */}
+
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro  separarAbajo">Remoto</h3>
+                        {listaDatos !== null && <PieChartCustom dataset={listaDatos.estadisticas.remoto} />}
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Front-end</h3>
+                        {listaDatos !== null && <PieChartCustom dataset={listaDatos.estadisticas.front} />}
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Back-end</h3>
+                        {listaDatos !== null && <PieChartCustom dataset={listaDatos.estadisticas.back} />}
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Control de versiones</h3>
+                        {listaDatos !== null && <PieChartCustom dataset={listaDatos.estadisticas.control_versiones} />}
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Base de datos</h3>
+                        {listaDatos !== null && <PieChartCustom dataset={listaDatos.estadisticas.base_datos} />}
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Jornada</h3>
+                        {listaDatos !== null && <PieChartCustom dataset={listaDatos.estadisticas.jornada} />}
+                    </div>
+
+                    {/* VALORES NUMERICOS */}
+
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Tasa de contratación</h3>
+                        {listaDatos !== null && <p className="resaltar" style={{ color: colores[modoColor].Texto.principal }}>{listaDatos.estadisticas.tasa_contratacion} &#37;</p>}
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Val. de formación</h3>
+                        {listaDatos !== null && <p className="resaltar" style={{ color: colores[modoColor].Texto.principal }}>{listaDatos.estadisticas.val_formacion} </p>}
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Val. de ambiente laboral</h3>
+                        {listaDatos !== null && <p className="resaltar" style={{ color: colores[modoColor].Texto.principal }}>{listaDatos.estadisticas.val_ambiente_trabajo} </p>}
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Salario Medio Anual</h3>
+                        {listaDatos !== null && <p className="resaltar" style={{ color: colores[modoColor].Texto.principal }}>{listaDatos.estadisticas.salario_medio} &#8364;</p>}
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Tiempo de descanso</h3>
+                        {listaDatos !== null && <p className="resaltar" style={{ color: colores[modoColor].Texto.principal }}>{listaDatos.estadisticas.tiempo_descanso} </p>}
+                    </div>
+                    <div className="col-12 col-md-4">
+                        <h3 className="text-center azulClaro separarAbajo">Equipo de trabajo</h3>
+                        {listaDatos !== null && <p className="resaltar" style={{ color: colores[modoColor].Texto.principal }}>{listaDatos.estadisticas.equipo_trabajo} &#37;</p>}
                     </div>
                 </div>
             </div>
