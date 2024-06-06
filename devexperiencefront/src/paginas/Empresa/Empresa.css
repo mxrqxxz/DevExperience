@@ -1,0 +1,17 @@
+.cabeceraEmpresa {
+    padding: 50px;
+    border-radius: 10px;
+}
+
+.fotoCabeceraEmpresa {
+    max-width: 80%;
+    border-radius: 10px;
+}
+.textoCabeceraEmpresa {
+    font-size: larger;
+}
+
+.centrarFoto {
+    display: flex;
+    justify-content: center;
+}

@@ -77,7 +77,6 @@ function App() {
   return (
     <UserProvider>
       <ColoresContext.Provider value={Colores}>
-        <div className='container-fluid p-0'>
           <Routes>
             <Route path="/" element={<Home infoGuardada={infoGuardada} cambiarDarkmode={cambiarDarkmode}></Home>}> </Route>
             {isTokenValid && (
@@ -90,7 +89,6 @@ function App() {
               </>
             )}
           </Routes>
-        </div>
       </ColoresContext.Provider>
     </UserProvider>
   )

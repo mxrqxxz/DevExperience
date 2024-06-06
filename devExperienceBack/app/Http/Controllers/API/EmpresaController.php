@@ -106,7 +106,7 @@ class EmpresaController extends Controller
                 'nombre' => $empresa->nombre,
                 'localizacion' => $empresa->direccion,
                 'num_usuarios' => $empresa->formularios->count(),
-                'val-media' => $formularios_empresa->avg('val_empresa'),
+                'val_media' => $formularios_empresa->avg('val_empresa'),
                 'imagen' => $empresa->imagen,
             ],
             'estadisticas' => [
