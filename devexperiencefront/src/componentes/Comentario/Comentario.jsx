@@ -9,9 +9,7 @@ import avatar from '../../assets/imgs/Avatar.svg';
 import { sendReaccion } from "../../servicios/sendReaccion.jsx";
 
 function Comentario(props) {
-
     // User
-
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = user?.token || null;
 
@@ -27,7 +25,6 @@ function Comentario(props) {
     }, [props.modoColor]);
 
     // LÓGICA DE LA FOTO DEL USUARIO QUE HA COMENTADO
-
     const [urlFoto, setUrlFoto] = useState(avatar);
 
     useEffect(() => {
@@ -45,24 +42,47 @@ function Comentario(props) {
     }, [props.comentario.avatar]);
 
     // Lógica de los likes y dislikes
-
-    const [reaccion, setReaccion] = useState({
-        comentario_id: props.comentario.id,
-        reaccion: ""
-    });
+    const [reaccion, setReaccion] = useState(null);
+    const [likes, setLikes] = useState(props.comentario.likes);
+    const [dislikes, setDislikes] = useState(props.comentario.dislikes);
 
     function asignarReaccion(reaccionNueva) {
-        setReaccion({ ...reaccion, reaccion: reaccionNueva });
+        if (token) {
+            const nuevaReaccion = {
+                comentario_id: props.comentario.id,
+                reaccion: reaccionNueva
+            };
+            setReaccion(nuevaReaccion);
+
+            // Actualizar contadores de likes y dislikes en el UI
+            if (reaccionNueva === "like") {
+                setLikes(likes + 1);
+                if (props.comentario.reaccionActual === "dislike") {
+                    setDislikes(dislikes - 1);
+                }
+            } else if (reaccionNueva === "dislike") {
+                setDislikes(dislikes + 1);
+                if (props.comentario.reaccionActual === "like") {
+                    setLikes(likes - 1);
+                }
+            }
+            props.comentario.reaccionActual = reaccionNueva; // actualizar la reacción actual en el comentario
+        } else {
+            console.error("Token no disponible");
+        }
     }
 
     useEffect(() => {
-        sendReaccion(reaccion, token).then(response => {
-            console.log("Reacción enviada con éxito:", response);
-        })
-        .catch(error => {
-            console.error("Error al enviar la reacción:", error);
-        });
-    }, [reaccion]);
+        if (reaccion) {
+            sendReaccion(reaccion, token).then(response => {
+                console.log("Reacción enviada con éxito:", response);
+                // Aquí podrías manejar la respuesta si es necesario
+            })
+            .catch(error => {
+                console.error("Error al enviar la reacción:", error);
+            });
+        }
+    }, [reaccion, token]);
 
     return (
         <div className="col-12">
@@ -77,11 +97,11 @@ function Comentario(props) {
                         <button className="sinFondo" onClick={() => asignarReaccion("like")}>
                             <img src={modoColor === "Dark" ? likeBlanco : likeNegro} alt="Foto me gusta" />
                         </button>
-                        <p style={{ color: colores[modoColor].Texto.principal }}>{props.comentario.likes}</p>
+                        <p style={{ color: colores[modoColor].Texto.principal }}>{likes}</p>
                         <button className="sinFondo" onClick={() => asignarReaccion("dislike")}>
                             <img src={modoColor === "Dark" ? dislikeBlanco : dislikeNegro} alt="Foto no me gusta" />
                         </button>
-                        <p style={{ color: colores[modoColor].Texto.principal }}>{props.comentario.dislikes}</p>
+                        <p style={{ color: colores[modoColor].Texto.principal }}>{dislikes}</p>
                     </div>
                 </div>
             </div>
