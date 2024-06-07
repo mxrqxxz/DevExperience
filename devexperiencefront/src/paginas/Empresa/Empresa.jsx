@@ -6,7 +6,8 @@ import Navbar from '../../componentes/navbar/Navbar.jsx';
 import useEmpresa from "../../hooks/useEmpresa.jsx";
 import fotoDefault from "../../assets/imgs/empresas/portadaEmpresa.jpg";
 import PieChartCustom from "../../componentes/PieChart/PieChartCustom.jsx";
-
+import BarChartCustom from "../../componentes/BarChart/BarChartCustom.jsx";
+import Comentarios from "../../componentes/Comentarios/Comentarios.jsx";
 
 function Empresa(props) {
 
@@ -33,6 +34,12 @@ function Empresa(props) {
     const { idEmpresa } = useParams();
 
     const { listaDatos } = useEmpresa(token, idEmpresa);
+
+    useEffect(() => {
+        if (listaDatos !== null) {
+            console.log(listaDatos);
+        }
+    }, [listaDatos]);
 
     const nota = Math.round(listaDatos?.cabecera?.val_media * 10) / 10;
     const colorNota = nota >= 8 ? "green" : nota >= 5 ? "yellow" : "red";
@@ -62,7 +69,7 @@ function Empresa(props) {
                                 </div>
                                 <div className="col-7">
                                     <h1 style={{ color: colores[modoColor].Texto.principal }}>{listaDatos?.cabecera?.nombre}</h1>
-                                    <p className="textoCabeceraEmpresa" style={{ color: colores[modoColor].Texto.principal }}>Localizacion: {listaDatos?.cabecera?.localizacion}</p>
+                                    <p className="textoCabeceraEmpresa" style={{ color: colores[modoColor].Texto.principal }}>Localización: {listaDatos?.cabecera?.localizacion}</p>
                                     <p className="textoCabeceraEmpresa" style={{ color: colores[modoColor].Texto.principal }}>Usuarios con experiencia en esta empresa: {listaDatos?.cabecera?.num_usuarios}</p>
                                     <p className="textoCabeceraEmpresa" style={{ color: colores[modoColor].Texto.principal }}>Valoración media: <span style={{ color: colorNota }}>{nota}</span></p>
                                 </div>
@@ -123,6 +130,26 @@ function Empresa(props) {
                         <h3 className="text-center azulClaro separarAbajo">Equipo de trabajo</h3>
                         {listaDatos !== null && <p className="resaltar" style={{ color: colores[modoColor].Texto.principal }}>{listaDatos.estadisticas.equipo_trabajo} &#37;</p>}
                     </div>
+
+                    {/* Gráficos de barras */}
+                    {/* Unidad de medida es el simbolo de porcentaje */}
+
+                    <div className="col-12">
+                        <h3 className="text-center azulClaro separarAbajo">Hora de entrada</h3>
+                        <div className="alinearIzquierda">
+                            {listaDatos !== null && <BarChartCustom data={listaDatos.estadisticas.hora_entrada} unidadMedida=" &#37;" />}
+                        </div>
+                    </div>
+                    <div className="col-12">
+                        <h3 className="text-center azulClaro separarAbajo">Hora de entrada</h3>
+                        <div className="alinearIzquierda">
+                            {listaDatos !== null && <BarChartCustom data={listaDatos.estadisticas.hora_salida} unidadMedida=" &#37;" />}
+                        </div>
+                    </div>
+
+                    {/* Sección de comentarios */}
+
+                    {listaDatos !== null &&<Comentarios modoColor={modoColor} comentarios={listaDatos.comentarios} />}
                 </div>
             </div>
         </div>

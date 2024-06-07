@@ -7,6 +7,7 @@
     max-width: 80%;
     border-radius: 10px;
 }
+
 .textoCabeceraEmpresa {
     font-size: larger;
 }
@@ -25,6 +26,11 @@
     font-weight: bold;
     text-align: center;
 }
+
 .separarAbajo {
     margin: 25px 0px;
+}
+
+.alinearIzquierda {
+    margin-left: 25%;
 }

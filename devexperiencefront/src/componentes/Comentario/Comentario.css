@@ -1,0 +1,30 @@
+.comentario {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.fotoComentario {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.containerLikes {
+    display: flex;
+}
+
+.containerLikes img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.containerLikes p {
+    margin-right: 10px;
+}
+
+.sinFondo {
+    background-color: transparent;
+    border: none;
+}

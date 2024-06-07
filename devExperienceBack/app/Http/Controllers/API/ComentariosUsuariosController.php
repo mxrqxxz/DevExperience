@@ -21,10 +21,9 @@ class ComentariosUsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: Poner que el usuario que comenta sea el usuario logueado, usar auth()->user()->id
         $comentario = new ComentariosUsuarios();
         $comentario->reaccion = $request->reaccion;
-        $comentario->usuario_id = $request->usuario_id;
+        $comentario->usuario_id = auth()->user()->id;
         $comentario->comentario_id = $request->comentario_id;
         $comentario->save();
         return response()->json($comentario);

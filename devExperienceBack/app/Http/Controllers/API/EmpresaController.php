@@ -148,11 +148,14 @@ class EmpresaController extends Controller
         foreach ($comentarios as $comentario) {
             $likes = $interaccionesComentarios->where('comentario_id', $comentario->id)->where('reaccion', 'like')->count();
             $dislikes = $interaccionesComentarios->where('comentario_id', $comentario->id)->where('reaccion', 'dislike')->count();
+            $usuario = $comentario->usuario;
             $comentarioFinal = [
                 'id' => $comentario->id,
                 'contenido' => $comentario->contenido,
                 'likes' => $likes,
-                'dislikes' => $dislikes
+                'dislikes' => $dislikes,
+                'usuario' => $usuario->usuario,
+                'avatar' => $usuario->avatar,
             ];
             array_push($comentariosFinales, $comentarioFinal);
         }
