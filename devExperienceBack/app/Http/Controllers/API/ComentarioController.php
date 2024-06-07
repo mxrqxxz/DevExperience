@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Comentario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComentarioController extends Controller
 {
@@ -17,7 +18,7 @@ class ComentarioController extends Controller
         // TODO: Poner que el usuario que comenta sea el usuario logueado, usar auth()->user()->id
         $comentario = new Comentario();
         $comentario->contenido = $request->contenido;
-        $comentario->usuario_id = $request->usuario_id;
+        $comentario->usuario_id = Auth::user()->id;
         $comentario->empresa_id = $request->empresa_id;
         $comentario->save();
         return response()->json($comentario);
