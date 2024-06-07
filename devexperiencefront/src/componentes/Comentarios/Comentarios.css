@@ -1,0 +1,21 @@
+.nuevoComentario {
+    display: flex;
+}
+.textAreaComentario {
+    display: block;
+    resize: none;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #000;
+    height: 40px!important;
+}
+
+.botonesComentario {
+    display: flex;
+    justify-content: end;
+}
+
+.botonesComentario button{
+    margin-top: 25px;
+    margin-left: 30px;
+}

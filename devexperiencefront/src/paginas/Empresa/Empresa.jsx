@@ -149,7 +149,7 @@ function Empresa(props) {
 
                     {/* Sección de comentarios */}
 
-                    {listaDatos !== null &&<Comentarios modoColor={modoColor} comentarios={listaDatos.comentarios} />}
+                    {listaDatos !== null &&<Comentarios modoColor={modoColor} comentarios={listaDatos.comentarios} destinoNuevoComentario={idEmpresa}/>}
                 </div>
             </div>
         </div>

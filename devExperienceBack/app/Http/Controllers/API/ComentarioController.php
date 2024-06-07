@@ -14,13 +14,19 @@ class ComentarioController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: Poner que el usuario que comenta sea el usuario logueado, usar auth()->user()->id
         $comentario = new Comentario();
         $comentario->contenido = $request->contenido;
-        $comentario->usuario_id = $request->usuario_id;
+        $comentario->usuario_id = auth()->user()->id;
         $comentario->empresa_id = $request->empresa_id;
         $comentario->save();
-        return response()->json($comentario);
+        $comentarioDevolver = new Comentario();
+        $comentarioDevolver->id = $comentario->id;
+        $comentarioDevolver->contenido = $comentario->contenido;
+        $comentarioDevolver->likes = 0;
+        $comentarioDevolver->dislikes = 0;
+        $comentarioDevolver->usuario = auth()->user()->usuario;
+        $comentarioDevolver->avatar = auth()->user()->avatar;
+        return response()->json($comentarioDevolver);
     }
 
     /**
