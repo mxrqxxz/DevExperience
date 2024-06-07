@@ -151,11 +151,12 @@ function Estadisticas(props) {
         ));
     }
 
+    // Cargamos la primera sección por defecto
     useEffect(() => {
         setSelectedGraphData(listaDatos.estadisticas_tecnologias);
         setUnidadMedida(' %');
         setTitulos(['FRONT-END', 'BACK-END', 'BASE DE DATOS', 'CONTROL DE VERSIONES']);
-    }, [selectedGraphData == null]);
+    }, [listaDatos]);
 
     return (
         <div>
