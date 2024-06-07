@@ -16,18 +16,32 @@ class ComentariosUsuariosController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $comentario = new ComentariosUsuarios();
-        $comentario->reaccion = $request->reaccion;
-        $comentario->usuario_id = auth()->user()->id;
-        $comentario->comentario_id = $request->comentario_id;
-        $comentario->save();
-        return response()->json($comentario);
+
+        // Obtener el usuario autenticado
+        $userId = auth()->user()->id;
+
+        // Buscar si ya existe una reacción del usuario para el comentario
+        $comentarioUsuario = ComentariosUsuarios::where('usuario_id', $userId)
+                                                ->where('comentario_id', $request->comentario_id)
+                                                ->first();
+
+        if ($comentarioUsuario) {
+            // Si ya existe, actualizar la reacción
+            $comentarioUsuario->reaccion = $request->reaccion;
+            $comentarioUsuario->save();
+        } else {
+            // Si no existe, crear una nueva reacción
+            $comentarioUsuario = new ComentariosUsuarios();
+            $comentarioUsuario->usuario_id = $userId;
+            $comentarioUsuario->comentario_id = $request->comentario_id;
+            $comentarioUsuario->reaccion = $request->reaccion;
+            $comentarioUsuario->save();
+        }
+
     }
+
 
     /**
      * Display the specified resource.
