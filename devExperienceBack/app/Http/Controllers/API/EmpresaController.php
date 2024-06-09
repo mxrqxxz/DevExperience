@@ -172,7 +172,7 @@ class EmpresaController extends Controller
         $empresa->direccion = $request->direccion;
         if ($request->file('imagen')) {
             $request->validate([
-                'imagen' => 'mimes:png,jpg,jpeg|max:5120', // Se permiten imagenes de hasta 5 MB
+                'imagen' => 'mimes:png,jpg,jpeg,svg|max:5120', // Se permiten imagenes de hasta 5 MB
             ], [
                 'imagen.mimes' => 'El archivo debe ser una imagen.',
                 'imagen.max' => 'El tamaño de la imagen no debe ser mayor a 5 MB.',

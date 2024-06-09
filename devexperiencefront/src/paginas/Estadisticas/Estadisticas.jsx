@@ -115,22 +115,22 @@ function Estadisticas(props) {
             case 'TECNOLOGÍAS':
                 setSelectedGraphData(listaDatos.estadisticas_tecnologias);
                 setUnidadMedida(' %');
-                setTitulos(['FRONT-END', 'BACK-END', 'BASE DE DATOS', 'CONTROL DE VERSIONES']);
+                setTitulos(['FRONT-END (%)', 'BACK-END (%)', 'BASE DE DATOS (%)', 'CONTROL DE VERSIONES (%)']);
                 break;
             case 'EMPRESAS':
                 setSelectedGraphData(listaDatos.estadisticas_empresas);
-                setUnidadMedida(' %');
-                setTitulos(['PRÁCTICAS (%)', 'PORCENTAJE DE LAS CONTRATACIONES TOTALES', 'SALARIOS', 'REMOTO (%)']);
+                setUnidadMedida(' ');
+                setTitulos(['PRÁCTICAS (%)', 'PORCENTAJE DE LAS CONTRATACIONES TOTALES (%)', 'SALARIOS (€)', 'REMOTO (%)']);
                 break;
             case 'CENTROS':
                 setSelectedGraphData(listaDatos.estadisticas_centros);
-                setUnidadMedida(' %');
-                setTitulos(['CON MÁS CONTRATACIONES (%)', 'MEDIA DE SALARIOS MÁS ALTOS', 'PRÁCTICAS EN REMOTO', 'EMPRESAS ASOCIADAS (%)']);
+                setUnidadMedida(' ');
+                setTitulos(['CON MÁS CONTRATACIONES (%)', 'MEDIA DE SALARIOS MÁS ALTOS (€)', 'PRÁCTICAS EN REMOTO (%)', 'EMPRESAS ASOCIADAS (%)']);
                 break;
             case 'HORARIOS':
                 setSelectedGraphData(listaDatos.estadisticas_horarios);
                 setUnidadMedida(' %');
-                setTitulos(['HORA DE ENTRADA (%)', 'HORA DE SALIDA (%)', 'TIPO DE JORNADA', 'TIEMPO DE DESCANSO (%)']);
+                setTitulos(['HORA DE ENTRADA (%)', 'HORA DE SALIDA (%)', 'TIPO DE JORNADA (%)', 'TIEMPO DE DESCANSO (%)']);
                 break;
             default:
                 setSelectedGraphData(null);
@@ -164,7 +164,7 @@ function Estadisticas(props) {
             <div className="container-fluid p-0">
                 <div className="row" style={{ backgroundColor: colores[modoColor].Fondos.secundario }}>
                     <div className="col-3">
-                        <div className="barraLateral">
+                        <div className="barraLateral" style={{ backgroundColor: colores[modoColor].Fondos.terciario }} >
                             {/* TITULOS DE LA BARRA LATERAL */}
                             <div className="d-none d-md-block grupoTitulos">
                                 {items.map((item, index) => (

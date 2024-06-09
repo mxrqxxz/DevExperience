@@ -13,11 +13,27 @@ import Alerta from "../../componentes/alerta/alerta.jsx";
 import ModalCuentas from "../../componentes/modalCuentas/ModalCuentas.jsx";
 import ModalFormulario from "../../componentes/modalFormulario/ModalFormulario.jsx";
 import ModalInvitaciones from "../../componentes/modalInvitaciones/ModalInvitaciones.jsx";
+import insignia1 from '../../assets/imgs/Insignias/insignia1.svg';
+import insignia2 from '../../assets/imgs/Insignias/insignia2.svg';
+import insignia3 from '../../assets/imgs/Insignias/insignia3.svg';
+import insignia4 from '../../assets/imgs/Insignias/insignia4.svg';
+import insignia5 from '../../assets/imgs/Insignias/insignia5.svg';
+import insignia6 from '../../assets/imgs/Insignias/insignia6.svg';
+import insignia7 from '../../assets/imgs/Insignias/insignia7.svg';
 
 function Perfil(props) {
     const imagenes = {
         LinkedIn: linkedIn,
         Github: github
+    };
+    const insignias = {
+        Insignia1: insignia1,
+        Insignia2: insignia2,
+        Insignia3: insignia3,
+        Insignia4: insignia4,
+        Insignia5: insignia5,
+        Insignia6: insignia6,
+        Insignia7: insignia7
     };
     const [alertaTipo, setAlertaTipo] = useState('correcto');
 
@@ -179,7 +195,7 @@ function Perfil(props) {
                                     {editableDatosPerfil && editableDatosPerfil.insignias && editableDatosPerfil.insignias.length > 0 ? (
                                         editableDatosPerfil.insignias.map((element, index) => (
                                             <div key={'Insig-' + index} className="col-3 col-md-2 col-xl-1 caja-img">
-                                                <img src={`http://devexperience.test/storage/Insignias/${element.avatar}`} alt={element.nombre} className="avatares-perfil" title={element.nombre} />
+                                                <img src={insignias[element.avatar]} alt={element.nombre} className="avatares-perfil" title={element.nombre} />
                                             </div>
                                         ))
                                     ) : (

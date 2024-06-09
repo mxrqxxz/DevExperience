@@ -1,5 +1,4 @@
 .barraLateral {
-    background-color: #23272F;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -12,7 +11,9 @@
     padding: 15px 0px;
     margin-bottom: 0px;
 }
-
+.tituloLateral:hover {
+    opacity: 0.5;
+}
 .iconoLateral {
     display: block;
     margin: auto;

@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'nombre' => 'admin',
             'apellidos' => 'admin',
             'sobre_mi' => 'admin',
-            'avatar' => 'admin',
+            'avatar' => null,
             'formulario_realizado' => '0',
         ]);
 

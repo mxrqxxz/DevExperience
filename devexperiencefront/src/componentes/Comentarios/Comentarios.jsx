@@ -81,10 +81,10 @@ function Comentarios(props) {
                     <img src={urlFoto} alt="Avatar" className="fotoComentario" />
                 </div>
                 <div className="segundaCajaComentarios">
-                    <textarea placeholder="Añade un comentario..." className="textAreaComentario" />
+                    <textarea style={{ color: colores[modoColor].Texto.principal }}  placeholder="Añade un comentario..." className="textAreaComentario" />
                     <div className="botonesComentario">
-                        <button className="sinFondo" onClick={vaciarComentario}>Cancelar</button>
-                        <button className="sinFondo" onClick={enviarComentario}>Comentar</button>
+                        <button style={{ color: colores[modoColor].Texto.principal }}  className="sinFondo" onClick={vaciarComentario}>Cancelar</button>
+                        <button style={{ color: colores[modoColor].Texto.principal }}  className="sinFondo" onClick={enviarComentario}>Comentar</button>
                     </div>
                 </div>
             </div>

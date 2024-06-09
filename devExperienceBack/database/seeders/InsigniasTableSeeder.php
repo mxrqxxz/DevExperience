@@ -12,37 +12,37 @@ class InsigniasTableSeeder extends Seeder
         [
             'nombre' => 'Maestro de las valoraciones',
             'descripcion' => 'Otorgada a los usuarios que han realizado 4 valoraciones o más.',
-            'avatar' => 'insignia1.svg'
+            'avatar' => 'Insignia1'
         ],
         [
             'nombre' => 'Contribuidor',
             'descripcion' => 'El usuario ha completado el formulario.',
-            'avatar' => 'insignia2.svg'
+            'avatar' => 'Insignia2'
         ],
         [
             'nombre' => 'Maestro de los comentarios',
             'descripcion' => 'Otorgada a los usuarios que han realizado 10 comentarios o más.',
-            'avatar' => 'insignia3.svg'
+            'avatar' => 'Insignia3'
         ],
         [
             'nombre' => 'Nuevo Usuario',
             'descripcion' => 'Concedida a los usuarios que se han unido recientemente.',
-            'avatar' => 'insignia4.svg'
+            'avatar' => 'Insignia4'
         ],
         [
             'nombre' => 'Usuario de 1 Mes',
             'descripcion' => 'Concedida a los usuarios que han sido miembros durante 1 mes.',
-            'avatar' => 'insignia5.svg'
+            'avatar' => 'Insignia5'
         ],
         [
             'nombre' => 'Usuario de 6 Meses',
             'descripcion' => 'Concedida a los usuarios que han sido miembros durante 6 meses.',
-            'avatar' => 'insignia6.svg'
+            'avatar' => 'Insignia6'
         ],
         [
             'nombre' => 'Usuario de 1 Año',
             'descripcion' => 'Concedida a los usuarios que han sido miembros durante 1 año.',
-            'avatar' => 'insignia7.svg'
+            'avatar' => 'Insignia7'
         ]
     ];
 
