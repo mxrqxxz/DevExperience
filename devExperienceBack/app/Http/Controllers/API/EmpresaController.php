@@ -9,6 +9,7 @@ use App\Models\Tecnologia;
 use App\Models\TecnologiasFormularios;
 use App\Models\ComentariosUsuarios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmpresaController extends Controller
 {
@@ -156,6 +157,7 @@ class EmpresaController extends Controller
                 'dislikes' => $dislikes,
                 'usuario' => $usuario->usuario,
                 'avatar' => $usuario->avatar,
+                'reaccion' => $interaccionesComentarios->where('comentario_id', $comentario->id)->where('usuario_id', Auth::user()->id)->first() ? $interaccionesComentarios->where('comentario_id', $comentario->id)->where('usuario_id', Auth::user()->id)->first()->reaccion : null,
             ];
             array_push($comentariosFinales, $comentarioFinal);
         }

@@ -19,14 +19,14 @@ class CreateDatabaseTriggers extends Command
     {
         // Crear trigger para comentarios_usuarios
         DB::unprepared('
-            CREATE TRIGGER `INSIGNIA_COMENTARIOS` AFTER INSERT ON `comentarios_usuarios`
+            CREATE TRIGGER `INSIGNIA_COMENTARIOS` AFTER INSERT ON `comentarios`
             FOR EACH ROW
             BEGIN
                 DECLARE comentario_count INT;
 
                 -- Contar los comentarios del usuario
                 SELECT COUNT(*) INTO comentario_count
-                FROM comentarios_usuarios
+                FROM comentarios
                 WHERE usuario_id = NEW.usuario_id;
 
                 -- Verificar si el usuario tiene 4 o más comentarios

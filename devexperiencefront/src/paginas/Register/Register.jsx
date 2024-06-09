@@ -22,11 +22,11 @@ function Register(props) {
         event.preventDefault();
         setLoading(true);
         setError(null);
-
+    
         try {
             const registerDetails = { email, password, usuario, nombre, apellidos, confirm_password: confirmPassword };
-            const token = await sendRegisterDestails(registerDetails);
-
+            const { token, errorMessage } = await sendRegisterDestails(registerDetails);
+    
             if (token) {
                 const newUser = {
                     token: token,
@@ -41,7 +41,7 @@ function Register(props) {
                 setApellidos('');
                 props.handleClose();
             } else {
-                setError('Error al registrarse');
+                setError(errorMessage || 'Error al registrarse');
             }
         } catch (error) {
             setError('Datos incorrectos');
@@ -50,6 +50,7 @@ function Register(props) {
             setLoading(false);
         }
     };
+    
 
     return (
         <Modal show={props.show} onHide={props.handleClose} body={false}>

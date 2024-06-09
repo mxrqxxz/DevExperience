@@ -30,9 +30,16 @@ class TokenController extends Controller
             'confirm_password' => 'required|string|same:password',
         ]);
         if ($validator->fails()) {
+            // Construye un mensaje de error claro para cada campo que falló la validación
+            $errors = $validator->errors();
+            $errorMessages = [];
+
+            foreach ($errors->getMessages() as $field => $message) {
+                $errorMessages[] = "{$field}: " . implode(", ", $message);
+            }
+
             return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
+                'message' => 'Validation failed: ' . implode("; ", $errorMessages)
             ], 422);
         }
         //quiero comprobar que el email tenga despues del @ un dominio de correo en concreto

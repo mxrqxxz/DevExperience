@@ -96,7 +96,7 @@ function ModalAñadirEmpresa(props) {
                     </div>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                     <div className="header-content" >
-                        <Boton type="submit" disabled={loading} contenido={loading ? 'Cargando...' : 'Acceder'}/>          
+                        <Boton type="submit" disabled={loading} contenido={loading ? 'Cargando...' : 'Añadir'}/>          
                     </div>
 
                 </form>

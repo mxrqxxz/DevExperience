@@ -21,30 +21,42 @@ class ComentariosUsuariosController extends Controller
     public function store(Request $request)
     {
         try {
+            // Inicializar variables
+            $userId = null;
+            $reaccion = null;
+
             // Validar la entrada
             $request->validate([
-                'reaccion' => 'required|string',
+                'reaccion' => 'nullable|string',
                 'comentario_id' => 'required|integer'
             ]);
 
             // Obtener el usuario autenticado
             $userId = Auth::user()->id;
+            $reaccion = $request->reaccion;
+            $comentarioId = $request->comentario_id;
 
             // Buscar si ya existe una reacción del usuario para el comentario
             $comentarioUsuario = ComentariosUsuarios::where('usuario_id', $userId)
-                                                    ->where('comentario_id', $request->comentario_id)
-                                                    ->first();
+                ->where('comentario_id', $comentarioId)
+                ->first();
 
             if ($comentarioUsuario) {
-                // Si ya existe, actualizar la reacción
-                $comentarioUsuario->reaccion = $request->reaccion;
-                $comentarioUsuario->save();
+                if ($reaccion == null) {
+                    // Si la reacción es null, eliminar la reacción existente
+                    $comentarioUsuario->delete();
+                    return response()->json(['message' => 'Reacción eliminada'], 200);
+                } else {
+                    // Si la reacción no es null, actualizar la reacción existente
+                    $comentarioUsuario->reaccion = $reaccion;
+                    $comentarioUsuario->save();
+                }
             } else {
                 // Si no existe, crear una nueva reacción
                 $comentarioUsuario = new ComentariosUsuarios();
                 $comentarioUsuario->usuario_id = $userId;
-                $comentarioUsuario->comentario_id = $request->comentario_id;
-                $comentarioUsuario->reaccion = $request->reaccion;
+                $comentarioUsuario->comentario_id = $comentarioId;
+                $comentarioUsuario->reaccion = $reaccion;
                 $comentarioUsuario->save();
             }
 
@@ -59,6 +71,7 @@ class ComentariosUsuariosController extends Controller
 
             return response()->json(['message' => 'Error al procesar la solicitud', 'error' => $e->getMessage()], 500);
         }
+
     }
 
 
