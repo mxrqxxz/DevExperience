@@ -30,7 +30,7 @@ class CreateDatabaseTriggers extends Command
                 WHERE usuario_id = NEW.usuario_id;
 
                 -- Verificar si el usuario tiene 4 o más comentarios
-                IF comentario_count >= 4 THEN
+                IF comentario_count = 4 THEN
                     -- Insertar o actualizar en insignias_usuarios
                     INSERT INTO insignias_usuarios (usuario_id, insignia_id, created_at, updated_at)
                     VALUES (NEW.usuario_id, 1, NOW(), NOW())
@@ -38,7 +38,7 @@ class CreateDatabaseTriggers extends Command
                 END IF;
 
                 -- Verificar si el usuario tiene 10 o más comentarios
-                IF comentario_count >= 10 THEN
+                IF comentario_count = 10 THEN
                     -- Insertar o actualizar en insignias_usuarios
                     INSERT INTO insignias_usuarios (usuario_id, insignia_id, created_at, updated_at)
                     VALUES (NEW.usuario_id, 3, NOW(), NOW())

@@ -15,7 +15,7 @@ class InsigniasUsuariosTableSeeder extends Seeder
      */
     public function run(): void
     {
-        InsigniasUsuarios::truncate();
+       /*  InsigniasUsuarios::truncate();
 
         $insignias = Insignia::all();
         $usuarios = User::all();
@@ -36,6 +36,6 @@ class InsigniasUsuariosTableSeeder extends Seeder
                 $registro->insignia_id = $insignia->id;
                 $registro->save();
             }
-        }
+        } */
     }
 }
