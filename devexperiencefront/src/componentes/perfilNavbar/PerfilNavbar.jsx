@@ -54,7 +54,7 @@ function PerfilNavbar(props) {
     const [urlFoto, setUrlFoto] = useState(Avatar);
 
     useEffect(() => {
-        if (usuario && usuario.foto !== null && usuario.foto !== "" && usuario.foto !== undefined && usuario.foto !== "url_example") {
+        if (usuario && (usuario.foto !== null && usuario.foto !== "" && usuario.foto !== undefined && usuario.foto !== "url_example" && usuario.foto !== "Sin definir")) {
             // Si es una foto almacenada
             if (usuario.foto.startsWith("imagenesPerfil/")){
                 setUrlFoto("http://devexperience.test/storage/" + usuario.foto);

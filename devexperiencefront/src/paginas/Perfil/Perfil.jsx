@@ -122,7 +122,7 @@ function Perfil(props) {
     const [urlFoto, setUrlFoto] = useState(Avatar);
 
     useEffect(() => {
-        if (datosPerfil && datosPerfil.avatar !== null && datosPerfil.avatar !== "" && datosPerfil.avatar !== undefined && datosPerfil.avatar !== "url_example") {
+        if (datosPerfil && datosPerfil.avatar !== null && datosPerfil.avatar !== "" && datosPerfil.avatar !== undefined && datosPerfil.avatar !== "url_example" && datosPerfil.avatar !== "Sin definir") {
             // Si es una foto almacenada
             if (datosPerfil.avatar.startsWith("imagenesPerfil/")) {
                 setUrlFoto("http://devexperience.test/storage/" + datosPerfil.avatar);

@@ -34,7 +34,7 @@ function Comentarios(props) {
     const [urlFoto, setUrlFoto] = useState(avatar);
 
     useEffect(() => {
-        if (user.foto !== null && user.foto !== "" && user.foto !== undefined && user.foto !== "url_example") {
+        if (user.foto !== null && user.foto !== "" && user.foto !== undefined && user.foto !== "url_example" && user.foto !== "Sin definir") {
             // Si es una foto almacenada
             if (user.foto.startsWith("imagenesPerfil/")) {
                 setUrlFoto("http://devexperience.test/storage/" + user.foto);
@@ -74,14 +74,14 @@ function Comentarios(props) {
     }
 
     return (
-        <>
-            <h2 style={{ color: colores[modoColor].Texto.principal }}>{numeroComentarios} Comentarios</h2>
+        <div className="cajaComentarios">
+            <h2 style={{ color: colores[modoColor].Texto.principal }} className="tituloComentarios">{numeroComentarios} Comentarios</h2>
             <div className="nuevoComentario">
                 <div>
                     <img src={urlFoto} alt="Avatar" className="fotoComentario" />
                 </div>
-                <div>
-                    <textarea cols={100} placeholder="Añade un comentario..." className="textAreaComentario" />
+                <div className="segundaCajaComentarios">
+                    <textarea placeholder="Añade un comentario..." className="textAreaComentario" />
                     <div className="botonesComentario">
                         <button className="sinFondo" onClick={vaciarComentario}>Cancelar</button>
                         <button className="sinFondo" onClick={enviarComentario}>Comentar</button>
@@ -91,7 +91,7 @@ function Comentarios(props) {
             <div>
                 {listaComentarios.map(mostrarComentario)}
             </div>
-        </>
+        </div>
     );
 }
 
